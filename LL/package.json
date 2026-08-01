@@ -1,0 +1,20 @@
+{
+  "name": "lamb-vs-liar",
+  "version": "2.0.0",
+  "description": "Liar and The Lamb - Cyber-Scriptural 2.5D Fighting Game Engine",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": [
+    "fighting-game",
+    "html5-canvas",
+    "svg",
+    "mobile-first",
+    "gamepad-api",
+    "web-audio"
+  ],
+  "author": "Antigravity Engineering",
+  "license": "MIT"
+}

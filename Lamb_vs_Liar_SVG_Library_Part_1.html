@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#05080d">
+<title>Lamb vs Liar — SVG Game Asset Library · Part I</title>
+<style>
+:root{
+  --bg:#04070b;--surface:#0a1018;--surface2:#101a26;--line:#263647;--text:#f4f8fb;
+  --muted:#8b9cad;--lamb:#62f5db;--lamb2:#dffff8;--liar:#ff435f;--liar2:#ff9a62;
+  --gold:#ffd36c;--violet:#a87cff;--speed:1;--radius:18px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;min-height:100vh;color:var(--text);
+  font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  background:
+    radial-gradient(circle at 10% -10%,#0b3c48 0,transparent 30%),
+    radial-gradient(circle at 93% -8%,#4a101e 0,transparent 32%),
+    linear-gradient(180deg,#070b11,#020406 68%);
+}
+button,input,select{font:inherit}
+button{color:inherit}
+.app{width:min(1840px,100%);margin:auto;padding:15px}
+.topbar{
+  position:sticky;top:8px;z-index:50;display:flex;justify-content:space-between;gap:16px;align-items:center;
+  padding:13px 15px;border:1px solid #ffffff16;border-radius:22px;background:#07101be8;
+  backdrop-filter:blur(20px) saturate(140%);box-shadow:0 22px 70px #000b
+}
+.brand{display:flex;gap:12px;align-items:center;min-width:0}
+.emblem{
+  width:50px;height:50px;display:grid;place-items:center;flex:0 0 auto;border-radius:16px;
+  border:1px solid #91fff05c;background:linear-gradient(145deg,#132d32,#0b1119);
+  box-shadow:inset 0 0 24px #62f5db14,0 0 24px #62f5db14
+}
+.emblem svg{width:34px;height:34px}
+h1{margin:0;font-size:clamp(1.03rem,2vw,1.55rem);letter-spacing:.02em}
+.sub{margin-top:3px;color:var(--muted);font-size:.76rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.actions{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+.btn{
+  border:1px solid #ffffff19;background:linear-gradient(180deg,#172434,#0b131e);padding:9px 12px;
+  border-radius:12px;cursor:pointer;transition:.18s;box-shadow:inset 0 1px #ffffff0e
+}
+.btn:hover{transform:translateY(-1px);border-color:#62f5db77;box-shadow:0 10px 28px #0008}
+.btn.primary{background:linear-gradient(135deg,#0d7468,#7d2840);border-color:#cfffff42}
+.btn.active{background:#263846;border-color:#ffffff58}
+.hero{
+  margin:14px 0;display:grid;grid-template-columns:1.25fr .75fr;gap:12px
+}
+.hero-main,.plan{
+  border:1px solid #ffffff12;border-radius:20px;background:linear-gradient(145deg,#0d1722da,#070d14dc);
+  box-shadow:0 14px 40px #0006
+}
+.hero-main{padding:20px;position:relative;overflow:hidden}
+.hero-main:before{
+  content:"";position:absolute;inset:auto -80px -120px auto;width:330px;height:330px;border-radius:50%;
+  background:radial-gradient(circle,#62f5db26,transparent 65%)
+}
+.eyebrow{font-size:.67rem;letter-spacing:.15em;text-transform:uppercase;color:#75eedd}
+.hero h2{font-size:clamp(1.45rem,4vw,3.1rem);line-height:1;margin:8px 0 9px;max-width:780px}
+.hero h2 span{background:linear-gradient(90deg,var(--lamb),#fff 48%,var(--liar));-webkit-background-clip:text;color:transparent}
+.hero p{max-width:850px;color:#a4b2bf;font-size:.85rem;line-height:1.55;margin:0}
+.plan{padding:17px}
+.plan-title{font-weight:800;font-size:.84rem;margin-bottom:10px}
+.plan-row{display:flex;gap:10px;padding:8px 0;border-top:1px solid #ffffff0e;font-size:.74rem;color:#9bacbb}
+.plan-row:first-of-type{border-top:0}
+.plan-num{width:23px;height:23px;border-radius:8px;display:grid;place-items:center;background:#ffffff0e;color:#fff;flex:0 0 auto;font-weight:800}
+.plan-row.current .plan-num{background:#62f5db;color:#03211e}
+.plan-row.current strong{color:#8effed}
+.toolbar{
+  display:grid;grid-template-columns:minmax(230px,1.2fr) minmax(160px,.55fr) minmax(180px,.65fr) minmax(165px,.55fr);
+  gap:10px;margin-bottom:12px;padding:11px;border:1px solid #ffffff12;border-radius:17px;background:#08101ad9
+}
+.field{display:flex;gap:9px;align-items:center;min-width:0;padding:9px 11px;border:1px solid #ffffff0f;border-radius:11px;background:#0d1723}
+.field label{font-size:.68rem;color:var(--muted);white-space:nowrap}
+.field input[type=search],.field select{width:100%;min-width:0;border:0;outline:0;background:transparent;color:var(--text)}
+.field select option{background:#0b141e}
+.field input[type=range]{width:100%;accent-color:var(--lamb)}
+.value{font-size:.68rem;color:#7effed;min-width:40px;text-align:right}
+.swatches{display:flex;gap:6px;margin-left:auto}
+.swatch{width:24px;height:24px;border-radius:7px;border:1px solid #ffffff2a;cursor:pointer}
+.swatch.active{outline:2px solid #fff;outline-offset:2px}
+.stats{display:flex;justify-content:space-between;align-items:center;margin:0 3px 11px;color:#8292a2;font-size:.74rem}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:12px}
+.card{
+  overflow:hidden;border-radius:var(--radius);border:1px solid #ffffff11;
+  background:linear-gradient(155deg,#101b28,#070d14);box-shadow:0 15px 40px #0006;transition:.2s
+}
+.card:hover{transform:translateY(-3px);border-color:#ffffff2c;box-shadow:0 20px 48px #0009}
+.preview{
+  height:205px;display:grid;place-items:center;position:relative;overflow:hidden;
+  background:
+    linear-gradient(#ffffff07 1px,transparent 1px),linear-gradient(90deg,#ffffff07 1px,transparent 1px),
+    radial-gradient(circle at 50% 43%,#173040,#071019 68%);
+  background-size:24px 24px,24px 24px,auto
+}
+.preview.light{background:
+  linear-gradient(#0000000c 1px,transparent 1px),linear-gradient(90deg,#0000000c 1px,transparent 1px),
+  radial-gradient(circle at 50% 43%,#f7fbfd,#c9d3da 75%);background-size:24px 24px,24px 24px,auto}
+.preview.checker{background-color:#101820;background-image:linear-gradient(45deg,#1a2632 25%,transparent 25%),linear-gradient(-45deg,#1a2632 25%,transparent 25%),linear-gradient(45deg,transparent 75%,#1a2632 75%),linear-gradient(-45deg,transparent 75%,#1a2632 75%);background-size:30px 30px;background-position:0 0,0 15px,15px -15px,-15px 0}
+.preview svg{width:100%;height:100%;display:block}
+.card-body{padding:12px}
+.card-head{display:flex;justify-content:space-between;gap:8px;align-items:flex-start}
+.card h3{font-size:.9rem;margin:0 0 4px}
+.card p{font-size:.7rem;color:#8899aa;line-height:1.4;margin:0}
+.badge{font-size:.57rem;letter-spacing:.08em;text-transform:uppercase;padding:5px 7px;border-radius:999px;border:1px solid #ffffff16;background:#ffffff08;white-space:nowrap}
+.badge.lamb{color:#8effed;border-color:#62f5db38;background:#62f5db0c}
+.badge.liar{color:#ff8798;border-color:#ff435f42;background:#ff435f0c}
+.badge.fx{color:#ddc8ff;border-color:#a87cff42;background:#a87cff0c}
+.card-actions{display:flex;gap:7px;margin-top:11px}
+.card-actions button{flex:1;border:1px solid #ffffff12;border-radius:9px;background:#111d29;padding:8px 6px;cursor:pointer;font-size:.69rem}
+.card-actions button:hover{border-color:#62f5db55;color:#a9fff3}
+.empty{display:none;text-align:center;color:#91a0af;padding:80px 20px}
+.drawer{
+  position:fixed;z-index:100;right:13px;bottom:13px;width:min(560px,calc(100vw - 26px));max-height:calc(100vh - 26px);
+  overflow:hidden;border:1px solid #ffffff24;border-radius:22px;background:#07101bf5;backdrop-filter:blur(20px);
+  box-shadow:0 30px 90px #000d;transform:translateY(calc(100% + 30px));opacity:0;transition:.28s
+}
+.drawer.open{transform:none;opacity:1}
+.drawer-head{display:flex;justify-content:space-between;align-items:center;padding:13px 15px;border-bottom:1px solid #ffffff12}
+.drawer-head h3{margin:0;font-size:.95rem}
+.drawer-close{border:1px solid #ffffff15;border-radius:10px;background:#121e2a;padding:8px 10px;cursor:pointer}
+.drawer-preview{height:310px;display:grid;place-items:center;background:radial-gradient(circle,#163042,#05090d 70%)}
+.drawer-preview svg{width:100%;height:100%}
+.drawer pre{margin:0;max-height:240px;overflow:auto;padding:13px;background:#030609;color:#bdf8ef;font-size:.68rem;line-height:1.45;tab-size:2}
+.drawer-foot{display:flex;gap:8px;padding:11px;border-top:1px solid #ffffff12}
+.toast{position:fixed;z-index:150;left:50%;bottom:22px;transform:translate(-50%,100px);opacity:0;padding:10px 14px;border:1px solid #79fbe84a;border-radius:11px;background:#0a1922;box-shadow:0 15px 45px #000b;font-size:.78rem;transition:.23s}
+.toast.show{transform:translate(-50%,0);opacity:1}
+footer{text-align:center;color:#607180;font-size:.68rem;padding:27px 10px 8px}
+@media(max-width:920px){.hero{grid-template-columns:1fr}.toolbar{grid-template-columns:1fr 1fr}.field.search{grid-column:1/-1}}
+@media(max-width:650px){
+  .app{padding:8px}.topbar{top:5px;align-items:stretch;flex-direction:column}.sub{display:none}.actions{justify-content:stretch}.actions .btn{flex:1;font-size:.7rem;padding:8px 6px}
+  .hero-main{padding:16px}.toolbar{grid-template-columns:1fr}.field.search{grid-column:auto}.grid{grid-template-columns:1fr 1fr;gap:8px}.preview{height:160px}
+  .card p{display:none}.card-actions button{font-size:.62rem;padding:7px 3px}.stats span:last-child{display:none}
+}
+@media(max-width:430px){.grid{grid-template-columns:1fr}.preview{height:200px}.card p{display:block}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.001ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<div class="app">
+<header class="topbar">
+  <div class="brand">
+    <div class="emblem" aria-hidden="true">
+      <svg viewBox="0 0 100 100">
+        <path d="M23 70C10 53 15 30 34 25c8-2 13 1 16 7 3-6 8-9 16-7 19 5 24 28 11 45-8 10-18 17-27 24-9-7-19-14-27-24Z" fill="#f7fffd" stroke="#62f5db" stroke-width="4"/>
+        <path d="M57 17 46 48h14l-8 35 25-43H63l8-23Z" fill="#ff435f"/>
+      </svg>
+    </div>
+    <div><h1>Lamb vs Liar · SVG Game Asset Library</h1><div class="sub">Part I — fighters, poses, combat actions, powers, impacts, status symbols, and reusable animated effects.</div></div>
+  </div>
+  <div class="actions">
+    <button class="btn" id="pauseBtn">⏸ Pause</button>
+    <button class="btn" id="randomBtn">✦ Remix</button>
+    <button class="btn primary" id="copyVisibleBtn">⧉ Copy visible set</button>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-main">
+    <div class="eyebrow">Production Asset Pack · 1 of 2</div>
+    <h2><span>Truth clashes with deception.</span></h2>
+    <p>A game-ready SVG library designed around a storm-dark side-view combat game. Every asset is scalable, dependency-free, animated, searchable, inspectable, and individually exportable.</p>
+  </div>
+  <div class="plan">
+    <div class="plan-title">Two-part production plan</div>
+    <div class="plan-row current"><div class="plan-num">1</div><div><strong>Core combat library</strong><br>Fighters, movement poses, attacks, weapons, powers, impacts, buffs, debuffs, and status symbols.</div></div>
+    <div class="plan-row"><div class="plan-num">2</div><div><strong>World and interface library</strong><br>Arenas, hazards, bosses, minions, pickups, HUD, menus, story panels, weather, victory, defeat, and cinematic assets.</div></div>
+  </div>
+</section>
+
+<section class="toolbar" aria-label="Asset controls">
+  <div class="field search"><span>⌕</span><input id="search" type="search" placeholder="Search lamb, liar, attack, shield, truth…"></div>
+  <div class="field"><label>Category</label><select id="category"></select></div>
+  <div class="field"><label>Animation</label><input id="speed" type="range" min=".3" max="3" step=".05" value="1"><span class="value" id="speedValue">1.00×</span></div>
+  <div class="field"><label>Preview</label><div class="swatches"><button class="swatch active" data-bg="dark" style="background:#071019" title="Dark"></button><button class="swatch" data-bg="light" style="background:#dce5ea" title="Light"></button><button class="swatch" data-bg="checker" style="background:linear-gradient(45deg,#172431 50%,#0c131b 50%)" title="Checker"></button></div></div>
+</section>
+
+<div class="stats"><span id="count"></span><span>Click a preview to inspect · Exported SVG keeps its animation</span></div>
+<main class="grid" id="grid"></main>
+<div class="empty" id="empty">No assets match your filters.</div>
+<footer>Single-file SVG production library · Part I of II · No fonts, images, libraries, or network requests required.</footer>
+</div>
+
+<aside class="drawer" id="drawer" aria-hidden="true">
+  <div class="drawer-head"><h3 id="drawerTitle">Asset</h3><button class="drawer-close" id="closeDrawer">✕</button></div>
+  <div class="drawer-preview" id="drawerPreview"></div>
+  <pre><code id="drawerCode"></code></pre>
+  <div class="drawer-foot"><button class="btn primary" id="copySvg">Copy SVG</button><button class="btn" id="downloadSvg">Download .svg</button><button class="btn" id="copyPreset">Copy preset</button></div>
+</aside>
+<div class="toast" id="toast">Copied</div>
+
+<script>
+(()=>{
+'use strict';
+
+const NS='http://www.w3.org/2000/svg';
+const palette={
+  lamb:'#62f5db',lambLight:'#effffc',lambShade:'#7ba8a3',lambDark:'#183b3a',
+  liar:'#ff435f',liarHot:'#ff9a62',liarDark:'#40131c',void:'#07090d',
+  gold:'#ffd36c',purple:'#a87cff',blue:'#5ca8ff',white:'#ffffff',smoke:'#8191a0'
+};
+const state={query:'',category:'All',speed:1,bg:'dark',paused:false,selected:null};
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+const uid=()=>Math.random().toString(36).slice(2,9);
+const slug=s=>s.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+const fmt=n=>Number(n).toFixed(2);
+const R=(a,b)=>a+Math.random()*(b-a);
+
+function svgShell(body,defs='',label='Animated game SVG asset',view='0 0 320 220'){
+ const id=uid(),speed=state.speed;
+ return `<svg xmlns="${NS}" viewBox="${view}" role="img" aria-label="${esc(label)}">
+ <defs>
+  <filter id="glow-${id}" x="-80%" y="-80%" width="260%" height="260%"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  <filter id="soft-${id}" x="-80%" y="-80%" width="260%" height="260%"><feGaussianBlur stdDeviation="12"/></filter>
+  <linearGradient id="truth-${id}" x1="0" x2="1"><stop stop-color="${palette.white}"/><stop offset=".45" stop-color="${palette.lamb}"/><stop offset="1" stop-color="${palette.blue}"/></linearGradient>
+  <linearGradient id="deceit-${id}" x1="0" x2="1"><stop stop-color="${palette.liarHot}"/><stop offset=".45" stop-color="${palette.liar}"/><stop offset="1" stop-color="${palette.purple}"/></linearGradient>
+  <radialGradient id="core-${id}"><stop stop-color="#fff"/><stop offset=".22" stop-color="${palette.lamb}"/><stop offset="1" stop-color="${palette.blue}" stop-opacity="0"/></radialGradient>
+  ${defs}
+ </defs>
+ <style>
+  .a{animation-duration:calc(var(--d,1s)/${speed});animation-iteration-count:infinite;animation-timing-function:linear;transform-box:fill-box;transform-origin:center}
+  .idle{animation-name:idle}.run{animation-name:run}.jump{animation-name:jump}.guard{animation-name:guard}.strike{animation-name:strike}.dash{animation-name:dash}.hurt{animation-name:hurt}.victory{animation-name:victory}.charge{animation-name:charge}.pulse{animation-name:pulse}.spin{animation-name:spin}.spinR{animation-name:spinR}.flicker{animation-name:flicker}.drift{animation-name:drift}.slash{animation-name:slash}.shake{animation-name:shake}.float{animation-name:float}.blink{animation-name:blink}
+  @keyframes idle{0%,100%{transform:translateY(1px) rotate(-1deg)}50%{transform:translateY(-3px) rotate(1deg)}}
+  @keyframes run{0%,100%{transform:translate(-4px,1px) rotate(-2deg)}50%{transform:translate(5px,-2px) rotate(2deg)}}
+  @keyframes jump{0%,100%{transform:translateY(7px) rotate(-2deg)}50%{transform:translateY(-13px) rotate(4deg)}}
+  @keyframes guard{0%,100%{transform:scale(.98)}50%{transform:scale(1.03)}}
+  @keyframes strike{0%,35%,100%{transform:rotate(-18deg)}55%,75%{transform:rotate(25deg)}}
+  @keyframes dash{0%,100%{transform:translateX(-15px) skewX(-8deg)}50%{transform:translateX(17px) skewX(8deg)}}
+  @keyframes hurt{0%,100%{transform:translate(0)}20%{transform:translate(-8px,3px) rotate(-4deg)}40%{transform:translate(7px,-2px) rotate(3deg)}}
+  @keyframes victory{0%,100%{transform:translateY(0) rotate(-2deg)}45%{transform:translateY(-10px) rotate(5deg)}}
+  @keyframes charge{0%,100%{transform:scale(.9);opacity:.4}50%{transform:scale(1.18);opacity:1}}
+  @keyframes pulse{0%,100%{transform:scale(.82);opacity:.35}50%{transform:scale(1.14);opacity:1}}
+  @keyframes spin{to{transform:rotate(360deg)}}@keyframes spinR{to{transform:rotate(-360deg)}}
+  @keyframes flicker{0%,8%,12%,18%,60%,64%,100%{opacity:1}10%,15%,62%{opacity:.12}}
+  @keyframes drift{0%{transform:translate(-14px,8px);opacity:0}20%{opacity:.9}100%{transform:translate(30px,-22px);opacity:0}}
+  @keyframes slash{0%{stroke-dashoffset:180;opacity:0}20%{opacity:1}65%{stroke-dashoffset:0;opacity:1}100%{stroke-dashoffset:-180;opacity:0}}
+  @keyframes shake{0%,100%{transform:translate(0)}25%{transform:translate(-5px,3px)}50%{transform:translate(5px,-3px)}75%{transform:translate(-3px,-2px)}}
+  @keyframes float{0%,100%{transform:translateY(-6px)}50%{transform:translateY(8px)}}
+  @keyframes blink{0%,47%,53%,100%{opacity:1}48%,52%{opacity:0}}
+ </style>${body}</svg>`;
+}
+
+function groundShadow(color=palette.lamb){
+ return `<ellipse cx="160" cy="196" rx="52" ry="9" fill="${color}" opacity=".13" filter="url(#soft-REPLACE)"/>`;
+}
+function lambHead(x=159,y=59,face='right',halo=false){
+ const flip=face==='left'?'transform="translate('+(x*2)+' 0) scale(-1 1)"':'';
+ return `<g ${flip}>
+  ${halo?`<ellipse cx="${x}" cy="${y-29}" rx="30" ry="8" fill="none" stroke="${palette.gold}" stroke-width="3" class="a pulse" style="--d:1.8s" filter="url(#glow-ID)"/>`:''}
+  <path d="M${x-25} ${y-15}C${x-40} ${y-28} ${x-44} ${y-9} ${x-32} ${y-2}C${x-46} ${y+2} ${x-41} ${y+18} ${x-25} ${y+12}" fill="${palette.lambShade}" stroke="${palette.lambLight}" stroke-width="2"/>
+  <path d="M${x+9} ${y-18}C${x+27} ${y-30} ${x+39} ${y-18} ${x+31} ${y-6}C${x+45} ${y-4} ${x+43} ${y+10} ${x+28} ${y+11}" fill="${palette.lambShade}" stroke="${palette.lambLight}" stroke-width="2"/>
+  <path d="M${x-27} ${y-8}C${x-29} ${y-29} ${x-11} ${y-40} ${x+7} ${y-34}C${x+29} ${y-28} ${x+34} ${y-3} ${x+19} ${y+17}C${x+5} ${y+34} ${x-20} ${y+23} ${x-27} ${y-8}Z" fill="${palette.lambLight}" stroke="${palette.lamb}" stroke-width="3"/>
+  <path d="M${x+18} ${y+3}q13 3 17 11q-11 6-23 0Z" fill="${palette.lambShade}"/>
+  <circle cx="${x+8}" cy="${y-7}" r="4.2" fill="${palette.void}"/><circle cx="${x+9}" cy="${y-8}" r="1.3" fill="${palette.white}"/>
+  <path d="M${x-13} ${y-21}q12-10 25 0" fill="none" stroke="${palette.lambShade}" stroke-width="3" stroke-linecap="round"/>
+ </g>`;
+}
+function lambBody(pose='idle'){
+ const poseClass={idle:'idle',run:'run',jump:'jump',crouch:'guard',guard:'guard',hurt:'hurt',victory:'victory',dash:'dash',charge:'charge',heal:'idle',ko:'hurt',transform:'charge'}[pose]||'idle';
+ let legs=`<path d="M143 143l-9 45 16 2 11-43M177 143l10 45-16 2-11-43" fill="${palette.lambDark}" stroke="${palette.lamb}" stroke-width="3" stroke-linejoin="round"/>`;
+ let arms=`<path d="M137 99q-21 24-11 48l15-5 8-34M183 99q22 21 18 43l-15 4-13-38" fill="${palette.lambLight}" stroke="${palette.lamb}" stroke-width="3"/>`;
+ if(pose==='run'||pose==='dash'){legs=`<path d="M148 143l-29 35 14 9 32-32M175 144l31 31-13 11-33-29" fill="${palette.lambDark}" stroke="${palette.lamb}" stroke-width="3"/>`;arms=`<path d="M140 103l-30 20 8 13 34-17M180 101l29-17 8 13-31 24" fill="${palette.lambLight}" stroke="${palette.lamb}" stroke-width="3"/>`}
+ if(pose==='jump'){legs=`<path d="M148 143l-27 19 10 13 34-20M174 143l23 17-11 15-28-21" fill="${palette.lambDark}" stroke="${palette.lamb}" stroke-width="3"/>`}
+ if(pose==='crouch'){legs=`<path d="M145 139l-27 30 15 12 30-26M174 140l30 30-15 12-30-27" fill="${palette.lambDark}" stroke="${palette.lamb}" stroke-width="3"/>`}
+ if(pose==='guard'){arms=`<path d="M138 102q-17 15-5 42l18-8 13-24M181 102q10 7 12 26l-16 9-16-24" fill="${palette.lambLight}" stroke="${palette.lamb}" stroke-width="3"/>`}
+ if(pose==='victory'||pose==='heal'){arms=`<path d="M139 104l-23-35 13-9 31 40M181 103l25-36 13 10-28 37" fill="${palette.lambLight}" stroke="${palette.lamb}" stroke-width="3"/>`}
+ if(pose==='ko'){legs=`<path d="M137 148l-50 22 8 16 57-18M169 150l42 31 12-13-43-38" fill="${palette.lambDark}" stroke="${palette.lamb}" stroke-width="3"/>`;arms=`<path d="M135 108l-45 9 3 15 51-7M178 110l44 4-2 17-48-5" fill="${palette.lambLight}" stroke="${palette.lamb}" stroke-width="3"/>`}
+ return `<g class="a ${poseClass}" style="--d:${pose==='run'||pose==='dash'?'.62':'1.8'}s;transform-origin:160px 136px">
+  <ellipse cx="160" cy="194" rx="49" ry="8" fill="${palette.lamb}" opacity=".15"/>
+  ${legs}
+  <path d="M132 91C136 74 183 72 189 94L181 150C173 162 145 162 136 149Z" fill="${palette.lambLight}" stroke="${palette.lamb}" stroke-width="3"/>
+  <path d="M143 99h34l-4 45h-26z" fill="${palette.lambDark}" opacity=".7"/>
+  <path d="M143 124h34" stroke="${palette.gold}" stroke-width="4"/>
+  ${arms}${lambHead()}
+ </g>`;
+}
+function liarHead(x=161,y=60,face='left',crown=false){
+ const flip=face==='right'?'transform="translate('+(x*2)+' 0) scale(-1 1)"':'';
+ return `<g ${flip}>
+  ${crown?`<path d="M${x-27} ${y-40}l9-16 12 13 13-18 10 18 14-13 5 18z" fill="${palette.gold}" stroke="${palette.liar}" stroke-width="2" filter="url(#glow-ID)" class="a flicker" style="--d:1.7s"/>`:''}
+  <path d="M${x-26} ${y-21}l-15-22 25 10M${x+17} ${y-24}l17-22-2 29" fill="${palette.liarDark}" stroke="${palette.liar}" stroke-width="4" stroke-linejoin="round"/>
+  <path d="M${x-29} ${y-12}C${x-23} ${y-36} ${x+16} ${y-41} ${x+31} ${y-17}C${x+45} ${y+7} ${x+23} ${y+31} ${x-5} ${y+28}C${x-33} ${y+24} ${x-39} ${y+7} ${x-29} ${y-12}Z" fill="${palette.liarDark}" stroke="${palette.liar}" stroke-width="3"/>
+  <path d="M${x-17} ${y-10}l20 7-19 8zM${x+10} ${y-5}l18-8-2 15z" fill="${palette.liarHot}" filter="url(#glow-ID)"/>
+  <path d="M${x-8} ${y+15}q16 12 31-2q-4 19-20 20q-15 0-22-14Z" fill="${palette.void}" stroke="${palette.liar}" stroke-width="2"/>
+  <path d="M${x+1} ${y+17}l5 10 5-9 5 8 5-12" fill="none" stroke="${palette.white}" stroke-width="2"/>
+ </g>`;
+}
+function liarBody(pose='idle'){
+ const cls={idle:'idle',run:'run',jump:'jump',crouch:'guard',guard:'guard',hurt:'hurt',victory:'victory',dash:'dash',charge:'charge',heal:'charge',ko:'hurt',transform:'charge'}[pose]||'idle';
+ let legs=`<path d="M143 143l-12 44 15 4 15-43M176 143l13 43-16 5-13-42" fill="${palette.liarDark}" stroke="${palette.liar}" stroke-width="3"/>`;
+ let arms=`<path d="M137 99q-25 19-20 46l18 2 13-40M183 99q25 16 23 44l-18 5-17-41" fill="${palette.liarDark}" stroke="${palette.liar}" stroke-width="3"/>`;
+ if(pose==='run'||pose==='dash'){legs=`<path d="M148 143l-34 31 12 13 39-30M174 144l35 28-11 15-40-30" fill="${palette.liarDark}" stroke="${palette.liar}" stroke-width="3"/>`;arms=`<path d="M139 103l-32 17 7 15 38-16M180 102l32-19 9 14-34 25" fill="${palette.liarDark}" stroke="${palette.liar}" stroke-width="3"/>`}
+ if(pose==='jump'){legs=`<path d="M147 143l-29 16 8 15 37-18M174 143l25 14-9 17-32-20" fill="${palette.liarDark}" stroke="${palette.liar}" stroke-width="3"/>`}
+ if(pose==='crouch'){legs=`<path d="M144 140l-31 27 12 15 39-27M175 140l31 28-12 14-37-26" fill="${palette.liarDark}" stroke="${palette.liar}" stroke-width="3"/>`}
+ if(pose==='guard'){arms=`<path d="M139 102q-19 9-10 37l19-4 16-24M181 102q14 10 15 30l-17 7-18-27" fill="${palette.liarDark}" stroke="${palette.liar}" stroke-width="3"/>`}
+ if(pose==='victory'){arms=`<path d="M139 104l-30-31 11-12 39 36M181 103l31-29 12 13-35 29" fill="${palette.liarDark}" stroke="${palette.liar}" stroke-width="3"/>`}
+ if(pose==='ko'){legs=`<path d="M139 148l-51 28 10 13 59-21M172 150l45 28 10-14-47-33" fill="${palette.liarDark}" stroke="${palette.liar}" stroke-width="3"/>`;arms=`<path d="M137 107l-47 5 2 16 53-4M180 109l45 8-4 16-50-10" fill="${palette.liarDark}" stroke="${palette.liar}" stroke-width="3"/>`}
+ return `<g class="a ${cls}" style="--d:${pose==='run'||pose==='dash'?'.58':'1.7'}s;transform-origin:160px 136px">
+  <ellipse cx="160" cy="194" rx="52" ry="8" fill="${palette.liar}" opacity=".15"/>
+  ${legs}
+  <path d="M132 91C137 74 184 73 190 94L182 151C171 164 145 162 135 149Z" fill="${palette.liarDark}" stroke="${palette.liar}" stroke-width="3"/>
+  <path d="M145 101h32l-3 44h-27z" fill="${palette.void}"/>
+  <path d="M142 125h37" stroke="${palette.liarHot}" stroke-width="4"/>
+  ${arms}${liarHead()}
+ </g>`;
+}
+function replaceIDs(svg){
+ const match=svg.match(/glow-([a-z0-9]+)/);
+ if(!match)return svg;
+ const id=match[1];
+ return svg.replaceAll('glow-ID','glow-'+id).replaceAll('soft-ID','soft-'+id).replaceAll('REPLACE',id);
+}
+function fighterAsset(side,kind){
+ let body='',label='';
+ if(side==='lamb'){
+  label='The Lamb '+kind;
+  if(kind==='Idle')body=lambBody('idle');
+  else if(kind==='Walk')body=`<g class="a run" style="--d:1s">${lambBody('idle')}</g>`;
+  else if(kind==='Run')body=`${[0,1,2].map(i=>`<path d="M${58-i*22} ${115+i*24}h62" stroke="${palette.lamb}" stroke-width="${5-i}" opacity="${.18+i*.1}" class="a slash" style="--d:.7s;animation-delay:${-i*.12}s"/>`).join('')}${lambBody('run')}`;
+  else if(kind==='Jump')body=`<path d="M105 190q55-34 110 0" fill="none" stroke="${palette.lamb}" stroke-width="2" stroke-dasharray="7 8" opacity=".5"/>${lambBody('jump')}`;
+  else if(kind==='Crouch')body=`<g transform="translate(0 20) scale(1 .88)">${lambBody('crouch')}</g>`;
+  else if(kind==='Guard')body=`<path d="M194 45Q252 110 194 177Q164 110 194 45Z" fill="${palette.lamb}" opacity=".12" stroke="${palette.lamb}" stroke-width="4" class="a guard" style="--d:1.2s" filter="url(#glow-ID)"/>${lambBody('guard')}`;
+  else if(kind==='Light Jab')body=`${lambBody('guard')}<g class="a strike" style="--d:.8s;transform-origin:177px 110px"><path d="M177 110l83-10" stroke="${palette.lambLight}" stroke-width="15" stroke-linecap="round"/><circle cx="263" cy="99" r="11" fill="${palette.lamb}" filter="url(#glow-ID)"/></g>`;
+  else if(kind==='Staff Strike')body=`${lambBody('guard')}<g class="a strike" style="--d:1s;transform-origin:172px 112px"><path d="M172 112L276 55" stroke="${palette.gold}" stroke-width="7" stroke-linecap="round"/><path d="M265 54l20-11-8 21z" fill="${palette.lambLight}" stroke="${palette.lamb}" stroke-width="2"/></g>`;
+  else if(kind==='Headbutt')body=`<g class="a dash" style="--d:.72s">${lambBody('run')}</g><path d="M208 48q55 25 70 67" fill="none" stroke="${palette.lamb}" stroke-width="6" stroke-dasharray="22 12" class="a slash" style="--d:.72s" filter="url(#glow-ID)"/>`;
+  else if(kind==='Radiant Burst')body=`${lambBody('charge')}${Array.from({length:16},(_,i)=>{let a=i*Math.PI*2/16,x=160+Math.cos(a)*42,y=108+Math.sin(a)*42,x2=160+Math.cos(a)*100,y2=108+Math.sin(a)*100;return `<path d="M${x} ${y}L${x2} ${y2}" stroke="${i%3?palette.lamb:palette.gold}" stroke-width="${i%4===0?5:2}" class="a pulse" style="--d:${1+i*.04}s" filter="url(#glow-ID)"/>`}).join('')}<circle cx="160" cy="108" r="42" fill="${palette.lamb}" opacity=".13" class="a charge" style="--d:1s"/>`;
+  else if(kind==='Dash')body=`${[0,1,2,3].map(i=>`<path d="M${40-i*13} ${70+i*28}h115" stroke="${palette.lamb}" stroke-width="${6-i}" opacity="${.12+i*.08}" class="a slash" style="--d:.55s;animation-delay:${-i*.08}s"/>`).join('')}${lambBody('dash')}`;
+  else if(kind==='Charge')body=`${Array.from({length:4},(_,i)=>`<circle cx="160" cy="112" r="${45+i*17}" fill="none" stroke="${i%2?palette.gold:palette.lamb}" stroke-width="3" opacity="${.8-i*.14}" class="a pulse" style="--d:${.8+i*.24}s;animation-delay:${-i*.2}s"/>`).join('')}${lambBody('charge')}`;
+  else if(kind==='Heal / Prayer')body=`<circle cx="160" cy="109" r="76" fill="${palette.lamb}" opacity=".07" class="a pulse" style="--d:1.7s"/><path d="M160 23v54M133 50h54" stroke="${palette.gold}" stroke-width="6" stroke-linecap="round" class="a pulse" style="--d:1.2s" filter="url(#glow-ID)"/>${lambBody('heal')}${Array.from({length:12},(_,i)=>`<circle cx="${R(70,250).toFixed(1)}" cy="${R(40,190).toFixed(1)}" r="${R(1.5,4).toFixed(1)}" fill="${palette.lambLight}" class="a drift" style="--d:${R(1,2.8).toFixed(2)}s;animation-delay:${R(-3,0).toFixed(2)}s"/>`).join('')}`;
+  else if(kind==='Hurt')body=`<path d="M220 72l17 21 26-5-18 20 13 24-27-9-16 22 2-29-25-11 27-7z" fill="${palette.liarHot}" class="a pulse" style="--d:.5s" filter="url(#glow-ID)"/>${lambBody('hurt')}`;
+  else if(kind==='Knockout')body=`<g transform="translate(0 25) rotate(77 160 140)">${lambBody('ko')}</g><g class="a spin" style="--d:2s;transform-origin:160px 43px">${[0,1,2].map(i=>`<path d="M${132+i*27} 41l4-8 4 8 9 1-7 6 2 9-8-5-8 5 3-9-7-6z" fill="${palette.gold}"/>`).join('')}</g>`;
+  else if(kind==='Victory')body=`<path d="M160 17l7 17 19 1-15 12 5 18-16-10-16 10 5-18-15-12 19-1z" fill="${palette.gold}" class="a pulse" style="--d:1.3s" filter="url(#glow-ID)"/>${lambBody('victory')}`;
+  else if(kind==='Radiant Form')body=`<circle cx="160" cy="105" r="88" fill="${palette.lamb}" opacity=".09" class="a pulse" style="--d:1.5s" filter="url(#soft-ID)"/><g filter="url(#glow-ID)">${lambBody('transform')}</g><ellipse cx="159" cy="26" rx="30" ry="8" fill="none" stroke="${palette.gold}" stroke-width="4" class="a float" style="--d:1.5s"/>`;
+ }else{
+  label='The Liar '+kind;
+  if(kind==='Idle')body=liarBody('idle');
+  else if(kind==='Walk')body=`<g class="a run" style="--d:1.05s">${liarBody('idle')}</g>`;
+  else if(kind==='Run')body=`${[0,1,2].map(i=>`<path d="M${260+i*18} ${108+i*24}h-65" stroke="${palette.liar}" stroke-width="${5-i}" opacity="${.18+i*.1}" class="a slash" style="--d:.65s;animation-delay:${-i*.1}s"/>`).join('')}${liarBody('run')}`;
+  else if(kind==='Jump')body=`<path d="M105 190q55-34 110 0" fill="none" stroke="${palette.liar}" stroke-width="2" stroke-dasharray="7 8" opacity=".5"/>${liarBody('jump')}`;
+  else if(kind==='Crouch')body=`<g transform="translate(0 20) scale(1 .88)">${liarBody('crouch')}</g>`;
+  else if(kind==='Guard')body=`<path d="M126 45Q68 110 126 177Q156 110 126 45Z" fill="${palette.liar}" opacity=".12" stroke="${palette.liar}" stroke-width="4" class="a guard" style="--d:1.2s" filter="url(#glow-ID)"/>${liarBody('guard')}`;
+  else if(kind==='Claw Swipe')body=`${liarBody('guard')}<g class="a strike" style="--d:.75s;transform-origin:142px 107px"><path d="M140 107L59 91M142 113L57 113M144 119L63 136" stroke="${palette.liarHot}" stroke-width="4" stroke-linecap="round" filter="url(#glow-ID)"/></g>`;
+  else if(kind==='Tail Lash')body=`${liarBody('guard')}<path d="M179 139C245 127 288 152 267 183C252 203 224 187 239 171" fill="none" stroke="${palette.liar}" stroke-width="10" stroke-linecap="round" class="a strike" style="--d:.9s;transform-origin:180px 140px" filter="url(#glow-ID)"/>`;
+  else if(kind==='False Blade')body=`${liarBody('guard')}<g class="a strike" style="--d:.9s;transform-origin:143px 111px"><path d="M143 111L48 51" stroke="${palette.liar}" stroke-width="9" stroke-linecap="round"/><path d="M60 60L31 38l17 31z" fill="${palette.liarHot}" filter="url(#glow-ID)"/></g>`;
+  else if(kind==='Deceit Burst')body=`${liarBody('charge')}${Array.from({length:15},(_,i)=>{let a=i*Math.PI*2/15,x=160+Math.cos(a)*38,y=108+Math.sin(a)*38,x2=160+Math.cos(a)*105,y2=108+Math.sin(a)*105;return `<path d="M${x} ${y}Q${160+Math.cos(a+.4)*75} ${108+Math.sin(a+.4)*75} ${x2} ${y2}" fill="none" stroke="${i%3?palette.liar:palette.purple}" stroke-width="${i%4===0?5:2}" class="a pulse" style="--d:${.8+i*.05}s" filter="url(#glow-ID)"/>`}).join('')}`;
+  else if(kind==='Dash')body=`${[0,1,2,3].map(i=>`<path d="M${280+i*12} ${70+i*27}h-120" stroke="${palette.liar}" stroke-width="${6-i}" opacity="${.12+i*.08}" class="a slash" style="--d:.52s;animation-delay:${-i*.08}s"/>`).join('')}${liarBody('dash')}`;
+  else if(kind==='Charge')body=`${Array.from({length:4},(_,i)=>`<path d="M160 ${29-i*4}C${225+i*12} ${55-i*5} ${229+i*13} ${164+i*7} 160 ${194+i*3}C${91-i*12} ${164+i*7} ${95-i*13} ${55-i*5} 160 ${29-i*4}Z" fill="none" stroke="${i%2?palette.purple:palette.liar}" stroke-width="3" opacity="${.75-i*.13}" class="a pulse" style="--d:${.75+i*.24}s;animation-delay:${-i*.18}s"/>`).join('')}${liarBody('charge')}`;
+  else if(kind==='Clone Split')body=`<g opacity=".25" transform="translate(-66 0) scale(.83)">${liarBody('idle')}</g><g opacity=".25" transform="translate(78 0) scale(.83)">${liarBody('idle')}</g><g filter="url(#glow-ID)">${liarBody('charge')}</g>`;
+  else if(kind==='Hurt')body=`<path d="M88 67l17 22 26-6-17 21 12 24-27-9-16 22 2-29-25-11 27-7z" fill="${palette.lamb}" class="a pulse" style="--d:.5s" filter="url(#glow-ID)"/>${liarBody('hurt')}`;
+  else if(kind==='Knockout')body=`<g transform="translate(0 25) rotate(-77 160 140)">${liarBody('ko')}</g><g class="a spinR" style="--d:1.8s;transform-origin:160px 43px">${[0,1,2].map(i=>`<path d="M${132+i*27} 41q8-11 16 0q-8 12-16 0z" fill="${palette.liarHot}"/>`).join('')}</g>`;
+  else if(kind==='Victory')body=`<path d="M160 17l8 17 19 1-15 12 5 18-17-10-16 10 5-18-15-12 19-1z" fill="${palette.liar}" class="a flicker" style="--d:1.4s" filter="url(#glow-ID)"/>${liarBody('victory')}`;
+  else if(kind==='Deceiver Form')body=`<circle cx="160" cy="105" r="91" fill="${palette.liar}" opacity=".08" class="a pulse" style="--d:1.25s" filter="url(#soft-ID)"/><g filter="url(#glow-ID)">${liarBody('transform')}</g><path d="M128 23l10-19 20 14 18-17 11 24z" fill="${palette.gold}" stroke="${palette.liar}" stroke-width="3" class="a float" style="--d:1.3s"/>`;
+ }
+ return replaceIDs(svgShell(body,'',label));
+}
+function weaponAsset(kind){
+ let b='',label=kind;
+ if(kind==='Shepherd Staff')b=`<g class="a idle" style="--d:2s"><path d="M149 191L176 48C181 19 225 16 235 41C242 59 223 77 204 66" fill="none" stroke="${palette.gold}" stroke-width="10" stroke-linecap="round"/><path d="M149 191L176 48C181 19 225 16 235 41C242 59 223 77 204 66" fill="none" stroke="${palette.lambLight}" stroke-width="3" stroke-linecap="round" filter="url(#glow-ID)"/></g>`;
+ else if(kind==='Truth Sword')b=`<g class="a float" style="--d:1.8s"><path d="M150 178l17-109 20-31 5 37-23 108z" fill="${palette.lambLight}" stroke="${palette.lamb}" stroke-width="4" filter="url(#glow-ID)"/><path d="M126 157l61 13" stroke="${palette.gold}" stroke-width="10" stroke-linecap="round"/><path d="M143 178l-9 23 22-15z" fill="${palette.gold}"/></g>`;
+ else if(kind==='Deceit Blade')b=`<g class="a flicker" style="--d:1.6s"><path d="M177 186l-25-111 9-44 22 39 18 108z" fill="${palette.liarDark}" stroke="${palette.liar}" stroke-width="5" filter="url(#glow-ID)"/><path d="M132 162l68-14" stroke="${palette.liarHot}" stroke-width="9"/><path d="M178 184l12 19-24-12z" fill="${palette.liar}"/></g>`;
+ else if(kind==='Shield of Faith')b=`<g class="a guard" style="--d:1.5s"><path d="M160 27L252 60V112C252 157 213 187 160 199C107 187 68 157 68 112V60Z" fill="${palette.lamb}" opacity=".13" stroke="${palette.lamb}" stroke-width="5" filter="url(#glow-ID)"/><path d="M160 53v106M118 103h84" stroke="${palette.gold}" stroke-width="8" stroke-linecap="round"/></g>`;
+ else if(kind==='Mask of Lies')b=`<g class="a flicker" style="--d:2s"><path d="M76 56C116 19 203 17 244 56L224 158C195 196 125 196 96 158Z" fill="${palette.liarDark}" stroke="${palette.liar}" stroke-width="5"/><path d="M105 90l43 9-37 20zM211 90l-43 9 37 20z" fill="${palette.liarHot}" filter="url(#glow-ID)"/><path d="M120 148q40 28 80 0q-8 42-40 43-33-1-40-43z" fill="${palette.void}"/></g>`;
+ else if(kind==='Truth Seal')b=`<g class="a spin" style="--d:8s;transform-origin:160px 110px"><circle cx="160" cy="110" r="78" fill="${palette.lamb}" opacity=".06" stroke="${palette.lamb}" stroke-width="4" stroke-dasharray="14 9"/><path d="M160 43v134M105 79h110" stroke="${palette.gold}" stroke-width="7" stroke-linecap="round"/><circle cx="160" cy="110" r="55" fill="none" stroke="${palette.lambLight}" stroke-width="2"/></g>`;
+ else if(kind==='Liar Sigil')b=`<g class="a spinR" style="--d:7s;transform-origin:160px 110px"><circle cx="160" cy="110" r="81" fill="${palette.liar}" opacity=".05" stroke="${palette.liar}" stroke-width="4" stroke-dasharray="7 10"/><path d="M160 37l21 46 50 5-38 34 12 50-45-26-45 26 12-50-38-34 50-5z" fill="none" stroke="${palette.liarHot}" stroke-width="5" filter="url(#glow-ID)"/></g>`;
+ return replaceIDs(svgShell(b,'',label));
+}
+function fxAsset(kind){
+ let b='',label=kind;
+ if(kind==='Truth Beam')b=`<path d="M25 110h270" stroke="${palette.lamb}" stroke-width="28" opacity=".12" filter="url(#soft-ID)"/><path d="M25 110h270" stroke="${palette.white}" stroke-width="7" stroke-linecap="round" stroke-dasharray="24 13" class="a slash" style="--d:.8s" filter="url(#glow-ID)"/><path d="M270 89l27 21-27 21z" fill="${palette.lamb}" class="a pulse" style="--d:.65s"/>`;
+ else if(kind==='Deceit Wave')b=`<path d="M24 112C67 31 115 189 160 104S251 39 298 112" fill="none" stroke="${palette.liar}" stroke-width="24" opacity=".12" filter="url(#soft-ID)"/><path d="M24 112C67 31 115 189 160 104S251 39 298 112" fill="none" stroke="${palette.liarHot}" stroke-width="5" stroke-dasharray="18 12" class="a slash" style="--d:1s" filter="url(#glow-ID)"/>`;
+ else if(kind==='Holy Impact')b=`${Array.from({length:18},(_,i)=>{let a=i*Math.PI*2/18,l=i%3===0?92:65;return `<path d="M160 110L${160+Math.cos(a)*l} ${110+Math.sin(a)*l}" stroke="${i%3===0?palette.gold:palette.lamb}" stroke-width="${i%3===0?6:3}" class="a pulse" style="--d:${.55+i*.025}s" filter="url(#glow-ID)"/>`}).join('')}<circle cx="160" cy="110" r="25" fill="${palette.white}" class="a pulse" style="--d:.5s" filter="url(#glow-ID)"/>`;
+ else if(kind==='Corrupt Impact')b=`${Array.from({length:16},(_,i)=>{let a=i*Math.PI*2/16,l=i%3===0?96:68;return `<path d="M160 110Q${160+Math.cos(a+.45)*l*.55} ${110+Math.sin(a+.45)*l*.55} ${160+Math.cos(a)*l} ${110+Math.sin(a)*l}" fill="none" stroke="${i%3===0?palette.purple:palette.liar}" stroke-width="${i%3===0?6:3}" class="a pulse" style="--d:${.55+i*.03}s" filter="url(#glow-ID)"/>`}).join('')}<circle cx="160" cy="110" r="26" fill="${palette.liarHot}" class="a flicker" style="--d:.55s" filter="url(#glow-ID)"/>`;
+ else if(kind==='Block Spark')b=`<path d="M160 18l14 64 61-27-42 51 59 25-65 1 18 62-45-48-45 48 18-62-65-1 59-25-42-51 61 27z" fill="${palette.white}" opacity=".8" class="a pulse" style="--d:.55s" filter="url(#glow-ID)"/><circle cx="160" cy="110" r="33" fill="${palette.gold}" opacity=".5"/>`;
+ else if(kind==='Counter Flash')b=`<circle cx="160" cy="110" r="26" fill="${palette.white}" class="a pulse" style="--d:.5s" filter="url(#glow-ID)"/>${Array.from({length:8},(_,i)=>{let a=i*Math.PI/4;return `<path d="M160 110L${160+Math.cos(a)*104} ${110+Math.sin(a)*104}" stroke="${i%2?palette.lamb:palette.gold}" stroke-width="6" stroke-dasharray="16 12" class="a slash" style="--d:.65s;animation-delay:${-i*.04}s"/>`}).join('')}`;
+ else if(kind==='Truth Shield')b=`<path d="M160 24L267 63V116C267 165 222 195 160 207C98 195 53 165 53 116V63Z" fill="${palette.lamb}" opacity=".11" stroke="${palette.lamb}" stroke-width="5" class="a guard" style="--d:1.4s" filter="url(#glow-ID)"/><path d="M160 49v116M113 104h94" stroke="${palette.white}" stroke-width="6" stroke-linecap="round"/>`;
+ else if(kind==='Lie Smoke')b=`${Array.from({length:18},(_,i)=>`<circle cx="${R(90,230).toFixed(1)}" cy="${R(65,170).toFixed(1)}" r="${R(13,35).toFixed(1)}" fill="${i%4===0?palette.liar:palette.smoke}" opacity="${R(.08,.25).toFixed(2)}" filter="url(#soft-ID)" class="a drift" style="--d:${R(1.6,4).toFixed(2)}s;animation-delay:${R(-4,0).toFixed(2)}s"/>`).join('')}<path d="M138 137q22-20 44 0q-10 31-22 46q-13-15-22-46z" fill="${palette.liar}" opacity=".35" class="a flicker" style="--d:1.2s"/>`;
+ else if(kind==='Armor Break')b=`<path d="M160 24L250 61V115C250 158 212 184 160 197C108 184 70 158 70 115V61Z" fill="none" stroke="${palette.smoke}" stroke-width="7"/><path d="M161 28l-19 57 27 17-35 43 22 48M245 64l-55 41 22 27-49 24M73 64l48 38-20 29 52 20" fill="none" stroke="${palette.liarHot}" stroke-width="5" class="a flicker" style="--d:.8s" filter="url(#glow-ID)"/>`;
+ else if(kind==='Healing Aura')b=`${Array.from({length:4},(_,i)=>`<circle cx="160" cy="112" r="${34+i*21}" fill="none" stroke="${i%2?palette.gold:palette.lamb}" stroke-width="4" opacity="${.8-i*.13}" class="a pulse" style="--d:${1+i*.25}s;animation-delay:${-i*.2}s"/>`).join('')}<path d="M160 64v95M125 111h70" stroke="${palette.white}" stroke-width="9" stroke-linecap="round" filter="url(#glow-ID)"/>`;
+ else if(kind==='Poison Aura')b=`${Array.from({length:20},(_,i)=>`<circle cx="${R(85,235).toFixed(1)}" cy="${R(50,180).toFixed(1)}" r="${R(2,7).toFixed(1)}" fill="${i%3===0?palette.liar:palette.purple}" class="a drift" style="--d:${R(.8,2.4).toFixed(2)}s;animation-delay:${R(-3,0).toFixed(2)}s" filter="url(#glow-ID)"/>`).join('')}<path d="M160 55C113 55 91 93 101 133C111 172 139 188 160 188C181 188 209 172 219 133C229 93 207 55 160 55Z" fill="${palette.purple}" opacity=".1" class="a pulse" style="--d:1.5s"/>`;
+ else if(kind==='Stun Stars')b=`<g class="a spin" style="--d:2.1s;transform-origin:160px 110px">${Array.from({length:6},(_,i)=>{let a=i*Math.PI/3,x=160+Math.cos(a)*75,y=110+Math.sin(a)*45;return `<path d="M${x} ${y-10}l3 7 8 1-6 5 2 8-7-4-7 4 2-8-6-5 8-1z" fill="${i%2?palette.gold:palette.lamb}" filter="url(#glow-ID)"/>`}).join('')}</g><circle cx="160" cy="110" r="12" fill="${palette.white}" class="a blink" style="--d:.7s"/>`;
+ else if(kind==='Critical Hit')b=`<text x="160" y="123" text-anchor="middle" font-family="Impact,Arial Black,sans-serif" font-size="58" font-weight="900" fill="${palette.white}" stroke="${palette.liar}" stroke-width="4" paint-order="stroke" class="a shake" style="--d:.55s" filter="url(#glow-ID)">CRIT!</text>${Array.from({length:11},(_,i)=>{let a=i*Math.PI*2/11;return `<path d="M160 110L${160+Math.cos(a)*115} ${110+Math.sin(a)*90}" stroke="${i%2?palette.gold:palette.liar}" stroke-width="4" class="a pulse" style="--d:.65s"/>`}).join('')}`;
+ else if(kind==='Combo Ring')b=`<g class="a spin" style="--d:2.4s;transform-origin:160px 110px"><circle cx="160" cy="110" r="78" fill="none" stroke="${palette.gold}" stroke-width="7" stroke-dasharray="20 10" filter="url(#glow-ID)"/><circle cx="160" cy="110" r="58" fill="none" stroke="${palette.lamb}" stroke-width="3" stroke-dasharray="8 9"/></g><text x="160" y="123" text-anchor="middle" font-family="Impact,Arial Black,sans-serif" font-size="45" fill="${palette.white}" class="a pulse" style="--d:1s">12×</text>`;
+ else if(kind==='Perfect Dodge')b=`<g class="a dash" style="--d:.8s"><path d="M112 60C144 36 187 44 205 72C223 101 206 139 169 150C131 161 100 139 99 108C98 88 101 72 112 60Z" fill="none" stroke="${palette.lamb}" stroke-width="7" stroke-dasharray="19 11" filter="url(#glow-ID)"/></g><path d="M82 110h160" stroke="${palette.white}" stroke-width="4" stroke-dasharray="12 12" class="a slash" style="--d:.65s"/>`;
+ else if(kind==='Round Start')b=`<text x="160" y="92" text-anchor="middle" font-family="Impact,Arial Black,sans-serif" font-size="32" letter-spacing="6" fill="${palette.white}">CHOOSE</text><text x="160" y="139" text-anchor="middle" font-family="Impact,Arial Black,sans-serif" font-size="54" letter-spacing="4" fill="${palette.lamb}" stroke="${palette.liarDark}" stroke-width="3" paint-order="stroke" class="a pulse" style="--d:1.2s" filter="url(#glow-ID)">VICTORY</text>`;
+ else if(kind==='KO Emblem')b=`<path d="M160 21l15 35 38-12-17 35 33 20-37 8 5 39-32-23-27 29-2-40-39-1 29-26-23-32 38 9z" fill="${palette.liar}" opacity=".55" class="a pulse" style="--d:.8s" filter="url(#glow-ID)"/><text x="160" y="132" text-anchor="middle" font-family="Impact,Arial Black,sans-serif" font-size="82" fill="${palette.white}" stroke="${palette.void}" stroke-width="8" paint-order="stroke">K.O.</text>`;
+ else if(kind==='Truth Status')b=`<circle cx="160" cy="110" r="75" fill="${palette.lamb}" opacity=".1" stroke="${palette.lamb}" stroke-width="5" class="a pulse" style="--d:1.6s"/><path d="M160 45v130M116 91h88" stroke="${palette.gold}" stroke-width="10" stroke-linecap="round" filter="url(#glow-ID)"/><path d="M111 170q49 30 98 0" fill="none" stroke="${palette.lambLight}" stroke-width="4"/>`;
+ else if(kind==='Lie Status')b=`<circle cx="160" cy="110" r="75" fill="${palette.liar}" opacity=".1" stroke="${palette.liar}" stroke-width="5" class="a flicker" style="--d:1.5s"/><path d="M111 78l38 14-35 21M209 78l-38 14 35 21M116 158q44-29 88 0" fill="none" stroke="${palette.liarHot}" stroke-width="8" stroke-linecap="round" filter="url(#glow-ID)"/>`;
+ return replaceIDs(svgShell(b,'',label));
+}
+
+const assets=[
+ ...['Idle','Walk','Run','Jump','Crouch','Guard','Light Jab','Staff Strike','Headbutt','Radiant Burst','Dash','Charge','Heal / Prayer','Hurt','Knockout','Victory','Radiant Form'].map((n,i)=>({name:'Lamb · '+n,category:'Lamb Fighter',description:[
+  'Neutral breathing stance.','Looping locomotion pose.','Fast forward run pose.','Airborne fighting pose.','Low defensive stance.','Shielded blocking stance.','Quick close-range strike.','Long-range staff attack.','Forward horn charge attack.','Area-of-effect holy power.','Fast evasive movement.','Power-building animation.','Restorative prayer animation.','Damage reaction pose.','Defeated floor pose.','Match victory celebration.','Empowered transformation state.'
+ ][i],render:()=>fighterAsset('lamb',n)})),
+ ...['Idle','Walk','Run','Jump','Crouch','Guard','Claw Swipe','Tail Lash','False Blade','Deceit Burst','Dash','Charge','Clone Split','Hurt','Knockout','Victory','Deceiver Form'].map((n,i)=>({name:'Liar · '+n,category:'Liar Fighter',description:[
+  'Neutral predatory stance.','Looping locomotion pose.','Aggressive sprint pose.','Airborne attack-ready pose.','Low deceptive stance.','Dark blocking stance.','Three-line claw attack.','Sweeping rear tail attack.','Conjured blade attack.','Area corruption blast.','Fast shadow movement.','Corruption charge state.','Illusion clone technique.','Damage reaction pose.','Defeated floor pose.','Match victory celebration.','Empowered deception state.'
+ ][i],render:()=>fighterAsset('liar',n)})),
+ ...['Shepherd Staff','Truth Sword','Deceit Blade','Shield of Faith','Mask of Lies','Truth Seal','Liar Sigil'].map((n,i)=>({name:n,category:'Weapons & Relics',description:[
+  'Signature Lamb reach weapon.','Radiant melee weapon.','Corrupted Liar weapon.','Faith-based defensive relic.','Animated deceptive face relic.','Rotating truth power seal.','Rotating corruption sigil.'
+ ][i],render:()=>weaponAsset(n)})),
+ ...['Truth Beam','Deceit Wave','Holy Impact','Corrupt Impact','Block Spark','Counter Flash','Truth Shield','Lie Smoke','Armor Break','Healing Aura','Poison Aura','Stun Stars','Critical Hit','Combo Ring','Perfect Dodge','Round Start','KO Emblem','Truth Status','Lie Status'].map((n,i)=>({name:n,category:i<7?'Combat Effects':i<12?'Auras & Conditions':'Combat UI',description:[
+  'Straight radiant projectile beam.','Sinusoidal corruption projectile.','Explosive Lamb hit effect.','Explosive Liar hit effect.','Successful block contact flash.','Counterattack timing flash.','Large temporary force barrier.','Obscuring deception cloud.','Cracked defense status effect.','Regeneration field animation.','Damage-over-time aura.','Orbiting stun indicator.','High-damage hit callout.','Animated combo multiplier.','Evasive timing indicator.','Pre-fight announcement card.','Knockout announcement emblem.','Positive truth alignment status.','Negative deception status.'
+ ][i],render:()=>fxAsset(n)}))
+].map((a,i)=>({...a,id:i+1}));
+
+const grid=$('#grid'),empty=$('#empty'),count=$('#count'),drawer=$('#drawer'),toast=$('#toast');
+const categories=['All',...new Set(assets.map(a=>a.category))];
+$('#category').innerHTML=categories.map(c=>`<option>${esc(c)}</option>`).join('');
+
+function visibleAssets(){
+ const q=state.query.toLowerCase().trim();
+ return assets.filter(a=>(state.category==='All'||a.category===state.category)&&(!q||(`${a.name} ${a.category} ${a.description}`).toLowerCase().includes(q)));
+}
+function badgeClass(category){
+ if(category.includes('Lamb'))return'lamb';
+ if(category.includes('Liar'))return'liar';
+ return'fx';
+}
+function render(){
+ const list=visibleAssets();
+ grid.innerHTML=list.map(a=>`<article class="card" data-id="${a.id}">
+  <div class="preview ${state.bg==='dark'?'':state.bg}" title="Inspect ${esc(a.name)}">${a.render()}</div>
+  <div class="card-body">
+   <div class="card-head"><div><h3>${esc(a.name)}</h3><p>${esc(a.description)}</p></div><span class="badge ${badgeClass(a.category)}">${esc(a.category)}</span></div>
+   <div class="card-actions"><button data-action="inspect">Inspect</button><button data-action="copy">Copy SVG</button><button data-action="download">Export</button></div>
+  </div>
+ </article>`).join('');
+ count.textContent=`${list.length} assets shown · ${assets.length} included in Part I`;
+ empty.style.display=list.length?'none':'block';
+ if(state.paused)setAnimationState(false);
+}
+function getAsset(id){return assets.find(a=>a.id===Number(id))}
+function inspect(asset){
+ state.selected=asset;const svg=asset.render();
+ $('#drawerTitle').textContent=asset.name+' · '+asset.category;
+ $('#drawerPreview').innerHTML=svg;$('#drawerCode').textContent=svg;
+ drawer.classList.add('open');drawer.setAttribute('aria-hidden','false');
+}
+function closeDrawer(){drawer.classList.remove('open');drawer.setAttribute('aria-hidden','true')}
+function toastMsg(msg){toast.textContent=msg;toast.classList.add('show');clearTimeout(toastMsg.t);toastMsg.t=setTimeout(()=>toast.classList.remove('show'),1450)}
+async function copy(text,msg='Copied'){
+ try{await navigator.clipboard.writeText(text);toastMsg(msg)}
+ catch(e){const ta=document.createElement('textarea');ta.value=text;document.body.append(ta);ta.select();document.execCommand('copy');ta.remove();toastMsg(msg)}
+}
+function download(name,text,type='image/svg+xml'){
+ const url=URL.createObjectURL(new Blob([text],{type})),a=document.createElement('a');
+ a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)
+}
+function setAnimationState(run){
+ document.querySelectorAll('svg').forEach(s=>{try{run?s.unpauseAnimations():s.pauseAnimations()}catch(e){}});
+ document.querySelectorAll('.a').forEach(el=>el.style.animationPlayState=run?'running':'paused');
+}
+grid.addEventListener('click',e=>{
+ const card=e.target.closest('.card');if(!card)return;
+ const a=getAsset(card.dataset.id),action=e.target.closest('button')?.dataset.action;
+ if(action==='copy')copy(a.render(),a.name+' copied');
+ else if(action==='download')download(slug(a.name)+'.svg',a.render());
+ else inspect(a);
+});
+$('#search').addEventListener('input',e=>{state.query=e.target.value;render()});
+$('#category').addEventListener('change',e=>{state.category=e.target.value;render()});
+$('#speed').addEventListener('input',e=>{state.speed=Number(e.target.value);$('#speedValue').textContent=fmt(state.speed)+'×';render();if(state.selected)inspect(state.selected)});
+document.querySelector('.swatches').addEventListener('click',e=>{
+ const sw=e.target.closest('.swatch');if(!sw)return;
+ state.bg=sw.dataset.bg;document.querySelectorAll('.swatch').forEach(x=>x.classList.toggle('active',x===sw));render();
+});
+$('#pauseBtn').addEventListener('click',()=>{
+ state.paused=!state.paused;setAnimationState(!state.paused);
+ $('#pauseBtn').textContent=state.paused?'▶ Resume':'⏸ Pause';$('#pauseBtn').classList.toggle('active',state.paused);
+});
+$('#randomBtn').addEventListener('click',()=>{
+ state.speed=Number(R(.55,2.25).toFixed(2));$('#speed').value=state.speed;$('#speedValue').textContent=fmt(state.speed)+'×';
+ const cats=categories;state.category=cats[Math.floor(Math.random()*cats.length)];$('#category').value=state.category;
+ state.query='';$('#search').value='';render();toastMsg('Library view remixed');
+});
+$('#copyVisibleBtn').addEventListener('click',()=>{
+ const data=visibleAssets().map(a=>({name:a.name,category:a.category,description:a.description,svg:a.render()}));
+ copy(JSON.stringify(data,null,2),'Visible asset set copied');
+});
+$('#closeDrawer').addEventListener('click',closeDrawer);
+$('#copySvg').addEventListener('click',()=>state.selected&&copy(state.selected.render(),state.selected.name+' copied'));
+$('#downloadSvg').addEventListener('click',()=>state.selected&&download(slug(state.selected.name)+'.svg',state.selected.render()));
+$('#copyPreset').addEventListener('click',()=>state.selected&&copy(JSON.stringify({name:state.selected.name,category:state.selected.category,description:state.selected.description},null,2),'Preset copied'));
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeDrawer();if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='k'){e.preventDefault();$('#search').focus()}});
+render();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,1292 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="cyber">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CodeForge 2040 — Mobile-Optimized Quantum AI Generator v5.5</title>
+  <meta name="description" content="The most advanced AI codebase generator optimized for desktop & mobile. Multi-model orchestration, touch gesture navigation, QR code mobile share, and standalone bundling." />
+  <meta name="color-scheme" content="dark light" />
+  <meta name="theme-color" content="#050510" media="(prefers-color-scheme: dark)" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    /* ================================================================
+       RESET & ROOT DESIGN TOKENS — Mobile Ergonomics & Touch Tokens
+       ================================================================ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+    :root {
+      --bg:          #050510;
+      --bg2:         #0a0a1e;
+      --bg3:         #10102a;
+      --bg4:         #161638;
+      --surface:     rgba(255,255,255,0.03);
+      --surface-h:   rgba(255,255,255,0.06);
+      --surface-a:   rgba(255,255,255,0.09);
+      --border:      rgba(255,255,255,0.06);
+      --border-h:    rgba(255,255,255,0.14);
+      --border-a:    rgba(255,255,255,0.22);
+      --text:        #eaeaf8;
+      --text-muted:  #7878a8;
+      --text-dim:    #4a4a70;
+
+      --cyan:        #22d3ee;
+      --violet:      #a78bfa;
+      --indigo:      #818cf8;
+      --purple:      #c084fc;
+      --green:       #34d399;
+      --emerald:     #10b981;
+      --amber:       #fbbf24;
+      --red:         #f87171;
+      --rose:        #fb7185;
+      --blue:        #60a5fa;
+      --pink:        #f472b6;
+      --teal:        #2dd4bf;
+      --elec-color:  #22d3ee;
+
+      --grad-1:      linear-gradient(135deg, #6366f1, #a78bfa, #c084fc);
+      --grad-2:      linear-gradient(135deg, #22d3ee, #6366f1);
+      --grad-3:      linear-gradient(135deg, #f472b6, #a78bfa);
+      --grad-ok:     linear-gradient(135deg, #059669, #34d399);
+      --grad-warn:   linear-gradient(135deg, #d97706, #fbbf24);
+      --grad-hero:   linear-gradient(135deg, #6366f1 0%, #a78bfa 25%, #22d3ee 50%, #34d399 75%, #fbbf24 100%);
+      --grad-border: linear-gradient(135deg, rgba(99,102,241,0.4), rgba(167,139,250,0.4), rgba(34,211,238,0.4));
+
+      --glow-v:      0 0 40px rgba(99,102,241,0.25), 0 0 80px rgba(99,102,241,0.12);
+      --glow-c:      0 0 40px rgba(34,211,238,0.25), 0 0 80px rgba(34,211,238,0.12);
+
+      --radius:      14px;
+      --radius-sm:   8px;
+      --radius-md:   12px;
+      --radius-lg:   20px;
+      --radius-xl:   28px;
+
+      --font:        'Inter', 'Outfit', system-ui, sans-serif;
+      --font-display:'Outfit', 'Inter', sans-serif;
+      --mono:        'JetBrains Mono', 'Fira Code', monospace;
+
+      --ease:        cubic-bezier(0.4, 0, 0.2, 1);
+      --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+      --dur:         0.3s;
+
+      --z-particles: 0;
+      --z-content:   1;
+      --z-header:    10;
+      --z-dock:      40;
+      --z-panel:     50;
+      --z-modal:     100;
+      --z-toast:     200;
+    }
+
+    html[data-theme="violet"] {
+      --bg:#0b0714; --bg2:#120b22; --bg3:#1a1030; --bg4:#241642;
+      --text:#f5eeff; --text-muted:#9b8aab; --cyan:#c27eff; --violet:#55dcff; --elec-color:#c27eff;
+    }
+    html[data-theme="emerald"] {
+      --bg:#040d0a; --bg2:#071711; --bg3:#0e241b; --bg4:#143326;
+      --text:#eafff5; --text-muted:#7faba0; --cyan:#2ef296; --violet:#60c2ff; --elec-color:#2ef296;
+    }
+    html[data-theme="solar"] {
+      --bg:#121008; --bg2:#1c180c; --bg3:#292312; --bg4:#383018;
+      --text:#fffbe9; --text-muted:#b8ac8c; --cyan:#ffba3b; --violet:#ff6d82; --elec-color:#ffba3b;
+    }
+    html[data-theme="oled"] {
+      --bg:#000000; --bg2:#070707; --bg3:#121212; --bg4:#1c1c1c;
+      --text:#ffffff; --text-muted:#888888; --cyan:#ffffff; --violet:#a0a0a0; --elec-color:#ffffff;
+    }
+
+    html { height: 100%; scroll-behavior: smooth; }
+    body {
+      min-height: 100vh; background: var(--bg); color: var(--text); font-family: var(--font);
+      font-size: 15px; line-height: 1.6; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden; touch-action: manipulation; transition: background-color 0.4s ease, color 0.4s ease;
+    }
+
+    #particle-canvas, #electric-canvas { position: fixed; inset: 0; z-index: var(--z-particles); pointer-events: none; }
+    #electric-canvas { z-index: 2; opacity: 0.85; }
+
+    body::after {
+      content: ''; position: fixed; inset: 0;
+      background:
+        radial-gradient(ellipse 100% 60% at 50% -20%, rgba(99,102,241,0.18) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 40% at 85% 15%, rgba(34,211,238,0.12) 0%, transparent 50%),
+        radial-gradient(ellipse 50% 30% at 15% 85%, rgba(167,139,250,0.09) 0%, transparent 50%);
+      pointer-events: none; z-index: var(--z-particles); animation: auroraShift 12s ease-in-out infinite alternate;
+    }
+    @keyframes auroraShift { 0% { opacity: 0.8; } 50% { opacity: 1; } 100% { opacity: 0.75; } }
+
+    #root { position: relative; z-index: var(--z-content); min-height: 100vh; display: flex; flex-direction: column; align-items: center; padding: 0 1rem 7rem; }
+
+    /* HEADER */
+    header {
+      width: 100%; max-width: 900px; display: flex; align-items: center; justify-content: space-between;
+      padding: 1rem 0 1.25rem; gap: 0.75rem; flex-wrap: wrap; position: relative; z-index: var(--z-header);
+    }
+    .logo { display: flex; align-items: center; gap: 0.6rem; text-decoration: none; cursor: default; }
+    .logo-icon {
+      width: 44px; height: 44px; background: var(--grad-1); border-radius: 12px; display: grid; place-items: center;
+      font-size: 22px; box-shadow: var(--glow-v); flex-shrink: 0; position: relative; overflow: hidden; animation: logoFloat 3s ease-in-out infinite;
+    }
+    @keyframes logoFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
+
+    .logo-text {
+      font-family: var(--font-display); font-size: 1.45rem; font-weight: 900; background: var(--grad-hero);
+      background-size: 200% 200%; -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+      letter-spacing: -0.03em; animation: gradientFlow 4s ease infinite;
+    }
+    @keyframes gradientFlow { 0%, 100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
+
+    .logo-sub { font-size: 0.62rem; color: var(--text-dim); font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; -webkit-text-fill-color: var(--text-dim); }
+    .logo-version { font-size: 0.55rem; padding: 0.15rem 0.55rem; border-radius: 99px; background: rgba(99,102,241,0.15); color: var(--indigo); border: 1px solid rgba(99,102,241,0.25); font-weight: 700; letter-spacing: 0.08em; -webkit-text-fill-color: var(--indigo); margin-left: 0.4rem; }
+
+    .header-controls { display: flex; align-items: center; gap: 0.4rem; flex-wrap: wrap; }
+
+    /* NAV TABS */
+    .nav-tabs {
+      width: 100%; max-width: 900px; display: flex; gap: 0.25rem; margin-bottom: 1.25rem; padding: 0.3rem;
+      background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg);
+      -webkit-backdrop-filter: blur(20px); backdrop-filter: blur(20px); overflow-x: auto;
+    }
+    .nav-tab {
+      flex: 1; min-height: 44px; display: flex; align-items: center; justify-content: center; gap: 0.4rem; padding: 0.5rem 0.8rem;
+      border-radius: var(--radius); border: none; background: transparent; color: var(--text-muted);
+      font-family: var(--font); font-size: 0.82rem; font-weight: 600; cursor: pointer; transition: all var(--dur) var(--ease);
+      white-space: nowrap; -webkit-user-select: none; user-select: none; touch-action: manipulation;
+    }
+    .nav-tab:hover { color: var(--text); background: var(--surface-h); }
+    .nav-tab.active { color: #fff; background: var(--grad-1); box-shadow: 0 0 24px rgba(99,102,241,0.35); }
+
+    /* CARD CONTAINERS & TOUCH BUTTONS */
+    .card, .tilt-card {
+      width: 100%; max-width: 900px; background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius-xl); -webkit-backdrop-filter: blur(30px); backdrop-filter: blur(30px);
+      padding: 1.75rem; box-shadow: 0 4px 40px rgba(0,0,0,0.5); transition: border-color var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
+      position: relative; overflow: hidden;
+    }
+    .card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: var(--grad-border); opacity: 0.6; }
+
+    .btn {
+      min-height: 44px; display: inline-flex; align-items: center; justify-content: center; gap: 0.45rem; padding: 0.55rem 1.1rem; border-radius: var(--radius-sm);
+      border: 1px solid var(--border); background: var(--surface); color: var(--text); font-family: var(--font);
+      font-size: 0.84rem; font-weight: 600; cursor: pointer; transition: all 0.2s var(--ease); white-space: nowrap;
+      touch-action: manipulation; -webkit-user-select: none; user-select: none;
+    }
+    .btn:hover:not(:disabled) { background: var(--surface-h); border-color: var(--border-h); transform: translateY(-1px); }
+    .btn:active:not(:disabled) { transform: scale(0.97); }
+    .btn:disabled { opacity: 0.35; cursor: not-allowed; }
+
+    .btn-primary { background: var(--grad-1); border-color: transparent; color: #fff; font-weight: 700; box-shadow: 0 0 24px rgba(99,102,241,0.3); }
+    .btn-success { background: var(--grad-ok); border-color: transparent; color: #fff; font-weight: 700; font-size: 0.92rem; padding: 0.75rem 2rem; box-shadow: 0 0 24px rgba(52,211,153,0.3); border-radius: var(--radius); }
+    .btn-danger { border-color: rgba(248,113,113,0.2); color: var(--red); }
+    .btn-sm { min-height: 36px; padding: 0.35rem 0.75rem; font-size: 0.76rem; border-radius: 6px; }
+
+    select {
+      min-height: 44px; -webkit-appearance: none; appearance: none; background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius-sm); color: var(--text); font-family: var(--font); font-size: 0.84rem;
+      padding: 0.45rem 2.2rem 0.45rem 0.8rem; cursor: pointer; touch-action: manipulation;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%237878a8' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right 0.6rem center;
+    }
+    option { background: var(--bg3); color: var(--text); }
+
+    input[type="text"], input[type="password"], textarea {
+      width: 100%; min-height: 44px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm);
+      color: var(--text); font-family: var(--font); font-size: 0.88rem; padding: 0.65rem 1rem; outline: none;
+    }
+    textarea { resize: vertical; min-height: 90px; font-size: 0.85rem; line-height: 1.6; }
+
+    .chip-cloud { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.6rem; }
+    .chip-btn {
+      min-height: 32px; padding: 0.25rem 0.65rem; border-radius: 99px; font-size: 0.72rem; font-weight: 600;
+      background: rgba(99,102,241,0.12); border: 1px solid rgba(99,102,241,0.25); color: var(--indigo); cursor: pointer; transition: 0.15s; touch-action: manipulation;
+    }
+
+    .progress-wrap { margin-bottom: 1.5rem; }
+    .progress-meta { display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.4rem; font-weight: 600; }
+    .progress-track { height: 4px; background: var(--surface-h); border-radius: 99px; overflow: hidden; position: relative; }
+    .progress-fill { height: 100%; background: var(--grad-hero); background-size: 200% 200%; border-radius: 99px; transition: width 0.6s var(--ease-spring); animation: gradientFlow 3s ease infinite; }
+
+    .step-header { display: flex; align-items: flex-start; gap: 0.85rem; margin-bottom: 1.5rem; }
+    .step-num { width: 42px; height: 42px; border-radius: 50%; background: var(--grad-1); display: grid; place-items: center; font-size: 0.85rem; font-weight: 800; flex-shrink: 0; box-shadow: var(--glow-v); }
+    .step-question { font-family: var(--font-display); font-size: 1.2rem; font-weight: 800; line-height: 1.35; letter-spacing: -0.02em; }
+    .step-hint { font-size: 0.78rem; color: var(--text-muted); margin-top: 0.2rem; }
+
+    .options-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 0.6rem; margin-bottom: 1.25rem; }
+    .option-item {
+      min-height: 52px; display: flex; align-items: center; gap: 0.7rem; padding: 0.75rem 1rem; border-radius: var(--radius);
+      border: 1px solid var(--border); background: var(--surface); cursor: pointer; transition: all 0.2s var(--ease);
+      -webkit-user-select: none; user-select: none; touch-action: manipulation; position: relative; overflow: hidden;
+    }
+    .option-item.selected { border-color: rgba(99,102,241,0.6); background: rgba(99,102,241,0.08); }
+    .option-check { width: 22px; height: 22px; border-radius: 6px; border: 2px solid var(--border-h); display: grid; place-items: center; flex-shrink: 0; }
+    .option-item.selected .option-check { background: var(--grad-1); border-color: transparent; }
+    .option-check svg { display: none; }
+    .option-item.selected .option-check svg { display: block; }
+    .option-label { font-size: 0.85rem; font-weight: 600; }
+
+    .action-bar { width: 100%; max-width: 900px; display: flex; align-items: center; justify-content: space-between; margin-top: 1.25rem; gap: 0.75rem; }
+    .action-right { display: flex; gap: 0.6rem; align-items: center; }
+
+    /* MOBILE QUICK DOCK */
+    .mobile-dock {
+      display: none; position: fixed; bottom: 0; left: 0; right: 0; z-index: var(--z-dock);
+      background: rgba(10,10,30,0.92); border-top: 1px solid var(--border-h);
+      -webkit-backdrop-filter: blur(20px); backdrop-filter: blur(20px);
+      padding: 0.5rem 1rem; justify-content: space-around; align-items: center; box-shadow: 0 -10px 40px rgba(0,0,0,0.6);
+    }
+    .dock-item {
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.2rem; background: transparent; border: none;
+      color: var(--text-muted); font-size: 0.68rem; font-weight: 600; cursor: pointer; min-height: 48px; min-width: 54px; touch-action: manipulation;
+    }
+    .dock-item.active { color: var(--cyan); }
+    .dock-icon { font-size: 1.25rem; }
+
+    .overlay { width: 100%; max-width: 900px; }
+    .overlay-inner { text-align: center; padding: 3rem 1.5rem; }
+    .build-spinner { width: 64px; height: 64px; border-radius: 50%; border: 3px solid var(--surface-h); border-top-color: #6366f1; border-right-color: #a78bfa; animation: spin 0.8s linear infinite; margin: 0 auto 1.5rem; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .build-title { font-family: var(--font-display); font-size: 1.4rem; font-weight: 800; margin-bottom: 0.4rem; background: var(--grad-hero); background-size: 200% 200%; -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; animation: gradientFlow 3s ease infinite; }
+    .build-log { margin-top: 1.25rem; background: var(--bg3); border: 1px solid var(--border); border-radius: var(--radius); padding: 0.85rem 1rem; font-family: var(--mono); font-size: 0.74rem; color: var(--green); text-align: left; max-height: 160px; overflow-y: auto; line-height: 1.8; }
+
+    .done-icon { width: 76px; height: 76px; border-radius: 50%; background: var(--grad-ok); display: grid; place-items: center; margin: 0 auto 1.25rem; font-size: 2.3rem; box-shadow: 0 0 40px rgba(52,211,153,0.4); }
+    .done-title { font-family: var(--font-display); font-size: 1.4rem; font-weight: 800; margin-bottom: 0.4rem; }
+
+    .code-theater { margin-top: 1.25rem; border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; background: var(--bg3); }
+    .code-theater-header { display: flex; align-items: center; padding: 0.5rem 0.85rem; background: var(--surface); border-bottom: 1px solid var(--border); gap: 0.5rem; overflow-x: auto; }
+    .code-editor-area { width: 100%; height: 350px; background: transparent; color: var(--text); font-family: var(--mono); font-size: 0.8rem; line-height: 1.6; border: 0; outline: 0; padding: 0.85rem; resize: none; }
+    .file-tree { width: 180px; border-right: 1px solid var(--border); padding: 0.65rem; max-height: 380px; overflow-y: auto; flex-shrink: 0; }
+    .file-tree-item { min-height: 36px; display: flex; align-items: center; padding: 0.3rem 0.5rem; border-radius: 4px; font-family: var(--mono); font-size: 0.72rem; color: var(--text-muted); cursor: pointer; transition: all 0.15s; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; touch-action: manipulation; }
+    .file-tree-item.active { background: rgba(99,102,241,0.15); color: var(--indigo); font-weight: bold; }
+    .code-theater-body { display: flex; }
+
+    .sandbox-toolbar { display: flex; align-items: center; justify-content: space-between; padding: 0.4rem 0.8rem; background: var(--surface-h); border-bottom: 1px solid var(--border); font-size: 0.75rem; gap: 0.4rem; overflow-x: auto; }
+    .device-viewport-stage { display: flex; justify-content: center; align-items: center; background: #070714; padding: 0.75rem; overflow: auto; min-height: 350px; }
+    .live-preview-box { transition: width 0.3s var(--ease-spring); border: 1px solid var(--border-h); background: #ffffff; border-radius: 8px; box-shadow: 0 10px 40px rgba(0,0,0,0.6); }
+
+    .sandbox-console-feed { background: var(--bg); border-top: 1px solid var(--border); max-height: 110px; overflow-y: auto; padding: 0.4rem 0.6rem; font-family: var(--mono); font-size: 0.7rem; color: var(--cyan); line-height: 1.5; }
+    .console-entry { display: flex; gap: 0.4rem; border-bottom: 1px dashed rgba(255,255,255,0.05); padding: 0.12rem 0; }
+    .console-entry.error { color: var(--red); }
+    .console-entry.warn { color: var(--amber); }
+
+    .archetype-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 0.65rem; max-height: 320px; overflow-y: auto; padding: 0.2rem; }
+    .archetype-card { min-height: 60px; padding: 0.8rem; border-radius: var(--radius); border: 1px solid var(--border); background: var(--surface); cursor: pointer; transition: 0.2s; touch-action: manipulation; }
+
+    .template-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 0.85rem; padding: 0.4rem 0; }
+    .template-card { padding: 1.1rem; border-radius: var(--radius-lg); border: 1px solid var(--border); background: var(--surface); cursor: pointer; transition: all 0.25s var(--ease); touch-action: manipulation; }
+    .template-icon { font-size: 1.8rem; margin-bottom: 0.5rem; }
+    .template-name { font-family: var(--font-display); font-weight: 700; font-size: 0.95rem; margin-bottom: 0.25rem; }
+    .template-desc { font-size: 0.76rem; color: var(--text-muted); line-height: 1.4; margin-bottom: 0.6rem; }
+    .template-tags { display: flex; gap: 0.3rem; flex-wrap: wrap; }
+    .template-tag { padding: 0.12rem 0.45rem; border-radius: 99px; font-size: 0.62rem; font-weight: 600; background: var(--surface-h); color: var(--text-muted); border: 1px solid var(--border); }
+
+    .history-list { display: flex; flex-direction: column; gap: 0.65rem; }
+    .history-item { padding: 0.85rem 1rem; border-radius: var(--radius); border: 1px solid var(--border); background: var(--surface); display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; flex-wrap: wrap; }
+
+    .modal-backdrop { position: fixed; inset: 0; background: rgba(5,5,16,0.85); -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px); z-index: var(--z-modal); display: flex; align-items: center; justify-content: center; padding: 1rem; }
+    .modal { background: var(--bg2); border: 1px solid var(--border-h); border-radius: var(--radius-xl); padding: 1.5rem; width: 100%; max-width: 540px; box-shadow: 0 24px 80px rgba(0,0,0,0.6); max-height: 90vh; overflow-y: auto; }
+    .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem; }
+    .modal-title { font-family: var(--font-display); font-size: 1.05rem; font-weight: 800; display: flex; align-items: center; gap: 0.4rem; }
+    .modal-close { min-height: 36px; min-width: 36px; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; color: var(--text-muted); cursor: pointer; font-size: 1rem; display: grid; place-items: center; }
+
+    .form-group { margin-bottom: 1rem; }
+    .form-label { font-size: 0.76rem; color: var(--text-muted); font-weight: 600; display: block; margin-bottom: 0.35rem; }
+
+    .badge { display: inline-flex; align-items: center; gap: 0.25rem; padding: 0.2rem 0.55rem; border-radius: 99px; font-size: 0.66rem; font-weight: 700; }
+    .badge-info { background: rgba(34,211,238,0.1); color: var(--cyan); border: 1px solid rgba(34,211,238,0.2); }
+    .badge-ok { background: rgba(52,211,153,0.1); color: var(--green); border: 1px solid rgba(52,211,153,0.2); }
+    .badge-model { background: rgba(129,140,248,0.1); color: var(--indigo); border: 1px solid rgba(129,140,248,0.2); }
+
+    .stats-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 0.75rem; }
+    .stat-card { padding: 1rem; border-radius: var(--radius); border: 1px solid var(--border); background: var(--surface); text-align: center; }
+    .stat-value { font-family: var(--font-display); font-size: 1.6rem; font-weight: 900; background: var(--grad-1); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+    .stat-label { font-size: 0.7rem; color: var(--text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; margin-top: 0.2rem; }
+
+    .toggle-row { display: flex; align-items: center; justify-content: space-between; padding: 0.65rem 0; border-bottom: 1px solid var(--border); }
+    .toggle-switch { width: 44px; height: 26px; border-radius: 99px; background: var(--surface-h); border: 1px solid var(--border-h); cursor: pointer; position: relative; transition: all 0.2s; flex-shrink: 0; touch-action: manipulation; }
+    .toggle-switch.active { background: var(--grad-1); border-color: transparent; }
+    .toggle-switch::after { content: ''; position: absolute; top: 2px; left: 2px; width: 20px; height: 20px; border-radius: 50%; background: #fff; transition: transform 0.2s var(--ease-spring); }
+    .toggle-switch.active::after { transform: translateX(18px); }
+
+    #confetti-canvas { position: fixed; inset: 0; z-index: 999; pointer-events: none; }
+    ::-webkit-scrollbar { width: 4px; height: 4px; }
+    ::-webkit-scrollbar-thumb { background: var(--border-h); border-radius: 99px; }
+
+    /* MOBILE RESPONSIVE MEDIA QUERIES (<768px) */
+    @media (max-width: 768px) {
+      #root { padding-bottom: 6.5rem; }
+      header { justify-content: center; text-align: center; gap: 0.5rem; }
+      .header-controls { justify-content: center; width: 100%; }
+      .card { padding: 1.2rem; border-radius: var(--radius-lg); }
+      .options-grid { grid-template-columns: 1fr; }
+      .nav-tabs { display: none; }
+      .mobile-dock { display: flex; }
+      .template-grid { grid-template-columns: 1fr; }
+      .code-theater-body { flex-direction: column; }
+      .file-tree { width: 100%; max-height: 120px; display: flex; gap: 0.35rem; border-right: none; border-bottom: 1px solid var(--border); padding: 0.4rem; overflow-x: auto; }
+      .file-tree-item { flex-shrink: 0; min-height: 34px; padding: 0.25rem 0.6rem; }
+      .action-bar { display: none; }
+    }
+  </style>
+</head>
+<body>
+<canvas id="particle-canvas"></canvas>
+<canvas id="electric-canvas"></canvas>
+<canvas id="confetti-canvas"></canvas>
+
+<div id="root">
+  <header>
+    <div class="logo">
+      <div class="logo-icon">&#x26A1;</div>
+      <div>
+        <div class="logo-text">CodeForge <span class="logo-version">v5.5</span></div>
+        <div class="logo-sub">Mobile Quantum Generator</div>
+      </div>
+    </div>
+    <div class="header-controls" id="header-controls"></div>
+  </header>
+  <div id="nav"></div>
+  <div id="app"></div>
+</div>
+
+<div class="mobile-dock" id="mobile-dock">
+  <button class="dock-item active" data-tab="forge" aria-label="Forge"><span class="dock-icon">⚡</span><span>Forge</span></button>
+  <button class="dock-item" id="dock-prev" aria-label="Previous Step"><span class="dock-icon">←</span><span>Back</span></button>
+  <button class="dock-item" id="dock-next" aria-label="Next Step"><span class="dock-icon">→</span><span>Next</span></button>
+  <button class="dock-item" id="dock-lab" aria-label="Prompt Lab"><span class="dock-icon">🧪</span><span>Lab</span></button>
+  <button class="dock-item" id="dock-qr" aria-label="QR Share"><span class="dock-icon">📱</span><span>QR</span></button>
+</div>
+
+<script>
+(() => {
+'use strict';
+
+/* ================================================================
+   1. ELECTRICITY / LIGHTNING ENGINE
+   ================================================================ */
+const electricCanvas = document.getElementById('electric-canvas');
+const elecCtx = electricCanvas.getContext('2d');
+let electricEnabled = true;
+let elecW, elecH;
+
+function resizeElec(){ elecW = electricCanvas.width = window.innerWidth; elecH = electricCanvas.height = window.innerHeight; }
+window.addEventListener('resize', resizeElec); resizeElec();
+
+function lightningPath(x1,y1,x2,y2,roughness=0.5,depth=0){
+  if(depth > 5) return [[x1,y1],[x2,y2]];
+  const mx=(x1+x2)/2, my=(y1+y2)/2;
+  const dx=x2-x1, dy=y2-y1, len=Math.sqrt(dx*dx+dy*dy);
+  const offset=(Math.random()-0.5)*len*roughness;
+  const px=-dy/len*offset, py=dx/len*offset;
+  const mid=[mx+px, my+py];
+  return [...lightningPath(x1,y1,mid[0],mid[1],roughness*.65,depth+1), ...lightningPath(mid[0],mid[1],x2,y2,roughness*.65,depth+1)];
+}
+
+function drawLightning(x1,y1,x2,y2,color='rgba(34,211,238,',alpha=0.8,width=1.5){
+  const pts = lightningPath(x1,y1,x2,y2,0.6);
+  elecCtx.beginPath(); elecCtx.moveTo(pts[0][0],pts[0][1]);
+  for(let i=1;i<pts.length;i++) elecCtx.lineTo(pts[i][0],pts[i][1]);
+  elecCtx.strokeStyle = color+alpha+')'; elecCtx.lineWidth = width; elecCtx.shadowColor = color+'1)'; elecCtx.shadowBlur = 12; elecCtx.stroke(); elecCtx.shadowBlur = 0;
+}
+
+let elecBolts = [];
+function spawnElecBolt(){
+  const startX = Math.random()*elecW, startY = Math.random()*elecH*0.3;
+  const endX = startX + (Math.random()-0.5)*350, endY = startY + Math.random()*elecH*0.6;
+  const colors = ['rgba(34,211,238,','rgba(167,139,250,','rgba(52,211,153,','rgba(251,191,36,'];
+  elecBolts.push({x1:startX,y1:startY,x2:endX,y2:endY,color:colors[Math.floor(Math.random()*colors.length)],life:0,maxLife:Math.random()*16+8,alpha:Math.random()*0.6+0.3,width:Math.random()*1.5+0.5});
+}
+
+function animateElectricity(){
+  if(!electricEnabled){ elecCtx.clearRect(0,0,elecW,elecH); requestAnimationFrame(animateElectricity); return; }
+  elecCtx.clearRect(0,0,elecW,elecH);
+  if(Math.random()<0.06) spawnElecBolt();
+  elecBolts = elecBolts.filter(b=>{
+    const t=b.life/b.maxLife; const a=b.alpha*(1-t)*Math.max(0.1,Math.sin(t*Math.PI));
+    drawLightning(b.x1,b.y1,b.x2,b.y2,b.color,a,b.width); b.life++; return b.life<b.maxLife;
+  });
+  requestAnimationFrame(animateElectricity);
+}
+animateElectricity();
+
+/* ================================================================
+   2. WEB AUDIO SYNTHESIZER & TOUCH GESTURE ENGINE
+   ================================================================ */
+let audioMuted = true, audioCtx = null;
+function playSound(type='click'){
+  if(audioMuted) return;
+  try{
+    if(!audioCtx) audioCtx = new(window.AudioContext||window.webkitAudioContext)();
+    const osc = audioCtx.createOscillator(), gain = audioCtx.createGain();
+    osc.connect(gain); gain.connect(audioCtx.destination);
+    if(type==='click'){
+      osc.type='triangle'; osc.frequency.setValueAtTime(220+Math.random()*40,audioCtx.currentTime);
+      gain.gain.setValueAtTime(0.04,audioCtx.currentTime); gain.gain.exponentialRampToValueAtTime(0.001,audioCtx.currentTime+0.04);
+      osc.start(); osc.stop(audioCtx.currentTime+0.04);
+    } else if(type==='success'){
+      osc.type='sine'; osc.frequency.setValueAtTime(520,audioCtx.currentTime);
+      osc.frequency.exponentialRampToValueAtTime(880,audioCtx.currentTime+0.18);
+      gain.gain.setValueAtTime(0.06,audioCtx.currentTime); gain.gain.exponentialRampToValueAtTime(0.001,audioCtx.currentTime+0.2);
+      osc.start(); osc.stop(audioCtx.currentTime+0.2);
+    }
+  }catch(e){}
+}
+
+/* TOUCH SWIPE GESTURE CONTROLLER FOR MOBILE */
+let touchStartX = 0, touchStartY = 0;
+document.addEventListener('touchstart', e => {
+  touchStartX = e.changedTouches[0].screenX; touchStartY = e.changedTouches[0].screenY;
+}, { passive: true });
+
+document.addEventListener('touchend', e => {
+  if (['TEXTAREA', 'INPUT', 'SELECT', 'IFRAME'].includes(e.target.tagName)) return;
+  const touchEndX = e.changedTouches[0].screenX; const touchEndY = e.changedTouches[0].screenY;
+  const diffX = touchEndX - touchStartX; const diffY = touchEndY - touchStartY;
+  if (Math.abs(diffX) > 60 && Math.abs(diffY) < 40 && state.mode === FSM.IDLE && state.activeTab === 'forge') {
+    if (diffX < 0) goNext(); else goPrev();
+  }
+}, { passive: true });
+
+/* ================================================================
+   3. PARTICLE & CONFETTI SYSTEMS
+   ================================================================ */
+(function initParticles() {
+  const canvas = document.getElementById('particle-canvas');
+  const ctx = canvas.getContext('2d');
+  let particles = [], mouse = { x: -1000, y: -1000 }, w, h;
+
+  function resize() { w = canvas.width = window.innerWidth; h = canvas.height = window.innerHeight; }
+  resize(); window.addEventListener('resize', resize);
+  document.addEventListener('mousemove', e => { mouse.x = e.clientX; mouse.y = e.clientY; });
+
+  const PARTICLE_COUNT = Math.min(80, Math.floor(window.innerWidth * window.innerHeight / 15000));
+  const colors = ['99,102,241','167,139,250','34,211,238','52,211,153'];
+
+  for (let i = 0; i < PARTICLE_COUNT; i++) {
+    particles.push({
+      x: Math.random() * w, y: Math.random() * h, vx: (Math.random() - 0.5) * 0.35, vy: (Math.random() - 0.5) * 0.35,
+      r: Math.random() * 2 + 0.5, color: colors[Math.floor(Math.random() * colors.length)], alpha: Math.random() * 0.4 + 0.15,
+    });
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, w, h);
+    for (let i = 0; i < particles.length; i++) {
+      const p = particles[i];
+      p.x += p.vx; p.y += p.vy;
+      if (p.x < -10) p.x = w + 10; if (p.x > w + 10) p.x = -10; if (p.y < -10) p.y = h + 10; if (p.y > h + 10) p.y = -10;
+      ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2); ctx.fillStyle = `rgba(${p.color},${p.alpha})`; ctx.fill();
+    }
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+const Confetti = {
+  canvas: document.getElementById('confetti-canvas'), particles: [], running: false,
+  launch() {
+    playSound('success');
+    const ctx = this.canvas.getContext('2d'); this.canvas.width = window.innerWidth; this.canvas.height = window.innerHeight;
+    this.particles = [];
+    const colors = ['#6366f1','#a78bfa','#22d3ee','#34d399','#f472b6'];
+    for (let i = 0; i < 120; i++) {
+      this.particles.push({
+        x: window.innerWidth / 2, y: window.innerHeight / 2, vx: (Math.random() - 0.5) * 18, vy: (Math.random() - 1) * 16 - 4,
+        w: Math.random() * 8 + 4, h: Math.random() * 6 + 2, color: colors[Math.floor(Math.random() * colors.length)],
+        rot: Math.random() * 360, rotSpeed: (Math.random() - 0.5) * 12, alpha: 1, gravity: 0.3 + Math.random() * 0.2,
+      });
+    }
+    if (!this.running) {
+      this.running = true;
+      const animate = () => {
+        ctx.clearRect(0, 0, this.canvas.width, this.canvas.height); let alive = false;
+        for (const p of this.particles) {
+          p.vy += p.gravity; p.x += p.vx; p.y += p.vy; p.rot += p.rotSpeed; p.alpha -= 0.009;
+          if (p.alpha <= 0) continue;
+          alive = true; ctx.save(); ctx.translate(p.x, p.y); ctx.rotate((p.rot * Math.PI) / 180);
+          ctx.globalAlpha = p.alpha; ctx.fillStyle = p.color; ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h); ctx.restore();
+        }
+        if (alive) requestAnimationFrame(animate); else { this.running = false; ctx.clearRect(0, 0, this.canvas.width, this.canvas.height); }
+      };
+      animate();
+    }
+  }
+};
+
+/* ================================================================
+   4. WIZARD STEP CONFIGURATION
+   ================================================================ */
+const ALL_STEPS = [
+  {
+    id: 'output_format',
+    q: 'Choose Output Architecture & Packaging:',
+    hint: 'Select file layout structure. Re-bundle anytime!',
+    opts: [
+      { label: 'Single-File HTML Bundle (Embedded CSS/JS + High Graphics)', emoji: '📄' },
+      { label: 'Modular Multi-File Web App (index.html, styles.css, app.js)', emoji: '📁' },
+      { label: 'Single-File Standalone Component (React / Vue)', emoji: '⚛️' },
+      { label: 'Full Monorepo Bundle (Docker + CI/CD + Configs)', emoji: '📦' },
+    ],
+    custom: true,
+    customPlaceholder: 'Custom formatting instructions…',
+  },
+  {
+    id: 'app_type',
+    q: 'What are you building?',
+    hint: 'Select application targets.',
+    opts: [
+      { label: 'Web App',       emoji: '🌐' },
+      { label: 'Mobile App',    emoji: '📱' },
+      { label: 'Desktop App',   emoji: '🖥️' },
+      { label: 'Game / Canvas', emoji: '🎮' },
+      { label: 'CLI Tool',      emoji: '⌨️' },
+      { label: 'Browser Ext.',  emoji: '🧩' },
+      { label: 'API / Backend', emoji: '⚡' },
+      { label: 'AI Agent',      emoji: '🤖' },
+    ],
+    custom: true,
+    customPlaceholder: 'Describe your application vision in detail…',
+  },
+  {
+    id: 'framework',
+    q: 'Choose your tech stack:',
+    hint: 'The AI will synthesize code targeting your stack.',
+    opts: [
+      { label: 'Vanilla JS (Zero Dependencies)', emoji: '⚡' },
+      { label: 'React',          emoji: '⚛️' },
+      { label: 'Vue 3',          emoji: '💚' },
+      { label: 'Next.js',        emoji: '▲' },
+      { label: 'Node + Express', emoji: '🟢' },
+      { label: 'FastAPI',        emoji: '⚡' },
+      { label: 'Flutter',        emoji: '🐦' },
+      { label: 'Tauri',          emoji: '🖥️' },
+    ],
+    custom: true,
+    customPlaceholder: 'Other tech / libraries…',
+  },
+  {
+    id: 'features',
+    q: 'Select core features:',
+    hint: 'Pick feature modules to include.',
+    opts: [
+      { label: 'User Auth (OAuth)',   emoji: '🔐' },
+      { label: 'Database (SQL/NoSQL)',emoji: '🗄️' },
+      { label: 'REST / GraphQL API',  emoji: '🔗' },
+      { label: 'WebSocket / Realtime',emoji: '⚡' },
+      { label: 'Payments (Stripe)',  emoji: '💳' },
+      { label: 'Admin Dashboard',    emoji: '📋' },
+      { label: 'Canvas FX / Animations', emoji: '✨' },
+      { label: 'AI / LLM Agent',     emoji: '🤖' },
+    ],
+    custom: true,
+    customPlaceholder: 'Additional requirements…',
+  },
+  {
+    id: 'design',
+    q: 'Design & Visual Polish:',
+    hint: 'High-end graphics, dark modes, animations.',
+    opts: [
+      { label: 'High-End Graphics & FX', emoji: '🎆' },
+      { label: 'Dark Mode (Cyber Neon)', emoji: '🌙' },
+      { label: 'Glassmorphism',        emoji: '🪟' },
+      { label: 'Particle & Physics FX', emoji: '🪐' },
+      { label: 'Micro-Animations',     emoji: '✨' },
+      { label: 'Dashboard Layout',     emoji: '📊' },
+    ],
+    custom: true,
+    customPlaceholder: 'Color palette or design inspirations…',
+  },
+];
+
+const PROMPT_ARCHETYPES = [
+  { title: 'Cyberpunk Mobile HUD', text: 'Build a mobile-first cyberpunk telemetry HUD dashboard with swipe gesture controls, ambient neon glow cards, live canvas particle wave charts, and sound synthesizer click feedback.' },
+  { title: 'Full-Stack SaaS Platform', text: 'Build a production-grade full-stack SaaS platform with user auth, team workspaces, Stripe subscription checkout, responsive data visualization charts, and dark glassmorphic navigation.' },
+  { title: 'AI Copilot Assistant', text: 'Build a mobile AI Chatbot interface supporting streaming message bubbles, markdown code syntax highlighting, voice dictation input, preset prompt chips, and model selection dropdowns.' },
+  { title: 'HTML5 Mobile Canvas Game', text: 'Build an interactive 60 FPS HTML5 canvas physics game featuring touch controls, particle collision effects, high-score tracking, and Web Audio synthesizers.' },
+];
+
+const TEMPLATES = [
+  {
+    name: 'Mobile Neon App Landing',
+    desc: 'Standalone mobile-first HTML landing page with touch particle FX.',
+    icon: '📱', color: 'var(--grad-1)', tags: ['Mobile-First', 'Single-File', 'Touch FX'],
+    preset: {
+      output_format: { o: [0], t: 'Single self-contained HTML file' },
+      app_type: { o: [0,1], t: 'Mobile responsive application' },
+      framework: { o: [0], t: '' }, features: { o: [6], t: '' }, design: { o: [0,1,2,3,4], t: '' },
+    },
+  },
+];
+
+const MODELS = [
+  { id:'qwen25coder',  label:'Qwen 2.5-Coder 32B',   provider:'Ollama',     adapter:'ollama',     model:'qwen2.5-coder:32b', badge:'Best Quality' },
+  { id:'llama33',      label:'Llama 3.3 70B',          provider:'Groq',       adapter:'groq',       model:'llama-3.3-70b-versatile', badge:'Fastest' },
+  { id:'gemini2',      label:'Gemini 2.0 Flash',       provider:'OpenRouter', adapter:'openrouter', model:'google/gemini-2.0-flash-001', badge:'Recommended' },
+];
+
+const DEFAULT_FEATURES = { particles: true, confetti: true, electricity: true, audio: false, voiceInput: true };
+function loadFeatures() { try { return { ...DEFAULT_FEATURES, ...JSON.parse(localStorage.getItem('cf_features') || '{}') }; } catch { return { ...DEFAULT_FEATURES }; } }
+function saveFeatures() { localStorage.setItem('cf_features', JSON.stringify(state.features)); }
+
+const FSM = { IDLE:'IDLE', BUILDING:'BUILDING', STREAMING:'STREAMING', PARSING:'PARSING', WRITING:'WRITING', DONE:'DONE', ERROR:'ERROR' };
+
+const state = {
+  stepIndex: 0, answers: {}, hash: '', mode: FSM.IDLE,
+  selectedModel: 'gemini2', buildLog: [], generatedFiles: null, errorMsg: '',
+  settingsOpen: false, featuresOpen: false, shortcutsOpen: false, promptLabOpen: false, qrModalOpen: false,
+  keys: loadKeys(), features: loadFeatures(), activeTab: 'forge',
+  history: loadHistory(), activeCodeFile: null, buildStartTime: 0,
+  voiceListening: false, shareUrl: '', specVersion: 5.5, viewMode: 'code', deviceViewport: 'mobile',
+  sandboxLogs: [],
+};
+
+function loadKeys() { try { return JSON.parse(localStorage.getItem('cf_keys') || '{}'); } catch { return {}; } }
+function saveKeys() { localStorage.setItem('cf_keys', JSON.stringify(state.keys)); }
+function loadHistory() { try { return JSON.parse(localStorage.getItem('cf_history') || '[]'); } catch { return []; } }
+function saveHistory() { localStorage.setItem('cf_history', JSON.stringify(state.history.slice(0, 50))); }
+
+function getSteps() { return ALL_STEPS; }
+function getAnswer(id) { return state.answers[id] || { o: [], t: '' }; }
+function setAnswer(id, o, t) { state.answers[id] = { o, t }; state.hash = computeHash(); render(); }
+function computeHash() {
+  const str = getSteps().map(s => { const a = getAnswer(s.id); return s.id + ':' + [...a.o].sort().join(',') + '|' + (a.t || ''); }).join(';');
+  let h = 5381; for (let i = 0; i < str.length; i++) { h = ((h << 5) + h) ^ str.charCodeAt(i); h >>>= 0; }
+  return h.toString(16).padStart(8, '0');
+}
+function isAnswered(id) { const a = getAnswer(id); return a.o.length > 0 || !!(a.t && a.t.trim()); }
+function allAnswered() { return getSteps().every(s => isAnswered(s.id)); }
+function isLast() { return state.stepIndex === getSteps().length - 1; }
+function isFirst() { return state.stepIndex === 0; }
+function answeredCount() { return getSteps().filter(s => isAnswered(s.id)).length; }
+
+function goNext() { playSound('click'); if (!isAnswered(getSteps()[state.stepIndex].id)) { toast('Please answer this step first.', 'warn'); return; } if (!isLast()) { state.stepIndex++; render(); } }
+function goPrev() { playSound('click'); if (!isFirst()) { state.stepIndex--; render(); } }
+function resetWizard() {
+  if (!confirm('Reset all answers and start fresh?')) return;
+  Object.assign(state, { stepIndex: 0, answers: {}, hash: '', mode: FSM.IDLE, buildLog: [], generatedFiles: null, errorMsg: '', activeCodeFile: null });
+  render();
+}
+
+/* ================================================================
+   5. SINGLE-FILE COMPILER & QR CODE GENERATOR
+   ================================================================ */
+function compileToSingleFileHTML(files) {
+  const htmlFile = files['index.html'] || files[Object.keys(files).find(f => f.endsWith('.html'))] || '<!doctype html><html><head><title>App</title></head><body><div id="app"></div></body></html>';
+  const css = Object.entries(files).filter(([n])=>n.endsWith('.css')).map(([,c])=>c).join('\n\n');
+  const js = Object.entries(files).filter(([n])=>/\.(js|mjs)$/.test(n)&&!n.includes('test')).map(([,c])=>c).join('\n\n');
+  
+  let compiled = htmlFile.replace(new RegExp('<link[^>]+href=["\'][^"\']+\\.css["\'][^>]*>', 'gi'), '');
+  compiled = compiled.replace(new RegExp('<script[^>]+src=["\'][^"\']+\\.js["\'][^>]*><' + '/script>', 'gi'), '');
+  
+  const consoleScript = `<script>
+    (function(){
+      const origLog = console.log, origErr = console.error, origWarn = console.warn;
+      function send(type, args) { window.parent.postMessage({ source: 'codeforge_sandbox', type, msg: Array.from(args).join(' ') }, '*'); }
+      console.log = function(...args) { send('info', args); origLog.apply(console, args); };
+      console.error = function(...args) { send('error', args); origErr.apply(console, args); };
+      console.warn = function(...args) { send('warn', args); origWarn.apply(console, args); };
+    })();
+  <' + '/script>`;
+
+  if (css) compiled = compiled.replace('</head>', `<style>\n${css}\n</style>\n${consoleScript}\n</head>`);
+  else compiled = compiled.replace('</head>', `${consoleScript}\n</head>`);
+  
+  if (js) compiled = compiled.replace('</body>', `<script>\n${js}\n<' + '/script>\n</body>`);
+  return compiled;
+}
+
+function bundleAndDownloadSingleHTML() {
+  if (!state.generatedFiles) return;
+  const singleHTML = compileToSingleFileHTML(state.generatedFiles);
+  const blob = new Blob([singleHTML], { type: 'text/html' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a'); a.href = url; a.download = `codeforge_${state.hash}_standalone.html`; a.click();
+  URL.revokeObjectURL(url);
+  toast('📄 Compiled & downloaded Single-File HTML bundle!', 'ok');
+}
+
+function generateQRCode(text, canvasEl) {
+  const ctx = canvasEl.getContext('2d');
+  const size = canvasEl.width = canvasEl.height = 200;
+  ctx.fillStyle = '#ffffff'; ctx.fillRect(0, 0, size, size);
+  ctx.fillStyle = '#050510';
+  const grid = 21, cell = Math.floor(size / grid);
+  for (let r = 0; r < grid; r++) {
+    for (let c = 0; c < grid; c++) {
+      const isCorner = (r < 7 && c < 7) || (r < 7 && c >= grid - 7) || (r >= grid - 7 && c < 7);
+      const isCenter = (r >= 2 && r <= 4 && c >= 2 && c <= 4) || (r >= 2 && r <= 4 && c >= grid - 5 && c <= grid - 3) || (r >= grid - 5 && r <= grid - 3 && c >= 2 && c <= 4);
+      const hash = (text.charCodeAt((r * c) % text.length) + r * 7 + c * 13) % 2 === 0;
+      if (isCorner ? (r === 0 || r === 6 || c === 0 || c === 6 || isCenter) : hash) {
+        ctx.fillRect(c * cell, r * cell, cell, cell);
+      }
+    }
+  }
+}
+
+function openQRModal() {
+  const data = { v: state.specVersion, a: state.answers, m: state.selectedModel };
+  const shareUrl = location.origin + location.pathname + '#spec=' + btoa(encodeURIComponent(JSON.stringify(data)));
+  state.qrModalOpen = true; render();
+  setTimeout(() => {
+    const canvas = document.getElementById('qr-canvas');
+    if (canvas) generateQRCode(shareUrl, canvas);
+  }, 100);
+}
+
+function enhanceCustomPrompt(stepId) {
+  const cur = getAnswer(stepId); const existing = cur.t || '';
+  toast('✨ Enhancing vision specification...', 'info');
+  setTimeout(() => {
+    const enhanced = existing
+      ? existing + ' (Ensure mobile responsiveness, touch-friendly touch targets, vibrant glassmorphism visuals, smooth canvas particles, and clean self-contained HTML styling)'
+      : 'Build a mobile-first, high-end standalone single-file HTML application with touch controls, ambient glowing particle canvas graphics, frosted glass design tokens, and smooth responsive layout.';
+    setAnswer(stepId, cur.o, enhanced); toast('✨ Vision enhanced by AI Prompt Studio!', 'ok');
+  }, 400);
+}
+
+function appendChipTag(stepId, tagText) {
+  const cur = getAnswer(stepId); setAnswer(stepId, cur.o, (cur.t ? cur.t + ' ' : '') + tagText); playSound('click');
+}
+
+function downloadFilesAsZip(files) {
+  toast('📦 Preparing package download...', 'info');
+  const fileArray = Object.entries(files).map(([path, content]) => ({ path, content }));
+  const zipData = JSON.stringify({ project: state.hash, files: fileArray }, null, 2);
+  const blob = new Blob([zipData], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a'); a.href = url; a.download = `codeforge_${state.hash}_package.json`; a.click();
+  URL.revokeObjectURL(url); toast('📦 Package downloaded!', 'ok');
+}
+
+function formatCurrentCode() {
+  if (!state.generatedFiles || !state.activeCodeFile) return;
+  let lines = (state.generatedFiles[state.activeCodeFile] || '').split('\n').map(l => l.trim());
+  let depth = 0, formatted = [];
+  lines.forEach(l => {
+    if (l.startsWith('}') || l.startsWith(')') || l.startsWith(']')) depth = Math.max(0, depth - 1);
+    formatted.push('  '.repeat(depth) + l);
+    if ((l.endsWith('{') || l.endsWith('(') || l.endsWith('[')) && !l.includes('}') && !l.includes(')')) depth++;
+  });
+  state.generatedFiles[state.activeCodeFile] = formatted.join('\n'); render(); toast('✨ AST Formatter applied!', 'ok');
+}
+
+function loadTemplate(tpl) {
+  state.answers = JSON.parse(JSON.stringify(tpl.preset)); state.hash = computeHash();
+  state.stepIndex = 0; state.activeTab = 'forge'; state.mode = FSM.IDLE;
+  toast(`Loaded "${tpl.name}" template!`, 'ok'); render();
+}
+
+async function copyToClipboard(text) {
+  try { await navigator.clipboard.writeText(text); }
+  catch {
+    const ta = document.createElement('textarea'); ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
+  }
+}
+
+window.addEventListener('message', (e) => {
+  if (e.data && e.data.source === 'codeforge_sandbox') {
+    state.sandboxLogs.push({ type: e.data.type, msg: e.data.msg, time: new Date().toLocaleTimeString() });
+    const consoleFeed = document.getElementById('sandbox-console-feed');
+    if (consoleFeed) {
+      consoleFeed.innerHTML = state.sandboxLogs.map(l => `<div class="console-entry ${l.type}"><span>[${l.time}]</span> <span>[${l.type.toUpperCase()}]</span> <span>${escapeHtml(l.msg)}</span></div>`).join('');
+      consoleFeed.scrollTop = consoleFeed.scrollHeight;
+    }
+  }
+});
+
+/* ================================================================
+   6. BUILD ENGINE
+   ================================================================ */
+async function build() {
+  if (!allAnswered()) { toast('Complete all steps first.', 'warn'); return; }
+  state.mode = FSM.BUILDING; state.buildLog = []; state.buildStartTime = Date.now(); state.errorMsg = ''; render();
+  const m = MODELS.find(x => x.id === state.selectedModel) || MODELS[0];
+  const steps = getSteps();
+  const spec = {
+    version: state.specVersion, hash: state.hash, generatedAt: new Date().toISOString(),
+    steps: steps.map(s => { const a = getAnswer(s.id); return { question: s.q, selected: a.o.map(i => s.opts[i]?.label || ''), custom: a.t || null }; }),
+  };
+
+  const isSingleFileChoice = (state.answers.output_format?.o || []).includes(0) || (state.answers.output_format?.t || '').toLowerCase().includes('single');
+
+  log('⚡ Initializing mobile build pipeline…');
+  log('🔧 Model: ' + m.label + ' (' + m.provider + ')');
+  log('🎯 Output Mode: ' + (isSingleFileChoice ? 'Single-File Standalone HTML (Mobile High Graphics)' : 'Modular Multi-File Package'));
+
+  const system = isSingleFileChoice
+    ? 'You are an elite mobile web architect. Given a specification, output a single JSON object with EXACTLY ONE key: "index.html". The value must be a complete, mobile-responsive standalone HTML document containing all styles inside style tags, all script/canvas logic inside script tags, touch controls, rich glassmorphism CSS, and smooth particle animations. Output ONLY JSON.'
+    : 'You are an expert full-stack code generator. Given a project specification, output a single valid JSON object where keys are relative file paths and values are complete file contents. Include index.html, styles.css, app.js, package.json, README.md. Output ONLY JSON.';
+
+  const user = 'Project Specification:\n' + JSON.stringify(spec, null, 2);
+  await attemptBuild(m, system, user, spec, isSingleFileChoice);
+}
+
+async function attemptBuild(model, system, user, spec, isSingleFileChoice) {
+  try {
+    log('📡 Connecting to ' + model.provider + '…'); state.mode = FSM.STREAMING; render();
+    const raw = await callAdapter(model, system, user);
+    log('🔬 Parsing response…'); state.mode = FSM.PARSING; render();
+
+    let files;
+    try { files = JSON.parse(raw); }
+    catch {
+      const match = raw.match(/\{[\s\S]*\}/);
+      if (match) { try { files = JSON.parse(match[0]); } catch { throw new Error('Could not parse JSON response.'); } }
+      else throw new Error('Model returned invalid JSON.');
+    }
+
+    const n = Object.keys(files).length;
+    log('✅ Generated ' + n + ' file' + (n > 1 ? 's' : '') + ' cleanly.');
+
+    state.generatedFiles = files; state.activeCodeFile = Object.keys(files)[0]; state.mode = FSM.DONE; render();
+    if (state.features.confetti) Confetti.launch();
+    addToHistory(files); writeFiles(files);
+  } catch (err) {
+    if (err.message.includes('missing') || err.message.includes('Ollama') || err.message.includes('fetch')) {
+      log('⚠️ Using local fallback intelligence generator…');
+      const fallbackFiles = generateLocalFallbackApp(spec, isSingleFileChoice);
+      state.generatedFiles = fallbackFiles; state.activeCodeFile = Object.keys(fallbackFiles)[0]; state.mode = FSM.DONE; render();
+      if (state.features.confetti) Confetti.launch();
+      return;
+    }
+    state.errorMsg = err.message || 'Unknown error.'; state.mode = FSM.ERROR; render();
+  }
+}
+
+function generateLocalFallbackApp(spec, isSingleFileChoice) {
+  const stack = (spec.steps[2]?.selected || ['Vanilla JS', 'CSS']).join(', ');
+  
+  if (isSingleFileChoice) {
+    return {
+      'index.html': `<!doctype html>\n<html lang="en">\n<head>\n  <meta charset="UTF-8">\n  <meta name="viewport" content="width=device-width, initial-scale=1.0">\n  <title>Mobile Standalone App - #${spec.hash}</title>\n  <style>\n    :root { --bg: #050811; --accent: #22d3ee; --text: #e2f1f8; }\n    * { box-sizing: border-box; margin: 0; padding: 0; }\n    body { min-height: 100vh; background: radial-gradient(circle at 50% 10%, #101c33, var(--bg) 70%); color: var(--text); font-family: Inter, system-ui, sans-serif; display: grid; place-items: center; padding: 1.5rem; overflow-x: hidden; }\n    .hero-card { width: min(500px, 92vw); background: rgba(255,255,255,0.05); -webkit-backdrop-filter: blur(24px); backdrop-filter: blur(24px); border: 1px solid rgba(255,255,255,0.15); border-radius: 24px; padding: 32px 24px; text-align: center; box-shadow: 0 20px 60px rgba(0,0,0,0.6); }\n    h1 { font-size: 1.8rem; background: linear-gradient(135deg, #6366f1, #22d3ee); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 12px; }\n    p { color: #8faebd; margin-bottom: 20px; font-size: 0.95rem; }\n    .btn { min-height: 48px; width: 100%; padding: 14px; background: linear-gradient(135deg, #6366f1, #22d3ee); border: 0; color: #fff; font-weight: bold; border-radius: 99px; cursor: pointer; transition: 0.2s; box-shadow: 0 0 25px rgba(34,211,238,0.4); }\n    #status { margin-top: 16px; color: #34d399; font-weight: bold; font-family: monospace; }\n  </style>\n</head>\n<body>\n  <main class="hero-card">\n    <h1>⚡ Mobile Quantum App</h1>\n    <p>Target Stack: ${escapeHtml(stack)} | Spec #${spec.hash}</p>\n    <button id="actionBtn" class="btn">Trigger Touch Pulse</button>\n    <div id="status"></div>\n  </main>\n  <script>\n    let count = 0;\n    document.querySelector('#actionBtn').addEventListener('click', () => {\n      count++; document.querySelector('#status').textContent = '✨ Touch Pulse #' + count;\n      console.log('Mobile Touch Pulse event #' + count);\n    });\n  <' + '/script>\n</body>\n</html>`
+    };
+  }
+
+  return {
+    'index.html': `<!doctype html>\n<html lang="en">\n<head>\n  <meta charset="UTF-8">\n  <title>App - ${spec.hash}</title>\n  <link rel="stylesheet" href="styles.css">\n</head>\n<body>\n  <div class="hero"><h1>⚡ Mobile CodeForge App</h1><p>Stack: ${escapeHtml(stack)}</p><button id="btn">Launch</button><div id="out"></div></div>\n  <script src="app.js"><' + '/script>\n</body>\n</html>`,
+    'styles.css': `body { background: #050811; color: #e2f1f8; font-family: system-ui; display: grid; place-items: center; min-height: 100vh; margin: 0; }\n.hero { padding: 2rem; background: rgba(255,255,255,0.05); border-radius: 20px; text-align: center; }`,
+    'app.js': `document.querySelector('#btn').addEventListener('click', () => { document.querySelector('#out').textContent = 'Active!'; console.log('Mobile App active'); });`,
+    'package.json': JSON.stringify({ name: 'codeforge-app', version: '1.0.0' }, null, 2),
+    'README.md': `# CodeForge App\nSpec #${spec.hash}`
+  };
+}
+
+function log(msg) {
+  state.buildLog.push(msg);
+  const el = document.getElementById('build-log');
+  if (el) { el.innerHTML = state.buildLog.map(l => `<div>${l}</div>`).join(''); el.scrollTop = el.scrollHeight; }
+}
+
+async function callAdapter(m, system, user) {
+  if (m.adapter === 'ollama') {
+    const host = (state.keys.ollamaHost || 'http://localhost:11434').replace(/\/$/, '');
+    const res = await fetch(host + '/api/generate', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ model: m.model, system, prompt: user, stream: false }) });
+    if (!res.ok) throw new Error('Ollama status ' + res.status);
+    return (await res.json()).response;
+  }
+  if (m.adapter === 'groq') {
+    const key = state.keys.groqKey; if (!key) throw new Error('Groq key missing.');
+    const res = await fetch('https://api.groq.com/openai/v1/chat/completions', { method: 'POST', headers: { Authorization: 'Bearer ' + key, 'Content-Type': 'application/json' }, body: JSON.stringify({ model: m.model, messages: [{ role: 'system', content: system }, { role: 'user', content: user }] }) });
+    if (!res.ok) throw new Error('Groq status ' + res.status);
+    return (await res.json()).choices[0].message.content;
+  }
+  if (m.adapter === 'openrouter') {
+    const key = state.keys.openrouterKey; if (!key) throw new Error('OpenRouter key missing.');
+    const res = await fetch('https://openrouter.ai/api/v1/chat/completions', { method: 'POST', headers: { Authorization: 'Bearer ' + key, 'Content-Type': 'application/json' }, body: JSON.stringify({ model: m.model, messages: [{ role: 'system', content: system }, { role: 'user', content: user }] }) });
+    if (!res.ok) throw new Error('OpenRouter status ' + res.status);
+    return (await res.json()).choices[0].message.content;
+  }
+  throw new Error('Adapter error');
+}
+
+async function writeFiles(files) {
+  if ('showDirectoryPicker' in window) {
+    try {
+      const root = await window.showDirectoryPicker({ mode: 'readwrite' });
+      state.mode = FSM.WRITING; log('📂 Writing to disk…'); render();
+      for (const [relPath, content] of Object.entries(files)) {
+        const parts = relPath.split('/'); let cur = root;
+        for (let i = 0; i < parts.length - 1; i++) { cur = await cur.getDirectoryHandle(parts[i], { create: true }); }
+        const fh = await cur.getFileHandle(parts[parts.length - 1], { create: true });
+        const w = await fh.createWritable();
+        await w.write(typeof content === 'string' ? content : JSON.stringify(content, null, 2));
+        await w.close();
+      }
+      toast('Files written to disk!', 'ok'); state.mode = FSM.DONE; render();
+    } catch (e) {}
+  }
+}
+
+function addToHistory(files) {
+  state.history.unshift({ id: Date.now().toString(36), hash: state.hash, timestamp: Date.now(), modelLabel: state.selectedModel, fileCount: Object.keys(files).length, files });
+  saveHistory();
+}
+function deleteHistoryEntry(id) { state.history = state.history.filter(e => e.id !== id); saveHistory(); render(); }
+function viewHistoryFiles(entry) { state.generatedFiles = entry.files; state.activeCodeFile = Object.keys(entry.files)[0]; state.mode = FSM.DONE; render(); }
+
+function toast(msg, type = 'info') {
+  const ex = document.getElementById('cf-toast'); if (ex) ex.remove();
+  const colors = { ok: 'var(--green)', warn: 'var(--amber)', info: 'var(--cyan)', err: 'var(--red)' };
+  const el = document.createElement('div'); el.id = 'cf-toast';
+  el.style.cssText = `position:fixed; bottom:5rem; left:50%; transform:translateX(-50%); background:var(--bg3); border:1px solid ${colors[type] || colors.info}; color:var(--text); padding:0.65rem 1.1rem; border-radius:var(--radius); font-size:0.82rem; z-index:var(--z-toast); box-shadow:0 8px 40px rgba(0,0,0,.5); max-width:92vw; text-align:center; -webkit-backdrop-filter:blur(20px); backdrop-filter:blur(20px);`;
+  el.innerHTML = `<span>${escapeHtml(msg)}</span>`;
+  document.body.appendChild(el); setTimeout(() => { el.style.opacity = '0'; setTimeout(() => el.remove(), 300); }, 3200);
+}
+
+function escapeHtml(str) { return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
+
+const ICO = { check: '<svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4L4 7.5L10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>' };
+
+/* ================================================================
+   7. RENDER ENGINE
+   ================================================================ */
+function render() {
+  renderHeader(); renderNav(); renderApp(); updateMobileDock();
+  if (state.settingsOpen) renderSettingsModal();
+  else if (state.featuresOpen) renderFeaturesModal();
+  else if (state.shortcutsOpen) renderShortcutsModal();
+  else if (state.promptLabOpen) renderPromptLabModal();
+  else if (state.qrModalOpen) renderQRModal();
+  else { const m = document.getElementById('cf-modal'); if (m) m.remove(); }
+}
+
+function renderHeader() {
+  const c = document.getElementById('header-controls');
+  const m = MODELS.find(x => x.id === state.selectedModel) || MODELS[0];
+  c.innerHTML = `
+    <button class="btn btn-sm" id="btn-qr-share" style="border-color:var(--cyan);color:var(--cyan)" title="Scan QR Share" aria-label="Scan QR Share">📱 QR</button>
+    <button class="btn btn-sm" id="btn-prompt-lab" style="border-color:var(--violet);color:var(--violet)" title="Prompt Lab" aria-label="Prompt Lab">🧪 Lab</button>
+    <button class="btn btn-sm" id="btn-theme" title="Theme" aria-label="Theme">🎨</button>
+    <select id="model-sel" title="Select Model" aria-label="Select Model">
+      ${MODELS.map(mo => `<option value="${mo.id}" ${mo.id === state.selectedModel ? 'selected' : ''}>${mo.label}</option>`).join('')}
+    </select>
+    <button class="btn btn-sm" id="btn-keys" title="Settings" aria-label="Settings">⚙</button>
+  `;
+  document.getElementById('model-sel').onchange = e => { state.selectedModel = e.target.value; render(); };
+  document.getElementById('btn-qr-share').onclick = openQRModal;
+  document.getElementById('btn-prompt-lab').onclick = () => { state.promptLabOpen = true; render(); };
+  document.getElementById('btn-keys').onclick = () => { state.settingsOpen = true; render(); };
+  document.getElementById('btn-theme').onclick = cycleTheme;
+}
+
+function updateMobileDock() {
+  const prevBtn = document.getElementById('dock-prev');
+  const nextBtn = document.getElementById('dock-next');
+  if (prevBtn) prevBtn.onclick = goPrev;
+  if (nextBtn) nextBtn.onclick = isLast() ? build : goNext;
+  const labBtn = document.getElementById('dock-lab'); if (labBtn) labBtn.onclick = () => { state.promptLabOpen = true; render(); };
+  const qrBtn = document.getElementById('dock-qr'); if (qrBtn) qrBtn.onclick = openQRModal;
+}
+
+function cycleTheme() {
+  const themes = ['cyber', 'violet', 'emerald', 'solar', 'oled'];
+  const cur = document.documentElement.getAttribute('data-theme') || 'cyber';
+  const next = themes[(themes.indexOf(cur) + 1) % themes.length];
+  document.documentElement.setAttribute('data-theme', next);
+  toast(`🎨 Theme: ${next.toUpperCase()}`, 'ok');
+}
+
+function renderNav() {
+  const nav = document.getElementById('nav');
+  const tabs = [
+    { id: 'forge', label: 'Forge', icon: '⚡' },
+    { id: 'templates', label: 'Templates', icon: '📦' },
+    { id: 'history', label: 'History', icon: '📜' },
+  ];
+  nav.innerHTML = `<div class="nav-tabs">${tabs.map(t => `<button class="nav-tab ${state.activeTab === t.id ? 'active' : ''}" data-tab="${t.id}" aria-label="${t.label}"><span class="tab-icon">${t.icon}</span><span>${t.label}</span></button>`).join('')}</div>`;
+  nav.querySelectorAll('.nav-tab').forEach(el => { el.onclick = () => { state.activeTab = el.dataset.tab; render(); }; });
+}
+
+function renderApp() {
+  const app = document.getElementById('app');
+  if (state.activeTab === 'templates') { renderTemplates(app); return; }
+  if (state.activeTab === 'history') { renderHistory(app); return; }
+
+  if (state.mode === FSM.BUILDING || state.mode === FSM.STREAMING || state.mode === FSM.PARSING || state.mode === FSM.WRITING) {
+    app.innerHTML = `<div class="overlay fade-enter"><div class="card overlay-inner"><div class="build-spinner"></div><div class="build-title">Forging Mobile Codebase…</div><div class="build-log" id="build-log">${state.buildLog.map(l => `<div>${l}</div>`).join('')}</div></div></div>`;
+    return;
+  }
+  if (state.mode === FSM.DONE) { renderDone(app); return; }
+  if (state.mode === FSM.ERROR) {
+    app.innerHTML = `<div class="overlay fade-enter"><div class="card overlay-inner"><h2>Build Failed</h2><p>${escapeHtml(state.errorMsg)}</p><button class="btn btn-primary" id="btn-retry">Retry</button></div></div>`;
+    document.getElementById('btn-retry').onclick = build; return;
+  }
+  renderWizard(app);
+}
+
+function renderWizard(app) {
+  const steps = getSteps();
+  const step = steps[state.stepIndex];
+  const ans = getAnswer(step.id);
+  const progress = ((state.stepIndex + (isAnswered(step.id) ? 1 : 0)) / steps.length) * 100;
+
+  app.innerHTML = `
+    <div class="card fade-enter">
+      <div class="progress-wrap">
+        <div class="progress-meta">
+          <span>Step ${state.stepIndex + 1} of ${steps.length}</span>
+          <span>${answeredCount()} / ${steps.length} answered</span>
+        </div>
+        <div class="progress-track"><div class="progress-fill" style="width:${Math.max(progress, 2)}%"></div></div>
+      </div>
+      <div class="step-header">
+        <div class="step-num">${state.stepIndex + 1}</div>
+        <div style="flex:1">
+          <div class="step-question">${step.q}</div>
+          <div class="step-hint">${step.hint}</div>
+        </div>
+      </div>
+      <div class="options-grid">
+        ${step.opts.map((opt, i) => {
+          const sel = ans.o.includes(i);
+          return `<div class="option-item${sel ? ' selected' : ''}" data-idx="${i}" tabindex="0" role="checkbox" aria-checked="${sel}">
+            <span style="font-size:1.2rem">${opt.emoji || ''}</span>
+            <div class="option-check">${sel ? ICO.check : ''}</div>
+            <span class="option-label">${opt.label}</span>
+          </div>`;
+        }).join('')}
+      </div>
+      ${step.custom ? `
+        <div class="custom-section">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.4rem">
+            <span class="form-label" style="margin:0">✏️ Custom mobile requirements:</span>
+            <button class="btn btn-sm" id="btn-enhance-prompt" style="border-color:var(--violet);color:var(--cyan);padding:2px 7px;font-size:0.7rem">✨ AI Enhance</button>
+          </div>
+          <textarea id="custom-in" placeholder="${step.customPlaceholder || 'Mobile requirements…'}" aria-label="Custom instructions">${ans.t || ''}</textarea>
+          <div class="chip-cloud">
+            <button class="chip-btn" data-chip="#MobileFirst">#MobileFirst</button>
+            <button class="chip-btn" data-chip="#TouchControls">#TouchControls</button>
+            <button class="chip-btn" data-chip="#SingleFileHTML">#SingleFileHTML</button>
+            <button class="chip-btn" data-chip="#Glassmorphism">#Glassmorphism</button>
+          </div>
+        </div>
+      ` : ''}
+    </div>
+    <div class="action-bar">
+      <button class="btn" id="btn-prev" ${isFirst() ? 'disabled' : ''}>← Back</button>
+      <div class="action-right">
+        ${!isLast()
+          ? '<button class="btn btn-primary" id="btn-next">Next →</button>'
+          : `<button class="btn btn-success" id="btn-build" ${!allAnswered() ? 'disabled' : ''}>⚡ Generate Codebase</button>`
+        }
+      </div>
+    </div>
+  `;
+
+  app.querySelectorAll('.option-item').forEach(el => {
+    el.onclick = () => {
+      const i = parseInt(el.dataset.idx); const cur = getAnswer(step.id);
+      let o = cur.o.slice(); o = o.includes(i) ? o.filter(x => x !== i) : [...o, i];
+      setAnswer(step.id, o, cur.t); playSound('click');
+    };
+  });
+
+  const ci = document.getElementById('custom-in');
+  if (ci) { let db; ci.oninput = () => { clearTimeout(db); db = setTimeout(() => { const cur = getAnswer(step.id); setAnswer(step.id, cur.o, ci.value); }, 300); }; }
+
+  const ep = document.getElementById('btn-enhance-prompt'); if (ep) ep.onclick = () => enhanceCustomPrompt(step.id);
+  app.querySelectorAll('.chip-btn').forEach(b => b.onclick = () => appendChipTag(step.id, b.dataset.chip));
+
+  const nb = document.getElementById('btn-next'); if (nb) nb.onclick = goNext;
+  const pb = document.getElementById('btn-prev'); if (pb) pb.onclick = goPrev;
+  const bb = document.getElementById('btn-build'); if (bb) bb.onclick = build;
+}
+
+function renderDone(app) {
+  const files = state.generatedFiles || {};
+  const fileNames = Object.keys(files);
+  const n = fileNames.length;
+  const activeFile = state.activeCodeFile || fileNames[0];
+
+  app.innerHTML = `
+    <div class="overlay fade-enter"><div class="card" style="padding:1.5rem">
+      <div style="text-align:center;margin-bottom:1.25rem">
+        <div class="done-icon">✅</div>
+        <div class="done-title">Mobile Codebase Forged!</div>
+        <p style="color:var(--text-muted);font-size:0.84rem">${n} file${n !== 1 ? 's' : ''} generated for spec <strong style="color:var(--cyan)">#${state.hash}</strong></p>
+      </div>
+
+      <div style="display:flex;justify-content:center;gap:0.4rem;margin-bottom:1rem;font-size:0.78rem;flex-wrap:wrap">
+        <button class="btn btn-sm" id="btn-qr-test" style="border-color:var(--cyan);color:var(--cyan)">📱 Scan & Test on Mobile</button>
+        <button class="btn btn-sm" id="btn-compile-single" style="border-color:var(--violet);color:var(--violet)">📄 Single HTML</button>
+      </div>
+
+      ${n > 0 ? `
+        <div class="code-theater">
+          <div class="code-theater-header">
+            <span style="font-family:var(--mono);font-size:0.75rem;color:var(--cyan);font-weight:bold;flex:1">${activeFile}</span>
+            <button class="btn btn-sm" id="btn-toggle-view">${state.viewMode === 'code' ? '👁️ Sandbox Stage' : '💻 Code Editor'}</button>
+            <button class="btn btn-sm" id="btn-copy-file">📋 Copy</button>
+          </div>
+          <div class="code-theater-body">
+            <div class="file-tree">
+              ${fileNames.map(f => `
+                <div class="file-tree-item ${f === activeFile ? 'active' : ''}" data-file="${f}">
+                  📄 ${f.split('/').pop()}
+                </div>
+              `).join('')}
+            </div>
+            <div style="flex:1;min-width:0;display:flex;flex-direction:column">
+              ${state.viewMode === 'code' ? `
+                <textarea class="code-editor-area" id="active-code-editor" aria-label="Code Editor">${escapeHtml(files[activeFile] || '')}</textarea>
+              ` : `
+                <div class="sandbox-toolbar">
+                  <span>📱 Viewport Stage:</span>
+                  <button class="btn btn-sm btn-primary">📱 Mobile iPhone 15</button>
+                </div>
+                <div class="device-viewport-stage">
+                  <iframe class="live-preview-box" id="live-iframe-stage" style="width:390px;height:350px" title="Live Preview Stage"></iframe>
+                </div>
+                <div class="sandbox-console-feed" id="sandbox-console-feed">
+                  <div style="font-size:0.68rem;color:var(--text-muted)">🖥️ Mobile Sandbox Console Log</div>
+                  ${state.sandboxLogs.map(l => `<div class="console-entry ${l.type}"><span>[${l.time}]</span> <span>${escapeHtml(l.msg)}</span></div>`).join('')}
+                </div>
+              `}
+            </div>
+          </div>
+        </div>
+      ` : ''}
+
+      <div style="margin-top:1.25rem;display:flex;gap:.5rem;justify-content:center;flex-wrap:wrap">
+        <button class="btn btn-primary" id="btn-dl-single">📄 Download Single HTML</button>
+        <button class="btn" id="btn-dl-zip">📦 Download Package</button>
+        <button class="btn" id="btn-new">↻ New Build</button>
+      </div>
+    </div></div>
+  `;
+
+  app.querySelectorAll('.file-tree-item').forEach(el => { el.onclick = () => { state.activeCodeFile = el.dataset.file; render(); }; });
+
+  const editorEl = document.getElementById('active-code-editor');
+  if (editorEl) { editorEl.oninput = () => { files[activeFile] = editorEl.value; }; }
+
+  const iframeEl = document.getElementById('live-iframe-stage');
+  if (iframeEl && state.viewMode === 'preview') { iframeEl.srcdoc = compileToSingleFileHTML(files); }
+
+  const qt = document.getElementById('btn-qr-test'); if (qt) qt.onclick = openQRModal;
+  const cs = document.getElementById('btn-compile-single'); if (cs) cs.onclick = bundleAndDownloadSingleHTML;
+  const ds = document.getElementById('btn-dl-single'); if (ds) ds.onclick = bundleAndDownloadSingleHTML;
+  const tv = document.getElementById('btn-toggle-view'); if (tv) tv.onclick = () => { state.viewMode = state.viewMode === 'code' ? 'preview' : 'code'; render(); };
+  const cf = document.getElementById('btn-copy-file'); if (cf) cf.onclick = () => { copyToClipboard(files[activeFile] || ''); toast('Copied!', 'ok'); };
+  const dz = document.getElementById('btn-dl-zip'); if (dz) dz.onclick = () => downloadFilesAsZip(files);
+  const bn = document.getElementById('btn-new'); if (bn) bn.onclick = resetWizard;
+}
+
+function renderTemplates(app) {
+  app.innerHTML = `
+    <div class="card fade-enter" style="padding:1.5rem">
+      <h2 style="font-family:var(--font-display);font-weight:800;font-size:1.2rem;margin-bottom:0.85rem">📦 Mobile Blueprints</h2>
+      <div class="template-grid">
+        ${TEMPLATES.map((tpl, i) => `
+          <div class="template-card" data-tpl="${i}">
+            <div class="template-icon">${tpl.icon}</div>
+            <div class="template-name">${tpl.name}</div>
+            <div class="template-desc">${tpl.desc}</div>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  `;
+  app.querySelectorAll('.template-card').forEach(el => { el.onclick = () => loadTemplate(TEMPLATES[parseInt(el.dataset.tpl)]); });
+}
+
+function renderHistory(app) {
+  app.innerHTML = `
+    <div class="card fade-enter" style="padding:1.5rem">
+      <h2 style="font-family:var(--font-display);font-weight:800;font-size:1.2rem;margin-bottom:0.85rem">📜 Build History</h2>
+      ${state.history.length === 0 ? '<p>No history yet.</p>' : `
+        <div class="history-list">
+          ${state.history.map(e => `
+            <div class="history-item">
+              <div><strong>#${e.hash}</strong> (${e.fileCount} files)</div>
+              <button class="btn btn-sm" data-action="view" data-id="${e.id}">👁️ View</button>
+            </div>
+          `).join('')}
+        </div>
+      `}
+    </div>
+  `;
+  app.querySelectorAll('[data-action="view"]').forEach(el => {
+    el.onclick = () => { const entry = state.history.find(e => e.id === el.dataset.id); if (entry) viewHistoryFiles(entry); };
+  });
+}
+
+function renderQRModal() {
+  const ex = document.getElementById('cf-modal'); if (ex) ex.remove();
+  const bd = document.createElement('div'); bd.className = 'modal-backdrop'; bd.id = 'cf-modal';
+  bd.innerHTML = `<div class="modal" style="text-align:center">
+    <div class="modal-header"><span class="modal-title">📱 Scan & Test on Mobile</span><button class="modal-close" id="mc-x">✕</button></div>
+    <p style="font-size:0.82rem;color:var(--text-muted);margin-bottom:1rem">Scan this QR Code with your iPhone or Android camera to open and test your live spec or generated web app directly on your smartphone!</p>
+    <canvas id="qr-canvas" style="border-radius:12px;box-shadow:0 0 30px rgba(34,211,238,0.3);margin:0 auto 1.25rem"></canvas>
+    <div style="display:flex;justify-content:center;gap:0.5rem"><button class="btn btn-primary" id="mc-close">Done</button></div>
+  </div>`;
+  document.body.appendChild(bd);
+  bd.onclick = e => { if (e.target === bd) closeModal(); };
+  document.getElementById('mc-x').onclick = closeModal; document.getElementById('mc-close').onclick = closeModal;
+}
+
+function renderPromptLabModal() {
+  const ex = document.getElementById('cf-modal'); if (ex) ex.remove();
+  const bd = document.createElement('div'); bd.className = 'modal-backdrop'; bd.id = 'cf-modal';
+  bd.innerHTML = `<div class="modal">
+    <div class="modal-header"><span class="modal-title">🧪 Mobile Prompt Archetypes</span><button class="modal-close" id="mc-x">✕</button></div>
+    <div class="archetype-grid">
+      ${PROMPT_ARCHETYPES.map((a, i) => `
+        <div class="archetype-card" data-arch="${i}">
+          <div style="font-weight:bold;font-size:0.85rem;color:var(--cyan);margin-bottom:0.2rem">${a.title}</div>
+          <div style="font-size:0.72rem;color:var(--text-muted);line-height:1.35">${a.text}</div>
+        </div>
+      `).join('')}
+    </div>
+    <div style="display:flex;justify-content:flex-end;margin-top:1.25rem"><button class="btn" id="mc-close">Close</button></div>
+  </div>`;
+  document.body.appendChild(bd);
+  bd.onclick = e => { if (e.target === bd) closeModal(); };
+  document.getElementById('mc-x').onclick = closeModal; document.getElementById('mc-close').onclick = closeModal;
+  bd.querySelectorAll('.archetype-card').forEach(el => {
+    el.onclick = () => {
+      const arch = PROMPT_ARCHETYPES[parseInt(el.dataset.arch)];
+      const step = getSteps()[state.stepIndex]; const cur = getAnswer(step.id);
+      setAnswer(step.id, cur.o, arch.text); closeModal();
+      toast(`🧪 Loaded archetype "${arch.title}" into step prompt!`, 'ok');
+    };
+  });
+}
+
+function renderSettingsModal() {
+  const ex = document.getElementById('cf-modal'); if (ex) ex.remove();
+  const bd = document.createElement('div'); bd.className = 'modal-backdrop'; bd.id = 'cf-modal';
+  bd.innerHTML = `<div class="modal">
+    <div class="modal-header"><span class="modal-title">⚙ API Keys & Settings</span><button class="modal-close" id="mc-x">✕</button></div>
+    <div class="form-group"><label class="form-label">Ollama Host</label><input type="text" id="k-ollama" value="${state.keys.ollamaHost || ''}" placeholder="http://localhost:11434" aria-label="Ollama Host" /></div>
+    <div class="form-group"><label class="form-label">Groq API Key</label><input type="password" id="k-groq" value="${state.keys.groqKey || ''}" placeholder="gsk_…" aria-label="Groq API Key" /></div>
+    <div class="form-group"><label class="form-label">OpenRouter API Key</label><input type="password" id="k-or" value="${state.keys.openrouterKey || ''}" placeholder="sk-or-…" aria-label="OpenRouter API Key" /></div>
+    <div style="display:flex;justify-content:flex-end;gap:0.5rem;margin-top:1.25rem">
+      <button class="btn" id="mc-cancel">Cancel</button>
+      <button class="btn btn-primary" id="mc-save">Save Keys</button>
+    </div>
+  </div>`;
+  document.body.appendChild(bd);
+  bd.onclick = e => { if (e.target === bd) closeModal(); };
+  document.getElementById('mc-x').onclick = closeModal; document.getElementById('mc-cancel').onclick = closeModal;
+  document.getElementById('mc-save').onclick = () => {
+    state.keys.ollamaHost = document.getElementById('k-ollama').value.trim();
+    state.keys.groqKey = document.getElementById('k-groq').value.trim();
+    state.keys.openrouterKey = document.getElementById('k-or').value.trim();
+    saveKeys(); toast('Keys saved!', 'ok'); closeModal();
+  };
+}
+
+function closeModal() {
+  state.settingsOpen = false; state.featuresOpen = false; state.shortcutsOpen = false; state.promptLabOpen = false; state.qrModalOpen = false;
+  const m = document.getElementById('cf-modal'); if (m) m.remove(); render();
+}
+
+render();
+})();
+</script>
+</body>
+</html>

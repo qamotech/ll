@@ -1,0 +1,170 @@
+{
+  "game_details": {
+    "title": "Liar and The Lamb",
+    "genre": "2.5D Fighting Game",
+    "platform": "Android (Mobile-first)",
+    "aesthetic_and_branding": {
+      "theme": "Biblical/Scriptural High-Fantasy Meets Cyber-Athletic",
+      "visual_style": "Athletic, Bold, Minimalist. Inspired by Nike ('Just Do It' energy). High-contrast typography, dark matte backgrounds, electric neon accents. Pure vector, zero latency feel.",
+      "environment": "Dark stormy cloudy boards, dynamic splashing water, procedural weather."
+    }
+  },
+  "technical_architecture": {
+    "engine": "Unity 2023 LTS (Universal Render Pipeline)",
+    "physics": "Havok Physics (Deterministic movement, asynchronous ticking)",
+    "networking": "GGPO (Rollback Netcode) implemented over UDP",
+    "backend": "Golang microservices deployed via Docker on AWS EKS",
+    "database": {
+      "primary": "Amazon DynamoDB (Player profiles, inventory)",
+      "matchmaking": "Redis (ElastiCache for real-time queues)"
+    },
+    "cdn": "AWS CloudFront (Edge-side asset caching)"
+  },
+  "core_mechanics": {
+    "movement": {
+      "fluidity": "Super ultra mega fluid movement systems",
+      "features": [
+        "Double Jumping (Mid-air trajectory alteration)",
+        "Kinetic Dashing (High-speed, frame-perfect directional invulnerability)",
+        "Tactical Crouching (Hurtbox compression)",
+        "Momentum-Based Collision (Damage scales with kinetic momentum)"
+      ]
+    },
+    "tension_system": "Faith/Fear Meter builds via aggressive play to unlock Ultimates.",
+    "customization": "Dynamic Scripture Weaving (Equip verses for conditional buffs)"
+  },
+  "roster": [
+    {
+      "name": "The Lamb",
+      "role": "The Victor / Balanced Protagonist",
+      "damage_type": "Holy",
+      "visuals": "White wool aura, electric blue sunglasses, glowing scriptural weapons",
+      "combat_states": {
+        "idle": "Idle Stance",
+        "dash": "Kinetic Dash",
+        "slide": "Tactical Slide (Low)",
+        "block": "Heavy Block (Shield of Faith)",
+        "attack_standard": "Sword Strike (Light)",
+        "ultimate": "Divine Burst"
+      },
+      "weapons": [
+        "Sword of the Spirit",
+        "Shield of Faith"
+      ]
+    },
+    {
+      "name": "The Liar",
+      "role": "Agile / Deception",
+      "damage_type": "Demonic / Abyssal",
+      "visuals": "Red demonic body, horns, furious yellow eyes",
+      "combat_states": {
+        "idle": "Idle Stance",
+        "dash": "Shadow Step",
+        "slide": "Predator Slide",
+        "block": "Hardened Guard (Crossed Obsidian Arms)",
+        "attack_standard": "Hellfire Slash (Trident/Claw)",
+        "ultimate": "Abyssal Eruption"
+      },
+      "weapons": [
+        "Claws",
+        "Hellfire Trident"
+      ]
+    },
+    {
+      "name": "Lion of Judah",
+      "role": "Heavy Grappler / High Impact",
+      "damage_type": "Holy / Kinetic",
+      "visuals": "Golden mane, majestic wings, royal aesthetic",
+      "combat_states": {
+        "idle": "Royal Stance",
+        "dash": "Golden Charge",
+        "slide": "Lion's Pounce (Low)",
+        "block": "Winged Aegis",
+        "attack_standard": "Scepter Smash (Heavy)",
+        "ultimate": "Wrathful Roar"
+      },
+      "weapons": [
+        "Golden Scepter"
+      ]
+    },
+    {
+      "name": "The Shadow Wolf",
+      "role": "Stance Switcher / Speed",
+      "damage_type": "Shadow / Ice",
+      "visuals": "Hunched feral body, jagged dark fur, piercing ice-blue eyes",
+      "combat_states": {
+        "idle": "Feral Stance",
+        "dash": "Phantom Sprint",
+        "slide": "Shadow Crawl",
+        "block": "Cloak of Shadows",
+        "attack_standard": "Cross Fang Strike (Twin Daggers)",
+        "ultimate": "Lunar Execution"
+      },
+      "weapons": [
+        "Twin Shadow Daggers"
+      ]
+    },
+    {
+      "name": "The Archangel",
+      "role": "Precision / Celestial Speed",
+      "damage_type": "Platinum Light",
+      "visuals": "Platinum armor, folded light wings, hovering halo",
+      "combat_states": {
+        "idle": "Seraphic Stance",
+        "dash": "Halo Dash",
+        "slide": "Celestial Glide (Low)",
+        "block": "Aegis of Light",
+        "attack_standard": "Spear of Justice (Thrust)",
+        "ultimate": "Heaven's Judgement"
+      },
+      "weapons": [
+        "Celestial Spear"
+      ]
+    },
+    {
+      "name": "The Leviathan",
+      "role": "Heavy Fluidity / Zone Control",
+      "damage_type": "Abyssal Water",
+      "visuals": "Coiled serpentine body, bioluminescent teal scales, deep oceanic blue",
+      "combat_states": {
+        "idle": "Abyssal Stance",
+        "dash": "Tidal Surge",
+        "slide": "Undertow (Submerge)",
+        "block": "Coral Carapace (Whirlpool Shield)",
+        "attack_standard": "Riptide Whip",
+        "ultimate": "Deep Maw"
+      },
+      "weapons": [
+        "Water Whip / Serpentine Tail"
+      ]
+    }
+  ],
+  "arenas": [
+    {
+      "name": "The Tempest Sea",
+      "description": "Dark stormy board, procedural splashing water displacing dynamically based on character weight/impact."
+    },
+    {
+      "name": "Mount of Transfiguration",
+      "description": "Blinding light, shattered stone pillars."
+    },
+    {
+      "name": "The Abyss",
+      "description": "Cracked obsidian, volcanic ash."
+    }
+  ],
+  "monetization_strategy": {
+    "philosophy": "Strictly cosmetic. Zero pay-to-win mechanics.",
+    "systems": [
+      "The Testament Pass (Seasonal battle pass for skins/animations)",
+      "Direct Purchase Store (High-tier cosmetic weapon skins)"
+    ]
+  },
+  "advanced_features": [
+    "Adaptive AI Sparring Partner",
+    "Haptic-Driven Combos",
+    "Live Spectator 'Colosseum' Mode",
+    "Vectorized Match Analytics",
+    "Micro-JSON OTA Patching"
+  ]
+}

@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liar and The Lamb - Game Client</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial Black', Impact, sans-serif;
+        }
+        body {
+            background-color: #050505;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            color: white;
+            overflow: hidden;
+        }
+
+        /* --- START SCREEN STYLES --- */
+        #start-screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 100;
+            background: #000;
+            transition: opacity 1s ease-out;
+        }
+        
+        #bg-video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            transform: translateX(-50%) translateY(-50%);
+            object-fit: cover;
+            z-index: 1; /* Pushed behind UI */
+            opacity: 0.6; 
+        }
+
+        /* Title at the Top */
+        .title-wrapper {
+            position: absolute;
+            top: 8vh; /* Anchors title to the top */
+            left: 0;
+            width: 100%;
+            text-align: center;
+            z-index: 10;
+            pointer-events: none; /* Prevents text from blocking clicks */
+        }
+
+        .main-title {
+            font-size: 80px;
+            letter-spacing: 5px;
+            background: -webkit-linear-gradient(#fff, #888);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0px 5px 15px rgba(0,0,0,0.8);
+        }
+
+        /* Button in the Center */
+        .button-wrapper {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 20; /* Highest z-index to guarantee clickability */
+        }
+
+        .start-btn {
+            padding: 15px 40px;
+            font-size: 24px;
+            color: #fff;
+            background: rgba(0, 0, 0, 0.5); /* Slight dark background to pop off video */
+            border: 3px solid #00ffcc;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: all 0.2s;
+            box-shadow: 0 0 15px rgba(0, 255, 204, 0.2);
+            pointer-events: auto; /* Forces clickability */
+        }
+
+        .start-btn:hover {
+            background: #00ffcc;
+            color: #000;
+            box-shadow: 0 0 30px rgba(0, 255, 204, 0.8);
+            transform: scale(1.05);
+        }
+
+        /* --- GAME UI STYLES --- */
+        #game-container {
+            position: relative;
+            display: none; 
+            border: 4px solid #333;
+            box-shadow: 0 0 30px rgba(255, 255, 255, 0.1);
+        }
+        
+        #ui-layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 10;
+        }
+        .health-bar-container {
+            position: relative;
+            width: 40%;
+            height: 30px;
+            background: #222;
+            border: 2px solid #555;
+            transform: skewX(-15deg);
+        }
+        .health-bar {
+            position: absolute;
+            top: 0;
+            height: 100%;
+            background: #00ffcc; 
+            width: 100%;
+            transition: width 0.2s ease-out;
+        }
+        #enemy-health {
+            background: #ff3333;
+            right: 0;
+        }
+        .timer {
+            font-size: 32px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 2px 2px 0 #000;
+        }
+        .player-name {
+            position: absolute;
+            top: 40px;
+            font-size: 18px;
+            color: #888;
+            text-transform: uppercase;
+            transform: skewX(15deg);
+        }
+        #p1-name { left: 0; }
+        #p2-name { right: 0; text-align: right; }
+        #game-over {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 48px;
+            display: none;
+            text-align: center;
+            text-shadow: 4px 4px 0 #000;
+        }
+        .subtitle {
+            font-size: 16px;
+            color: #888;
+            margin-top: 10px;
+            letter-spacing: 4px;
+        }
+        #controls {
+            margin-top: 20px;
+            display: none;
+            gap: 50px;
+            color: #666;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+        }
+        strong { color: #ccc; }
+    </style>
+</head>
+<body>
+
+    <!-- START SCREEN -->
+    <div id="start-screen">
+        <video id="bg-video" autoplay loop muted playsinline>
+            <source src="QMedia.mp4" type="video/mp4">
+        </video>
+        
+        <div class="title-wrapper">
+            <h1 class="main-title">LIAR & THE LAMB</h1>
+        </div>
+
+        <div class="button-wrapper">
+            <button class="start-btn" id="start-btn" onclick="initializeGame()">Initialize Combat</button>
+        </div>
+    </div>
+
+    <!-- GAME ENGINE -->
+    <div id="game-container">
+        <!-- HUD -->
+        <div id="ui-layer">
+            <div class="health-bar-container">
+                <div class="health-bar" id="player-health"></div>
+                <div class="player-name" id="p1-name">THE LAMB</div>
+            </div>
+            <div class="timer">99</div>
+            <div class="health-bar-container">
+                <div class="health-bar" id="enemy-health"></div>
+                <div class="player-name" id="p2-name">THE LIAR</div>
+            </div>
+        </div>
+        <div id="game-over">
+            <div id="winner-text">VICTORY</div>
+            <div class="subtitle">CHOOSE VICTORY.</div>
+        </div>
+        
+        <!-- Game Canvas -->
+        <canvas id="gameCanvas" width="1024" height="576"></canvas>
+    </div>
+
+    <div id="controls">
+        <div><strong>LAMB (Left):</strong> W, A, D to Move | SPACE to Attack</div>
+        <div><strong>LIAR (Right):</strong> Up, Left, Right Arrows | ENTER to Attack</div>
+    </div>
+
+    <script>
+        // --- UI TRANSITION LOGIC ---
+        function initializeGame() {
+            const startScreen = document.getElementById('start-screen');
+            const gameContainer = document.getElementById('game-container');
+            const controls = document.getElementById('controls');
+
+            // Fade out start screen
+            startScreen.style.opacity = '0';
+            
+            setTimeout(() => {
+                startScreen.style.display = 'none';
+                gameContainer.style.display = 'inline-block';
+                controls.style.display = 'flex';
+                
+                // Start the game loop only after the UI is ready
+                animate();
+            }, 1000); 
+        }
+
+        // --- ENGINE LOGIC ---
+        const canvas = document.getElementById('gameCanvas');
+        const c = canvas.getContext('2d');
+
+        // Physics Constants
+        const GRAVITY = 0.7;
+        const GROUND_LEVEL = 480;
+
+        // Environment: Stormy Water Particles
+        class Raindrop {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * -canvas.height;
+                this.speed = Math.random() * 10 + 10;
+                this.length = Math.random() * 20 + 10;
+            }
+            update() {
+                this.y += this.speed;
+                if (this.y > canvas.height) {
+                    this.y = -20;
+                    this.x = Math.random() * canvas.width;
+                }
+                c.beginPath();
+                c.moveTo(this.x, this.y);
+                c.lineTo(this.x - 2, this.y + this.length);
+                c.strokeStyle = 'rgba(255, 255, 255, 0.2)';
+                c.lineWidth = 1;
+                c.stroke();
+            }
+        }
+        const rain = Array.from({ length: 100 }, () => new Raindrop());
+
+        // CORE FIGHTER CLASS
+        class Fighter {
+            constructor({ position, velocity, color = 'white', offset }) {
+                this.position = position;
+                this.velocity = velocity;
+                this.width = 50;
+                this.height = 150;
+                this.lastKey = null;
+                this.attackBox = {
+                    position: { x: this.position.x, y: this.position.y },
+                    offset,
+                    width: 100,
+                    height: 50
+                };
+                this.color = color;
+                this.isAttacking = false;
+                this.health = 100;
+                this.speed = 6; 
+            }
+
+            draw() {
+                // Character Body
+                c.fillStyle = this.color;
+                c.fillRect(this.position.x, this.position.y, this.width, this.height);
+
+                // Attack Box 
+                if (this.isAttacking) {
+                    c.fillStyle = 'rgba(255, 255, 255, 0.5)';
+                    c.fillRect(
+                        this.attackBox.position.x,
+                        this.attackBox.position.y,
+                        this.attackBox.width,
+                        this.attackBox.height
+                    );
+                }
+            }
+
+            update() {
+                this.draw();
+                // Attach attack box to player
+                this.attackBox.position.x = this.position.x + this.attackBox.offset.x;
+                this.attackBox.position.y = this.position.y + this.attackBox.offset.y;
+
+                // Movement Execution
+                this.position.x += this.velocity.x;
+                this.position.y += this.velocity.y;
+
+                // Gravity & Ground Collision
+                if (this.position.y + this.height + this.velocity.y >= GROUND_LEVEL) {
+                    this.velocity.y = 0;
+                    this.position.y = GROUND_LEVEL - this.height;
+                } else {
+                    this.velocity.y += GRAVITY;
+                }
+
+                // Wall Bounds
+                if (this.position.x <= 0) this.position.x = 0;
+                if (this.position.x + this.width >= canvas.width) this.position.x = canvas.width - this.width;
+            }
+
+            attack() {
+                this.isAttacking = true;
+                setTimeout(() => {
+                    this.isAttacking = false;
+                }, 100);
+            }
+        }
+
+        // INSTANTIATE CHARACTERS
+        const player = new Fighter({
+            position: { x: 200, y: 0 },
+            velocity: { x: 0, y: 0 },
+            color: '#f4f4f4', 
+            offset: { x: 0, y: 20 }
+        });
+
+        const enemy = new Fighter({
+            position: { x: 774, y: 0 },
+            velocity: { x: 0, y: 0 },
+            color: '#cc0000', 
+            offset: { x: -50, y: 20 }
+        });
+
+        // INPUT HANDLING
+        const keys = {
+            a: { pressed: false },
+            d: { pressed: false },
+            ArrowRight: { pressed: false },
+            ArrowLeft: { pressed: false }
+        };
+
+        window.addEventListener('keydown', (event) => {
+            switch (event.key) {
+                // Lamb Controls
+                case 'd': keys.d.pressed = true; player.lastKey = 'd'; break;
+                case 'a': keys.a.pressed = true; player.lastKey = 'a'; break;
+                case 'w': if (player.velocity.y === 0) player.velocity.y = -15; break;
+                case ' ': player.attack(); break;
+                
+                // Liar Controls
+                case 'ArrowRight': keys.ArrowRight.pressed = true; enemy.lastKey = 'ArrowRight'; break;
+                case 'ArrowLeft': keys.ArrowLeft.pressed = true; enemy.lastKey = 'ArrowLeft'; break;
+                case 'ArrowUp': if (enemy.velocity.y === 0) enemy.velocity.y = -15; break;
+                case 'Enter': enemy.attack(); break;
+            }
+        });
+
+        window.addEventListener('keyup', (event) => {
+            switch (event.key) {
+                case 'd': keys.d.pressed = false; break;
+                case 'a': keys.a.pressed = false; break;
+                case 'ArrowRight': keys.ArrowRight.pressed = false; break;
+                case 'ArrowLeft': keys.ArrowLeft.pressed = false; break;
+            }
+        });
+
+        function rectangularCollision({ rectangle1, rectangle2 }) {
+            return (
+                rectangle1.attackBox.position.x + rectangle1.attackBox.width >= rectangle2.position.x &&
+                rectangle1.attackBox.position.x <= rectangle2.position.x + rectangle2.width &&
+                rectangle1.attackBox.position.y + rectangle1.attackBox.height >= rectangle2.position.y &&
+                rectangle1.attackBox.position.y <= rectangle2.position.y + rectangle2.height
+            );
+        }
+
+        let gameActive = true;
+        
+        function animate() {
+            if (!gameActive) return;
+            window.requestAnimationFrame(animate);
+            
+            // Background (Dark Storm)
+            c.fillStyle = '#111820';
+            c.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Water Floor
+            c.fillStyle = '#0a192f';
+            c.fillRect(0, GROUND_LEVEL, canvas.width, canvas.height - GROUND_LEVEL);
+
+            rain.forEach(drop => drop.update());
+
+            player.update();
+            enemy.update();
+
+            player.velocity.x = 0;
+            enemy.velocity.x = 0;
+
+            if (keys.a.pressed && player.lastKey === 'a') {
+                player.velocity.x = -player.speed;
+            } else if (keys.d.pressed && player.lastKey === 'd') {
+                player.velocity.x = player.speed;
+            }
+
+            if (keys.ArrowLeft.pressed && enemy.lastKey === 'ArrowLeft') {
+                enemy.velocity.x = -enemy.speed;
+            } else if (keys.ArrowRight.pressed && enemy.lastKey === 'ArrowRight') {
+                enemy.velocity.x = enemy.speed;
+            }
+
+            // Hit Detection
+            if (player.isAttacking && rectangularCollision({ rectangle1: player, rectangle2: enemy })) {
+                player.isAttacking = false;
+                enemy.health -= 10;
+                document.getElementById('enemy-health').style.width = enemy.health + '%';
+            }
+
+            if (enemy.isAttacking && rectangularCollision({ rectangle1: enemy, rectangle2: player })) {
+                enemy.isAttacking = false;
+                player.health -= 10;
+                document.getElementById('player-health').style.width = player.health + '%';
+            }
+
+            if (enemy.health <= 0 || player.health <= 0) {
+                determineWinner();
+            }
+        }
+
+        function determineWinner() {
+            gameActive = false;
+            const resultText = document.getElementById('winner-text');
+            const overlay = document.getElementById('game-over');
+            
+            if (player.health === enemy.health) {
+                resultText.innerHTML = 'DRAW';
+            } else if (player.health > enemy.health) {
+                resultText.innerHTML = 'THE LAMB WINS';
+            } else {
+                resultText.innerHTML = 'THE LIAR WINS';
+            }
+            
+            overlay.style.display = 'block';
+        }
+    </script>
+</body>
+</html>

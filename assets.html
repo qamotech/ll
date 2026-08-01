@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liar and The Lamb - Vector Assets</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial Black', Impact, sans-serif;
+        }
+        body {
+            background-color: #050505;
+            color: white;
+            padding: 40px;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+        }
+        h1 {
+            font-size: 48px;
+            background: -webkit-linear-gradient(#fff, #555);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .subtitle {
+            color: #00ffcc;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+        .asset-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        .asset-card {
+            background: #111;
+            border: 2px solid #222;
+            border-radius: 8px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+        .asset-card:hover {
+            border-color: #00ffcc;
+            box-shadow: 0 0 20px rgba(0, 255, 204, 0.2);
+            transform: translateY(-5px);
+        }
+        .asset-name {
+            margin-top: 20px;
+            font-size: 16px;
+            color: #888;
+            letter-spacing: 2px;
+            text-align: center;
+        }
+        svg {
+            width: 120px;
+            height: 120px;
+            filter: drop-shadow(0px 10px 10px rgba(0,0,0,0.8));
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>SVG Asset Context File</h1>
+        <div class="subtitle">PURE VECTOR. ZERO LATENCY.</div>
+    </header>
+
+    <div class="asset-grid">
+        
+        <!-- THE LAMB (Hero) -->
+        <div class="asset-card">
+            <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <!-- Wool Aura / Fluff -->
+                <circle cx="50" cy="50" r="35" fill="#ffffff" filter="drop-shadow(0 0 5px #ffffff)"/>
+                <circle cx="25" cy="40" r="18" fill="#f4f4f4"/>
+                <circle cx="75" cy="40" r="18" fill="#f4f4f4"/>
+                <circle cx="30" cy="70" r="15" fill="#e0e0e0"/>
+                <circle cx="70" cy="70" r="15" fill="#e0e0e0"/>
+                <circle cx="50" cy="25" r="20" fill="#ffffff"/>
+                
+                <!-- Ears -->
+                <ellipse cx="15" cy="55" rx="12" ry="6" fill="#e0e0e0" transform="rotate(-20 15 55)"/>
+                <ellipse cx="85" cy="55" rx="12" ry="6" fill="#e0e0e0" transform="rotate(20 85 55)"/>
+                
+                <!-- Sunglasses (Electric Blue / Nike Vibe) -->
+                <rect x="26" y="42" width="22" height="14" rx="4" fill="#00ffcc"/>
+                <rect x="52" y="42" width="22" height="14" rx="4" fill="#00ffcc"/>
+                <path d="M48 46 L52 46" stroke="#111" stroke-width="3"/>
+                <path d="M26 46 L18 40" stroke="#111" stroke-width="3"/>
+                <path d="M74 46 L82 40" stroke="#111" stroke-width="3"/>
+
+                <!-- Snout & Mouth -->
+                <ellipse cx="50" cy="68" rx="16" ry="12" fill="#dcdcdc"/>
+                <polygon points="45,65 55,65 50,70" fill="#222"/>
+                <path d="M50 70 L50 75 Q45 78 40 75" fill="none" stroke="#222" stroke-width="2"/>
+                <path d="M50 70 L50 75 Q55 78 60 75" fill="none" stroke="#222" stroke-width="2"/>
+            </svg>
+            <div class="asset-name">THE LAMB</div>
+        </div>
+
+        <!-- THE LIAR (Demon) -->
+        <div class="asset-card">
+            <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <!-- Demonic Head Shape -->
+                <path d="M20,35 Q50,15 80,35 L72,80 Q50,105 28,80 Z" fill="#cc0000"/>
+                <path d="M30,40 Q50,25 70,40 L65,75 Q50,95 35,75 Z" fill="#aa0000"/>
+                
+                <!-- Horns -->
+                <path d="M30,38 Q10,10 25,5 Q38,20 42,32 Z" fill="#111"/>
+                <path d="M70,38 Q90,10 75,5 Q62,20 58,32 Z" fill="#111"/>
+                
+                <!-- Furious Eyes -->
+                <polygon points="32,55 46,46 48,52" fill="#ffcc00"/>
+                <polygon points="68,55 54,46 52,52" fill="#ffcc00"/>
+                
+                <!-- Snarling Mouth -->
+                <path d="M40,78 Q50,88 60,78" fill="none" stroke="#111" stroke-width="4"/>
+                <polygon points="42,79 46,85 48,79" fill="#fff"/>
+                <polygon points="58,79 54,85 52,79" fill="#fff"/>
+            </svg>
+            <div class="asset-name">THE LIAR</div>
+        </div>
+
+        <!-- LION OF JUDAH -->
+        <div class="asset-card">
+            <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <!-- Golden Mane -->
+                <path d="M50,5 L70,15 L90,30 L85,60 L70,90 L50,95 L30,90 L15,60 L10,30 L30,15 Z" fill="#cc9900"/>
+                <path d="M50,15 L65,25 L80,35 L75,55 L65,80 L50,85 L35,80 L25,55 L20,35 L35,25 Z" fill="#ffcc00"/>
+                
+                <!-- Face -->
+                <ellipse cx="50" cy="55" rx="20" ry="25" fill="#e6b800"/>
+                
+                <!-- Eyes & Nose -->
+                <polygon points="38,48 45,45 45,50" fill="#fff"/>
+                <polygon points="62,48 55,45 55,50" fill="#fff"/>
+                <polygon points="45,60 55,60 50,68" fill="#333"/>
+                
+                <!-- Muzzle -->
+                <path d="M50 68 Q40 75 35 70" fill="none" stroke="#333" stroke-width="2"/>
+                <path d="M50 68 Q60 75 65 70" fill="none" stroke="#333" stroke-width="2"/>
+            </svg>
+            <div class="asset-name">LION OF JUDAH</div>
+        </div>
+
+        <!-- SWORD OF THE SPIRIT -->
+        <div class="asset-card">
+            <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <!-- Holy Glow -->
+                <polygon points="48,20 52,20 50,2" fill="#00ffcc" opacity="0.6" filter="blur(3px)"/>
+                
+                <!-- Blade -->
+                <polygon points="46,25 54,25 50,5" fill="#f4f4f4"/>
+                <rect x="48" y="25" width="4" height="45" fill="#dcdcdc"/>
+                <rect x="49" y="5" width="2" height="65" fill="#00ffcc"/> <!-- Energy core -->
+                
+                <!-- Crossguard & Hilt -->
+                <rect x="30" y="70" width="40" height="6" rx="2" fill="#cca600"/>
+                <polygon points="30,70 25,65 30,76" fill="#cca600"/>
+                <polygon points="70,70 75,65 70,76" fill="#cca600"/>
+                <rect x="45" y="76" width="10" height="18" fill="#333"/>
+                <circle cx="50" cy="95" r="5" fill="#cca600"/>
+            </svg>
+            <div class="asset-name">SWORD OF THE SPIRIT</div>
+        </div>
+
+        <!-- SHIELD OF FAITH -->
+        <div class="asset-card">
+            <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <!-- Shield Base -->
+                <path d="M15,20 L85,20 L85,45 Q85,90 50,95 Q15,90 15,45 Z" fill="#1a1a1a" stroke="#cca600" stroke-width="5"/>
+                <path d="M22,25 L78,25 L78,45 Q78,85 50,88 Q22,85 22,45 Z" fill="#2a2a2a"/>
+                
+                <!-- Golden Cross -->
+                <rect x="45" y="32" width="10" height="46" fill="#ffcc00" filter="drop-shadow(0 0 8px rgba(255, 204, 0, 0.8))"/>
+                <rect x="30" y="45" width="40" height="10" fill="#ffcc00" filter="drop-shadow(0 0 8px rgba(255, 204, 0, 0.8))"/>
+                
+                <!-- Inner Cross Highlight -->
+                <rect x="48" y="34" width="4" height="42" fill="#fff"/>
+                <rect x="32" y="48" width="36" height="4" fill="#fff"/>
+            </svg>
+            <div class="asset-name">SHIELD OF FAITH</div>
+        </div>
+
+        <!-- STORM / WATER FX -->
+        <div class="asset-card">
+            <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <!-- Dark Clouds -->
+                <path d="M20,50 Q30,30 50,35 Q65,20 80,40 Q95,55 75,70 L25,70 Q5,60 20,50 Z" fill="#2c3e50"/>
+                <path d="M30,55 Q40,40 55,45 Q65,35 75,50 Q85,60 70,65 L35,65 Q20,60 30,55 Z" fill="#34495e"/>
+                
+                <!-- Lightning Strike -->
+                <polygon points="45,50 65,50 50,68 65,68 35,95 45,72 30,72" fill="#00ffcc" filter="drop-shadow(0 0 5px #00ffcc)"/>
+                
+                <!-- Splashing Water Base -->
+                <path d="M10,85 Q25,75 40,85 T70,85 T90,85 L90,95 L10,95 Z" fill="#0a192f"/>
+                <path d="M20,80 Q35,70 50,80 T80,80 L80,95 L20,95 Z" fill="#112240"/>
+            </svg>
+            <div class="asset-name">TEMPEST ENGINE FX</div>
+        </div>
+
+    </div>
+
+</body>
+</html>
