@@ -64,6 +64,7 @@
             letter-spacing: 5px;
             background: -webkit-linear-gradient(#fff, #888);
             -webkit-background-clip: text;
+            background-clip: text;
             -webkit-text-fill-color: transparent;
             text-shadow: 0px 5px 15px rgba(0,0,0,0.8);
         }
@@ -185,7 +186,8 @@
     <!-- START SCREEN -->
     <div id="start-screen">
         <video id="bg-video" autoplay loop muted playsinline>
-            <source src="QMedia.mp4" type="video/mp4">
+            <source src="https://raw.githubusercontent.com/qamotech/ll/main/QMedia.mp4#t=3.2,10.0" type="video/mp4">
+            <source src="QMedia.mp4#t=3.2,10.0" type="video/mp4">
         </video>
         
         <div class="title-wrapper">
@@ -226,11 +228,36 @@
     </div>
 
     <script>
+        function toggleBgVideo() {
+            const bgVid = document.getElementById('bg-video');
+            if (bgVid) {
+                if (bgVid.paused) {
+                    bgVid.play().catch(() => {});
+                } else {
+                    bgVid.pause();
+                }
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const bgVid = document.getElementById('bg-video');
+            if (bgVid) {
+                bgVid.addEventListener('timeupdate', () => {
+                    if (bgVid.currentTime >= 10.0 || bgVid.currentTime < 3.2) {
+                        bgVid.currentTime = 3.2;
+                    }
+                });
+            }
+        });
+
         // --- UI TRANSITION LOGIC ---
         function initializeGame() {
             const startScreen = document.getElementById('start-screen');
+            const bgVid = document.getElementById('bg-video');
             const gameContainer = document.getElementById('game-container');
             const controls = document.getElementById('controls');
+
+            if (bgVid) { try { bgVid.pause(); } catch(e){} }
 
             // Fade out start screen
             startScreen.style.opacity = '0';

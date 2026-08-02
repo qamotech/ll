@@ -469,7 +469,8 @@
     <!-- QAMLOT MEDIA CINEMATIC INTRO -->
     <div id="qamlot-intro" onclick="dismissQamlotIntro()">
         <video id="qamlot-video" autoplay loop muted playsinline>
-            <source src="QMedia.mp4" type="video/mp4">
+            <source src="https://raw.githubusercontent.com/qamotech/ll/main/QMedia.mp4#t=3.2,10.0" type="video/mp4">
+            <source src="QMedia.mp4#t=3.2,10.0" type="video/mp4">
         </video>
         <div class="qamlot-overlay">
             <div class="qamlot-tag">QAMLOT MEDIA PRESENTS</div>
@@ -481,7 +482,8 @@
     <!-- START SCREEN -->
     <div id="start-screen">
         <video id="bg-video" autoplay loop muted playsinline>
-            <source src="QMedia.mp4" type="video/mp4">
+            <source src="https://raw.githubusercontent.com/qamotech/ll/main/QMedia.mp4#t=3.2,10.0" type="video/mp4">
+            <source src="QMedia.mp4#t=3.2,10.0" type="video/mp4">
         </video>
         <div class="title-wrapper">
             <div class="logo-emblem">
@@ -605,17 +607,62 @@
     </div>
 
     <script>
-        // Dismiss Intro Immediately
+        // Dismiss Intro & Control Video
         function dismissQamlotIntro() {
             const intro = document.getElementById('qamlot-intro');
             const vid = document.getElementById('qamlot-video');
+            const bgVid = document.getElementById('bg-video');
             if (intro) {
                 intro.style.pointerEvents = 'none';
                 intro.style.display = 'none';
                 intro.style.zIndex = '-1';
                 if (vid) { try { vid.pause(); } catch(e){} }
+                if (bgVid) { try { bgVid.pause(); } catch(e){} }
             }
         }
+
+        function toggleBgVideo() {
+            const bgVid = document.getElementById('bg-video');
+            const qVid = document.getElementById('qamlot-video');
+            if (bgVid) {
+                if (bgVid.paused) {
+                    bgVid.play().catch(() => {});
+                } else {
+                    bgVid.pause();
+                }
+            }
+            if (qVid) {
+                if (qVid.paused) {
+                    qVid.play().catch(() => {});
+                } else {
+                    qVid.pause();
+                }
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const bgVid = document.getElementById('bg-video');
+            const qVid = document.getElementById('qamlot-video');
+            
+            [bgVid, qVid].forEach(v => {
+                if (v) {
+                    v.addEventListener('timeupdate', () => {
+                        if (v.currentTime >= 10.0 || v.currentTime < 3.2) {
+                            v.currentTime = 3.2;
+                        }
+                    });
+                    v.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        if (v.paused) {
+                            v.play().catch(() => {});
+                        } else {
+                            v.pause();
+                        }
+                    });
+                }
+            });
+        });
+
         window.addEventListener('keydown', dismissQamlotIntro);
 
         // ==========================================
