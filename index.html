@@ -1360,8 +1360,8 @@
         // ==========================================
         const P2_PAL = { cyan: '#62f5db', ice: '#bffcf3', blue: '#5ca8ff', red: '#ff435f', hot: '#ff9a62', dark: '#071019', void: '#030508', gold: '#ffd36c', purple: '#a87cff', white: '#fff', smoke: '#8191a0' };
 
-        function part2Shell(body, label = 'Animated game SVG asset', view = '0 0 320 220') {
-            const id = Math.random().toString(36).slice(2, 9);
+        function part2Shell(body, label = 'Animated game SVG asset', view = '0 0 320 220', customId = null) {
+            const id = customId || label.toLowerCase().replace(/[^a-z0-9]+/g, '') || 'p2a';
             return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${view}" role="img" aria-label="${label}"><defs><filter id="g${id}" x="-80%" y="-80%" width="260%" height="260%"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter><filter id="s${id}" x="-80%" y="-80%" width="260%" height="260%"><feGaussianBlur stdDeviation="12"/></filter><linearGradient id="t${id}"><stop stop-color="${P2_PAL.white}"/><stop offset=".5" stop-color="${P2_PAL.cyan}"/><stop offset="1" stop-color="${P2_PAL.blue}"/></linearGradient><linearGradient id="d${id}"><stop stop-color="${P2_PAL.hot}"/><stop offset=".5" stop-color="${P2_PAL.red}"/><stop offset="1" stop-color="${P2_PAL.purple}"/></linearGradient></defs><style>.a{animation-duration:1.5s;animation-iteration-count:infinite;animation-timing-function:linear;transform-box:fill-box;transform-origin:center}.pulse{animation-name:pulse}.spin{animation-name:spin}.spinR{animation-name:spinR}.drift{animation-name:drift}.float{animation-name:float}.flicker{animation-name:flicker}.shake{animation-name:shake}.slide{animation-name:slide}.wave{animation-name:wave}.grow{animation-name:grow}.blink{animation-name:blink}@keyframes pulse{0%,100%{transform:scale(.86);opacity:.35}50%{transform:scale(1.12);opacity:1}}@keyframes spin{to{transform:rotate(360deg)}}@keyframes spinR{to{transform:rotate(-360deg)}}@keyframes drift{0%{transform:translate(-30px,10px);opacity:0}20%{opacity:.8}100%{transform:translate(45px,-25px);opacity:0}}@keyframes float{0%,100%{transform:translateY(-7px)}50%{transform:translateY(8px)}}@keyframes flicker{0%,8%,12%,70%,74%,100%{opacity:1}10%,72%{opacity:.12}}@keyframes shake{0%,100%{transform:translate(0)}25%{transform:translate(-4px,2px)}50%{transform:translate(5px,-2px)}75%{transform:translate(-2px,-3px)}}@keyframes slide{0%{transform:translateX(-80px);opacity:0}15%{opacity:1}85%{opacity:1}100%{transform:translateX(80px);opacity:0}}@keyframes wave{0%,100%{transform:skewX(-4deg) translateY(3px)}50%{transform:skewX(4deg) translateY(-5px)}}@keyframes grow{0%,100%{transform:scaleY(.65);opacity:.4}50%{transform:scaleY(1.15);opacity:1}}@keyframes blink{0%,46%,54%,100%{opacity:1}48%,52%{opacity:0}}</style>${body.replaceAll('GLOW', `g${id}`).replaceAll('SOFT', `s${id}`).replaceAll('TRUTH', `t${id}`).replaceAll('DECEIT', `d${id}`)}</svg>`;
         }
 
@@ -1369,12 +1369,98 @@
 
         function part2Arena(k) {
             let b = `<rect width="320" height="220" fill="${P2_PAL.dark}"/>`;
-            if (k === 'The Tempest Sea' || k === 'tempest') b += `<path d="M0 145Q40 120 80 145t80 0t80 0t80 0v75H0z" fill="#0d3650"/><path d="M0 153Q40 128 80 153t80 0t80 0t80 0" fill="none" stroke="${P2_PAL.cyan}" stroke-width="4" class="a wave" style="--d:1.6s"/><path d="M75 0l-18 66h25l-31 62 69-81H91l22-47" fill="${P2_PAL.white}" class="a flicker" style="--d:2.8s" filter="url(#GLOW)"/>${p2Particles(P2_PAL.blue, 10)}`;
-            else if (k === 'Mount of Transfiguration' || k === 'mount') b += `<circle cx="160" cy="69" r="58" fill="${P2_PAL.gold}" opacity=".18" class="a pulse" style="--d:2.2s" filter="url(#SOFT)"/><path d="M0 198L70 112l40 29 53-95 49 91 42-27 66 88z" fill="#2b3440" stroke="${P2_PAL.gold}" stroke-width="2"/><path d="M81 115v77M239 110v82" stroke="#7b8790" stroke-width="17" stroke-dasharray="9 5"/>`;
-            else if (k === 'The Abyss' || k === 'abyss') b += `<path d="M0 181L48 149l34 20 43-34 35 28 42-51 36 46 82-22v84H0z" fill="#211016"/><path d="M0 188l62-5 24-27 22 39 55-22 28-42 28 44 101-8" fill="none" stroke="${P2_PAL.red}" stroke-width="5" filter="url(#GLOW)" class="a flicker" style="--d:2s"/>${p2Particles(P2_PAL.hot, 9)}`;
-            else if (k === 'Garden of Choice' || k === 'garden') b += `<rect y="132" width="320" height="88" fill="#102c25"/><path d="M160 142V39M160 71q-53-45-76 4q35 35 76 12M160 70q54-44 77 5q-36 35-77 12" fill="#225c43" stroke="${P2_PAL.cyan}" stroke-width="3" class="a wave" style="--d:2.5s"/><circle cx="160" cy="52" r="10" fill="${P2_PAL.gold}" class="a pulse" style="--d:1.7s"/>`;
-            else if (k === 'Judgment Colosseum' || k === 'colosseum') b += `<path d="M25 184V83Q160 6 295 83v101" fill="#161c27" stroke="${P2_PAL.gold}" stroke-width="4"/><path d="M45 171V93Q160 33 275 93v78" fill="#080c12"/>${Array.from({ length: 9 }, (_, i) => `<rect x="${51 + i * 27}" y="104" width="11" height="59" fill="#2a3440"/>`).join('')}<ellipse cx="160" cy="182" rx="122" ry="25" fill="#342b22" stroke="${P2_PAL.gold}"/>`;
-            else b += `<rect y="145" width="320" height="75" fill="#101722"/><path d="M0 145L55 98l33 30 49-62 40 55 45-31 98 55" fill="#1a2633" stroke="${k.includes('Heaven') || k === 'heaven' ? P2_PAL.cyan : P2_PAL.red}" stroke-width="3"/>${p2Particles(k.includes('Heaven') || k === 'heaven' ? P2_PAL.cyan : P2_PAL.red, 12)}`;
+            if (k === 'The Tempest Sea' || k === 'tempest') {
+                b += `
+                <!-- Dark Storm Sky -->
+                <rect width="320" height="150" fill="url(#d${P2_PAL.dark})"/>
+                <!-- Distant Storm Clouds -->
+                <path d="M-10 40Q30 10 90 25Q140 5 210 20Q280 10 330 35v60H-10z" fill="#091826" opacity=".8"/>
+                <path d="M-10 60Q50 35 120 48Q190 30 260 45Q310 35 330 65v50H-10z" fill="#0d2438" opacity=".9"/>
+                <!-- Lightning Flash -->
+                <path d="M140 0L115 50h25l-35 65 75-75h-30l30-40z" fill="${P2_PAL.white}" class="a flicker" style="--d:2.2s" filter="url(#GLOW)"/>
+                <!-- Rolling Wave Layers -->
+                <path d="M0 135Q40 115 80 135t80 0t80 0t80 0v85H0z" fill="#0a2a40"/>
+                <path d="M0 148Q40 128 80 148t80 0t80 0t80 0" fill="none" stroke="${P2_PAL.cyan}" stroke-width="4" class="a wave" style="--d:1.5s"/>
+                <path d="M0 162Q40 142 80 162t80 0t80 0t80 0v58H0z" fill="#061c2c"/>
+                <path d="M0 168Q40 150 80 168t80 0t80 0t80 0" fill="none" stroke="${P2_PAL.blue}" stroke-width="3" class="a wave" style="--d:2s"/>
+                ${p2Particles(P2_PAL.cyan, 14)}`;
+            } else if (k === 'Mount of Transfiguration' || k === 'mount') {
+                b += `
+                <!-- Celestial Glory Sky -->
+                <rect width="320" height="220" fill="#141c26"/>
+                <!-- Radiant Halo Burst -->
+                <circle cx="160" cy="75" r="75" fill="${P2_PAL.gold}" opacity=".15" class="a pulse" style="--d:2.4s" filter="url(#SOFT)"/>
+                <circle cx="160" cy="75" r="45" fill="${P2_PAL.gold}" opacity=".25" class="a pulse" style="--d:1.6s" filter="url(#GLOW)"/>
+                <!-- Holy Light Beams -->
+                <polygon points="160,0 120,220 200,220" fill="${P2_PAL.gold}" opacity=".1" class="a pulse" style="--d:3s"/>
+                <!-- Mountain Peaks -->
+                <path d="M-20 220L50 110l45 35 65-115 60 105 50-35 70 110z" fill="#1c2633" stroke="${P2_PAL.gold}" stroke-width="2"/>
+                <path d="M30 220L95 130l35 25 30-55 40 60 45-30 65 90z" fill="#101822"/>
+                <!-- Sacred Temple Pillars -->
+                <rect x="35" y="110" width="18" height="90" fill="#2b3847" stroke="${P2_PAL.gold}" stroke-width="2"/>
+                <rect x="267" y="110" width="18" height="90" fill="#2b3847" stroke="${P2_PAL.gold}" stroke-width="2"/>
+                <path d="M30 110h28M262 110h28" stroke="${P2_PAL.gold}" stroke-width="4"/>
+                ${p2Particles(P2_PAL.gold, 12)}`;
+            } else if (k === 'The Abyss' || k === 'abyss') {
+                b += `
+                <!-- Dark Cavern Sky -->
+                <rect width="320" height="220" fill="#120508"/>
+                <!-- Blood Moon Orb -->
+                <circle cx="160" cy="65" r="50" fill="${P2_PAL.red}" opacity=".2" class="a pulse" style="--d:2s" filter="url(#SOFT)"/>
+                <circle cx="160" cy="65" r="30" fill="${P2_PAL.hot}" opacity=".4" class="a pulse" style="--d:1.5s" filter="url(#GLOW)"/>
+                <!-- Craggy Magma Peaks -->
+                <path d="M-10 220L40 140l35 25 45-45 40 35 45-60 40 50 85-35v110z" fill="#240c13"/>
+                <!-- Glowing Lava Veins -->
+                <path d="M0 185l50-15 30 20 45-30 35 25 45-45 35 40 80-15" fill="none" stroke="${P2_PAL.red}" stroke-width="5" filter="url(#GLOW)" class="a flicker" style="--d:1.8s"/>
+                <path d="M0 195l60-10 25 15 50-25 30 20 40-35 40 30 75-10" fill="none" stroke="${P2_PAL.hot}" stroke-width="3" class="a flicker" style="--d:2.4s"/>
+                ${p2Particles(P2_PAL.hot, 16)}`;
+            } else if (k === 'Garden of Choice' || k === 'garden') {
+                b += `
+                <!-- Twilight Forest Sky -->
+                <rect width="320" height="220" fill="#081815"/>
+                <!-- Moonlight Glow -->
+                <ellipse cx="160" cy="50" rx="90" ry="40" fill="${P2_PAL.cyan}" opacity=".12" class="a pulse" style="--d:2.5s" filter="url(#SOFT)"/>
+                <!-- Tree of Life Trunk & Canopy -->
+                <path d="M160 220V75M160 115q-60-50-85 10q40 40 85 15M160 115q60-50 85 10q-40 40-85 15" fill="#143b31" stroke="${P2_PAL.cyan}" stroke-width="3.5" class="a wave" style="--d:3s"/>
+                <!-- Golden Sacred Fruit -->
+                <circle cx="110" cy="85" r="9" fill="${P2_PAL.gold}" class="a pulse" style="--d:1.8s" filter="url(#GLOW)"/>
+                <circle cx="210" cy="85" r="9" fill="${P2_PAL.gold}" class="a pulse" style="--d:2.1s" filter="url(#GLOW)"/>
+                <circle cx="160" cy="55" r="11" fill="${P2_PAL.gold}" class="a pulse" style="--d:1.5s" filter="url(#GLOW)"/>
+                <!-- Forest Floor -->
+                <rect y="145" width="320" height="75" fill="#0d261f"/>
+                <path d="M0 145Q80 135 160 145T320 145v75H0z" fill="#081a15" stroke="${P2_PAL.cyan}" stroke-width="1.5"/>
+                ${p2Particles(P2_PAL.cyan, 12)}`;
+            } else if (k === 'Judgment Colosseum' || k === 'colosseum') {
+                b += `
+                <!-- Coliseum Arena Sky -->
+                <rect width="320" height="220" fill="#121824"/>
+                <!-- Arena Crest Glow -->
+                <circle cx="160" cy="80" r="70" fill="${P2_PAL.gold}" opacity=".1" class="a pulse" style="--d:2.2s" filter="url(#SOFT)"/>
+                <!-- Archways -->
+                <path d="M15 220V75Q160 -5 305 75v145" fill="#1a2433" stroke="${P2_PAL.gold}" stroke-width="3"/>
+                <path d="M35 220V88Q160 15 285 88v132" fill="#0b1018"/>
+                ${Array.from({ length: 9 }, (_, i) => `<rect x="${43 + i * 26}" y="95" width="13" height="75" fill="#243245" stroke="#121a24" stroke-width="1"/>`).join('')}
+                <!-- Flaming Torch Braziers -->
+                <rect x="30" y="110" width="10" height="40" fill="${P2_PAL.gold}"/>
+                <circle cx="35" cy="105" r="10" fill="${P2_PAL.hot}" class="a pulse" style="--d:1.2s" filter="url(#GLOW)"/>
+                <rect x="280" y="110" width="10" height="40" fill="${P2_PAL.gold}"/>
+                <circle cx="285" cy="105" r="10" fill="${P2_PAL.hot}" class="a pulse" style="--d:1.4s" filter="url(#GLOW)"/>
+                <!-- Sand Ring -->
+                <ellipse cx="160" cy="190" rx="135" ry="30" fill="#2e261d" stroke="${P2_PAL.gold}" stroke-width="2"/>
+                ${p2Particles(P2_PAL.gold, 10)}`;
+            } else {
+                b += `
+                <!-- Celestial Temple Sky -->
+                <rect width="320" height="220" fill="#0d1826"/>
+                <circle cx="160" cy="70" r="80" fill="${P2_PAL.cyan}" opacity=".15" class="a pulse" style="--d:2.5s" filter="url(#SOFT)"/>
+                <!-- Pearly Gates Pillar Architecture -->
+                <path d="M0 155L60 100l35 32 55-68 45 60 50-35 75 66v65H0z" fill="#182638" stroke="${P2_PAL.cyan}" stroke-width="2.5"/>
+                <path d="M40 220V120M280 220V120" stroke="${P2_PAL.white}" stroke-width="12" opacity=".8"/>
+                <path d="M30 115h20M270 115h20" stroke="${P2_PAL.gold}" stroke-width="6"/>
+                <!-- Heavenly Cloud Layer -->
+                <path d="M-10 175Q40 150 100 170T220 165T330 175v45H-10z" fill="#20334a" opacity=".9"/>
+                ${p2Particles(P2_PAL.white, 14)}`;
+            }
             return part2Shell(b, k);
         }
 
@@ -1986,9 +2072,31 @@
                 c.fillRect(0, 0, canvas.width, canvas.height);
             }
 
-            c.fillStyle = 'rgba(13, 31, 48, 0.75)';
-            c.fillRect(0, GROUND_LEVEL, canvas.width, canvas.height - GROUND_LEVEL);
-            drawUtilityEffect('tempest_engine_fx', canvas.width / 2, 210, 330, currentStage === 'tempest' ? .18 : .07);
+            // Stage Ambient Environmental Effects
+            if (frameCount % 4 === 0) {
+                if (currentStage === 'tempest') {
+                    particles.push({ x: Math.random() * canvas.width, y: 0, vx: -3, vy: 14 + Math.random() * 6, life: 30, color: '#62f5db' });
+                } else if (currentStage === 'mount') {
+                    particles.push({ x: Math.random() * canvas.width, y: canvas.height, vx: (Math.random() - .5) * 2, vy: -(1.5 + Math.random() * 2), life: 50, color: '#ffd36c' });
+                } else if (currentStage === 'abyss') {
+                    particles.push({ x: Math.random() * canvas.width, y: canvas.height, vx: (Math.random() - .5) * 3, vy: -(2 + Math.random() * 3), life: 45, color: '#ff435f' });
+                } else if (currentStage === 'garden') {
+                    particles.push({ x: Math.random() * canvas.width, y: Math.random() * canvas.height, vx: (Math.random() - .5) * 1.5, vy: (Math.random() - .5) * 1.5, life: 60, color: '#62f5db' });
+                } else if (currentStage === 'colosseum') {
+                    particles.push({ x: Math.random() * canvas.width, y: GROUND_LEVEL, vx: (Math.random() - .5) * 2.5, vy: -(1 + Math.random() * 2.5), life: 40, color: '#ff9a62' });
+                } else if (currentStage === 'heaven') {
+                    particles.push({ x: Math.random() * canvas.width, y: 0, vx: (Math.random() - .5) * 1.2, vy: 1 + Math.random() * 2, life: 55, color: '#ffffff' });
+                }
+            }
+
+            // Ground boundary marker line
+            c.strokeStyle = currentStage === 'abyss' ? 'rgba(255, 67, 95, 0.4)' : currentStage === 'mount' ? 'rgba(255, 211, 108, 0.4)' : 'rgba(98, 245, 219, 0.3)';
+            c.lineWidth = 2;
+            c.beginPath(); c.moveTo(0, GROUND_LEVEL); c.lineTo(canvas.width, GROUND_LEVEL); c.stroke();
+
+            if (currentStage === 'tempest') {
+                drawUtilityEffect('tempest_engine_fx', canvas.width / 2, 210, 330, .18);
+            }
             updateTempest();
             updateRelic();
             drawParticles();
