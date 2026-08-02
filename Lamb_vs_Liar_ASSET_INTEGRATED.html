@@ -1,15 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Liar and The Lamb - Cyber-Scriptural 2.5D Fighter</title>
     <link rel="manifest" href="LL/manifest.json">
-    <link rel="icon" type="image/svg+xml"
-        href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M23 70C10 53 15 30 34 25c8-2 13 1 16 7 3-6 8-9 16-7 19 5 24 28 11 45-8 10-18 17-27 24-9-7-19-14-27-24Z' fill='%23f7fffd' stroke='%2362f5db' stroke-width='4'/%3E%3Cpath d='M57 17 46 48h14l-8 35 25-43H63l8-23Z' fill='%23ff435f'/%3E%3C/svg%3E">
-    <link rel="apple-touch-icon"
-        href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M23 70C10 53 15 30 34 25c8-2 13 1 16 7 3-6 8-9 16-7 19 5 24 28 11 45-8 10-18 17-27 24-9-7-19-14-27-24Z' fill='%23f7fffd' stroke='%2362f5db' stroke-width='4'/%3E%3Cpath d='M57 17 46 48h14l-8 35 25-43H63l8-23Z' fill='%23ff435f'/%3E%3C/svg%3E">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M23 70C10 53 15 30 34 25c8-2 13 1 16 7 3-6 8-9 16-7 19 5 24 28 11 45-8 10-18 17-27 24-9-7-19-14-27-24Z' fill='%23f7fffd' stroke='%2362f5db' stroke-width='4'/%3E%3Cpath d='M57 17 46 48h14l-8 35 25-43H63l8-23Z' fill='%23ff435f'/%3E%3C/svg%3E">
+    <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M23 70C10 53 15 30 34 25c8-2 13 1 16 7 3-6 8-9 16-7 19 5 24 28 11 45-8 10-18 17-27 24-9-7-19-14-27-24Z' fill='%23f7fffd' stroke='%2362f5db' stroke-width='4'/%3E%3Cpath d='M57 17 46 48h14l-8 35 25-43H63l8-23Z' fill='%23ff435f'/%3E%3C/svg%3E">
     <style>
         :root {
             --bg: #04070b;
@@ -62,13 +59,15 @@
             transition: opacity 0.4s ease-out;
         }
 
-        #qamelot-intro-canvas, #bg-nebula-canvas {
+        #qamlot-video {
             position: absolute;
-            inset: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 1;
-            pointer-events: none;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            transform: translate(-50%, -50%);
+            object-fit: cover;
+            opacity: 0.85;
         }
 
         .qamlot-overlay {
@@ -86,15 +85,8 @@
         }
 
         @keyframes qamlotPulse {
-            0% {
-                transform: scale(0.97);
-                opacity: 0.85;
-            }
-
-            100% {
-                transform: scale(1.03);
-                opacity: 1;
-            }
+            0% { transform: scale(0.97); opacity: 0.85; }
+            100% { transform: scale(1.03); opacity: 1; }
         }
 
         .qamlot-tag {
@@ -158,15 +150,8 @@
         }
 
         @keyframes emblemPulse {
-            0% {
-                transform: scale(0.96);
-                box-shadow: 0 0 20px rgba(98, 245, 219, 0.3);
-            }
-
-            100% {
-                transform: scale(1.06);
-                box-shadow: 0 0 45px rgba(98, 245, 219, 0.85);
-            }
+            0% { transform: scale(0.96); box-shadow: 0 0 20px rgba(98, 245, 219, 0.3); }
+            100% { transform: scale(1.06); box-shadow: 0 0 45px rgba(98, 245, 219, 0.85); }
         }
 
         .main-title {
@@ -176,7 +161,7 @@
             -webkit-background-clip: text;
             background-clip: text;
             -webkit-text-fill-color: transparent;
-            text-shadow: 0px 10px 30px rgba(0, 0, 0, 0.9);
+            text-shadow: 0px 10px 30px rgba(0,0,0,0.9);
             text-transform: uppercase;
         }
 
@@ -229,9 +214,7 @@
             width: 100%;
         }
 
-        .select-group {
-            flex: 1;
-        }
+        .select-group { flex: 1; }
 
         .select-label {
             font-size: 10px;
@@ -253,8 +236,7 @@
             text-align: center;
         }
 
-        .select-btn.active,
-        .select-btn:hover {
+        .select-btn.active, .select-btn:hover {
             border-color: var(--gold);
             color: var(--gold);
             box-shadow: 0 0 15px rgba(255, 211, 108, 0.3);
@@ -352,17 +334,9 @@
             overflow: hidden;
         }
 
-        #p1-hud {
-            align-items: flex-start;
-        }
-
-        #p2-hud {
-            align-items: flex-end;
-        }
-
-        #p2-hud .tension-bar-container {
-            align-self: flex-end;
-        }
+        #p1-hud { align-items: flex-start; }
+        #p2-hud { align-items: flex-end; }
+        #p2-hud .tension-bar-container { align-self: flex-end; }
 
         .tension-bar {
             height: 100%;
@@ -370,14 +344,8 @@
             transition: width 0.15s ease-out;
         }
 
-        #p1-tension {
-            background: linear-gradient(90deg, var(--gold), var(--lamb));
-        }
-
-        #p2-tension {
-            background: linear-gradient(90deg, var(--purple), var(--liar));
-            float: right;
-        }
+        #p1-tension { background: linear-gradient(90deg, var(--gold), var(--lamb)); }
+        #p2-tension { background: linear-gradient(90deg, var(--purple), var(--liar)); float: right; }
 
         .timer-container {
             display: flex;
@@ -388,14 +356,10 @@
         .timer {
             font-size: 34px;
             color: #fff;
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.6), 2px 2px 0 #000;
+            text-shadow: 0 0 10px rgba(255,255,255,0.6), 2px 2px 0 #000;
         }
 
-        .round-tag {
-            font-size: 9px;
-            letter-spacing: 2px;
-            color: var(--muted);
-        }
+        .round-tag { font-size: 9px; letter-spacing: 2px; color: var(--muted); }
 
         /* Game Over Banner */
         #game-over {
@@ -455,16 +419,8 @@
             gap: 10px;
         }
 
-        #touch-left {
-            left: 20px;
-        }
-
-        #touch-right {
-            right: 20px;
-            flex-wrap: wrap;
-            justify-content: flex-end;
-            width: 220px;
-        }
+        #touch-left { left: 20px; }
+        #touch-right { right: 20px; flex-wrap: wrap; justify-content: flex-end; width: 220px; }
 
         .t-btn {
             width: 55px;
@@ -478,7 +434,7 @@
             place-items: center;
             -webkit-backdrop-filter: blur(5px);
             backdrop-filter: blur(5px);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
             touch-action: none;
         }
 
@@ -488,18 +444,8 @@
             transform: scale(0.92);
         }
 
-        .t-btn.special {
-            border-color: var(--gold);
-            color: var(--gold);
-        }
-
-        .t-btn.ultimate {
-            border-color: var(--liar);
-            color: var(--liar);
-            width: 65px;
-            height: 65px;
-            font-weight: bold;
-        }
+        .t-btn.special { border-color: var(--gold); color: var(--gold); }
+        .t-btn.ultimate { border-color: var(--liar); color: var(--liar); width: 65px; height: 65px; font-weight: bold; }
 
         #gamepad-badge {
             position: absolute;
@@ -509,188 +455,49 @@
             font-size: 10px;
             letter-spacing: 1px;
             color: var(--gold);
-            background: rgba(0, 0, 0, 0.6);
+            background: rgba(0,0,0,0.6);
             padding: 4px 10px;
             border-radius: 12px;
             border: 1px solid var(--gold);
             display: none;
             z-index: 20;
         }
-
-        .asset-status {
-            font-size: 9px;
-            letter-spacing: 1.4px;
-            color: var(--lamb);
-            opacity: .85;
-            text-align: center;
-            margin-top: 10px
-        }
-
-        .controls-hint {
-            position: absolute;
-            bottom: 10px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 15;
-            color: #cfe9ef;
-            background: rgba(3, 9, 15, .72);
-            border: 1px solid rgba(98, 245, 219, .3);
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 10px;
-            letter-spacing: .7px;
-            white-space: nowrap;
-            pointer-events: none
-        }
-
-        .codex-btn {
-            position: absolute;
-            right: 14px;
-            bottom: 14px;
-            z-index: 30;
-            border: 1px solid var(--lamb);
-            background: #07121dcc;
-            color: var(--lamb);
-            border-radius: 20px;
-            padding: 8px 12px;
-            font: 700 10px Rajdhani, sans-serif;
-            letter-spacing: 1px;
-            cursor: pointer
-        }
-
-        #asset-codex {
-            display: none;
-            position: absolute;
-            inset: 3%;
-            z-index: 60;
-            background: rgba(3, 8, 14, .97);
-            border: 1px solid var(--lamb);
-            border-radius: 16px;
-            box-shadow: 0 0 45px #000;
-            overflow: auto;
-            padding: 22px;
-            color: #fff
-        }
-
-        #asset-codex.open {
-            display: block
-        }
-
-        .codex-head {
-            position: sticky;
-            top: -22px;
-            z-index: 3;
-            background: #071019f2;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 12px 0;
-            border-bottom: 1px solid #244252
-        }
-
-        .codex-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(105px, 1fr));
-            gap: 10px;
-            margin: 14px 0 24px
-        }
-
-        .codex-card {
-            background: #0b1925;
-            border: 1px solid #1d4150;
-            border-radius: 10px;
-            padding: 8px;
-            text-align: center;
-            font-size: 9px;
-            letter-spacing: .6px;
-            color: #bce7ef
-        }
-
-        .codex-card img {
-            width: 78px;
-            height: 78px;
-            object-fit: contain;
-            display: block;
-            margin: auto
-        }
-
-        #move-callout {
-            position: absolute;
-            top: 28%;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 25;
-            font: 900 clamp(18px, 3vw, 34px) Rajdhani, sans-serif;
-            letter-spacing: 3px;
-            color: #fff;
-            text-shadow: 0 0 14px currentColor;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity .16s
-        }
-
-        #move-callout.show {
-            opacity: 1
-        }
-
-        .portrait-orb {
-            position: absolute;
-            top: 106px;
-            width: 58px;
-            height: 58px;
-            z-index: 16;
-            border: 2px solid currentColor;
-            border-radius: 50%;
-            background: #06111bd9;
-            object-fit: contain;
-            padding: 4px;
-            filter: drop-shadow(0 0 8px currentColor)
-        }
-
-        #p1-portrait {
-            left: 20px;
-            color: var(--lamb)
-        }
-
-        #p2-portrait {
-            right: 20px;
-            color: var(--liar)
-        }
-
-        @media(max-width:700px) {
-            .controls-hint {
-                display: none
-            }
-        }
+    
+        .asset-status{font-size:9px;letter-spacing:1.4px;color:var(--lamb);opacity:.85;text-align:center;margin-top:10px}
+        .controls-hint{position:absolute;bottom:10px;left:50%;transform:translateX(-50%);z-index:15;color:#cfe9ef;background:rgba(3,9,15,.72);border:1px solid rgba(98,245,219,.3);padding:6px 12px;border-radius:20px;font-size:10px;letter-spacing:.7px;white-space:nowrap;pointer-events:none}
+        @media(max-width:700px){.controls-hint{display:none}}
     </style>
 </head>
-
 <body>
 
-    <!-- QAMLOT MEDIA ANIMATED INTRO (BLOB BASH ROYALE STYLE) -->
+    <!-- QAMLOT MEDIA CINEMATIC INTRO -->
     <div id="qamlot-intro" onclick="dismissQamlotIntro()">
-        <canvas id="qamelot-intro-canvas"></canvas>
+        <video id="qamlot-video" autoplay loop muted playsinline>
+            <source src="https://raw.githubusercontent.com/qamotech/ll/main/QMedia.mp4#t=3.2,10.0" type="video/mp4">
+            <source src="QMedia.mp4#t=3.2,10.0" type="video/mp4">
+        </video>
         <div class="qamlot-overlay">
-            <div class="qamlot-tag">QAMELOT MEDIA PRESENTS</div>
+            <div class="qamlot-tag">QAMLOT MEDIA PRESENTS</div>
             <div class="qamlot-title">LIAR & THE LAMB</div>
-            <div class="qamlot-prompt">CLICK OR PRESS ANY BUTTON TO ENTER COMBAT</div>
+            <div class="qamlot-prompt">CLICK OR PRESS ANY KEY TO ENTER</div>
         </div>
     </div>
 
     <!-- START SCREEN -->
     <div id="start-screen">
-        <canvas id="bg-nebula-canvas"></canvas>
+        <video id="bg-video" autoplay loop muted playsinline>
+            <source src="https://raw.githubusercontent.com/qamotech/ll/main/QMedia.mp4#t=3.2,10.0" type="video/mp4">
+            <source src="QMedia.mp4#t=3.2,10.0" type="video/mp4">
+        </video>
         <div class="title-wrapper">
             <div class="logo-emblem">
                 <svg viewBox="0 0 100 100" width="48" height="48">
-                    <path
-                        d="M23 70C10 53 15 30 34 25c8-2 13 1 16 7 3-6 8-9 16-7 19 5 24 28 11 45-8 10-18 17-27 24-9-7-19-14-27-24Z"
-                        fill="#f7fffd" stroke="#62f5db" stroke-width="4" />
-                    <path d="M57 17 46 48h14l-8 35 25-43H63l8-23Z" fill="#ff435f" />
+                    <path d="M23 70C10 53 15 30 34 25c8-2 13 1 16 7 3-6 8-9 16-7 19 5 24 28 11 45-8 10-18 17-27 24-9-7-19-14-27-24Z" fill="#f7fffd" stroke="#62f5db" stroke-width="4"/>
+                    <path d="M57 17 46 48h14l-8 35 25-43H63l8-23Z" fill="#ff435f"/>
                 </svg>
             </div>
             <h1 class="main-title">LIAR & THE LAMB</h1>
-            <div class="sub-tagline">BIBLICAL COMBAT GAME</div>
+            <div class="sub-tagline">BIBLICAL HIGH-FANTASY COMBAT</div>
         </div>
 
         <div class="menu-wrapper">
@@ -700,8 +507,7 @@
             <div class="selection-row">
                 <div class="select-group">
                     <div class="select-label">SCRIPTURE BUFF</div>
-                    <select id="buff-select" class="select-btn" title="Scripture Buff Selection"
-                        aria-label="Scripture Buff Selection">
+                    <select id="buff-select" class="select-btn" title="Scripture Buff Selection" aria-label="Scripture Buff Selection">
                         <option value="armor">Armor of God (+25% Guard)</option>
                         <option value="eagles">Wings of Eagles (+15% Speed)</option>
                         <option value="faith">Shield of Faith (+20% Health)</option>
@@ -710,8 +516,7 @@
                 </div>
                 <div class="select-group">
                     <div class="select-label">STAGE ARENA</div>
-                    <select id="stage-select" class="select-btn" title="Stage Arena Selection"
-                        aria-label="Stage Arena Selection">
+                    <select id="stage-select" class="select-btn" title="Stage Arena Selection" aria-label="Stage Arena Selection">
                         <option value="tempest">The Tempest Sea</option>
                         <option value="mount">Mount Transfiguration</option>
                         <option value="abyss">The Abyss</option>
@@ -722,8 +527,7 @@
                 </div>
                 <div class="select-group">
                     <div class="select-label">AI DIFFICULTY</div>
-                    <select id="ai-select" class="select-btn" title="AI Difficulty Selection"
-                        aria-label="AI Difficulty Selection">
+                    <select id="ai-select" class="select-btn" title="AI Difficulty Selection" aria-label="AI Difficulty Selection">
                         <option value="apprentice">Apprentice</option>
                         <option value="warrior" selected>Warrior</option>
                         <option value="divine">Divine AI</option>
@@ -734,8 +538,7 @@
             <div class="selection-row">
                 <button class="select-btn active" onclick="setRoster('lamb_vs_liar', this)">LAMB vs LIAR</button>
                 <button class="select-btn" onclick="setRoster('lion_vs_wolf', this)">LION vs WOLF</button>
-                <button class="select-btn" onclick="setRoster('archangel_vs_leviathan', this)">ARCHANGEL vs
-                    LEVIATHAN</button>
+                <button class="select-btn" onclick="setRoster('archangel_vs_leviathan', this)">ARCHANGEL vs LEVIATHAN</button>
             </div>
             <div class="asset-status">36 COMBAT STATES • 6 VECTOR RELICS • LIVE SVG ENGINE</div>
         </div>
@@ -750,10 +553,8 @@
                 <div class="hud-header">
                     <div class="hud-p1-title">
                         <svg viewBox="0 0 100 100" width="22" height="22">
-                            <path
-                                d="M23 70C10 53 15 30 34 25c8-2 13 1 16 7 3-6 8-9 16-7 19 5 24 28 11 45-8 10-18 17-27 24-9-7-19-14-27-24Z"
-                                fill="#f7fffd" stroke="#62f5db" stroke-width="4" />
-                            <path d="M57 17 46 48h14l-8 35 25-43H63l8-23Z" fill="#ff435f" />
+                            <path d="M23 70C10 53 15 30 34 25c8-2 13 1 16 7 3-6 8-9 16-7 19 5 24 28 11 45-8 10-18 17-27 24-9-7-19-14-27-24Z" fill="#f7fffd" stroke="#62f5db" stroke-width="4"/>
+                            <path d="M57 17 46 48h14l-8 35 25-43H63l8-23Z" fill="#ff435f"/>
                         </svg>
                         <span id="p1-name" class="hud-p1-name">THE LAMB</span>
                     </div>
@@ -807,240 +608,67 @@
             <button class="restart-btn" onclick="resetMatch()">REMATCH</button>
         </div>
 
-        <img id="p1-portrait" class="portrait-orb" alt="Player one portrait"><img id="p2-portrait" class="portrait-orb"
-            alt="Player two portrait">
-        <div id="move-callout"></div><button class="codex-btn" onclick="toggleCodex()">◈ ASSET CODEX</button>
-        <div id="asset-codex">
-            <div class="codex-head"><b>VECTOR ASSET CODEX — ALL 42 ASSETS</b><button class="select-btn"
-                    onclick="toggleCodex()">CLOSE ×</button></div>
-            <div id="codex-content"></div>
-        </div>
-        <div class="controls-hint">P1: A/D move • W jump • S crouch • C guard • Space/F/Q/E attacks &nbsp;|&nbsp; P2:
-            Arrows • Enter/.///Shift</div>
+        <div class="controls-hint">P1: A/D move • W jump • S crouch • C guard • Space/F/Q/E attacks &nbsp;|&nbsp; P2: Arrows • Enter/.///Shift</div>
         <canvas id="gameCanvas" width="1024" height="576"></canvas>
     </div>
 
     <script>
-        // ==========================================
-        // QAMELOT ANIMATED INTRO (BLOB BASH ROYALE STYLE)
-        // ==========================================
-        class QamelotIntroEngine {
-            constructor() {
-                this.canvas = document.getElementById('qamelot-intro-canvas');
-                this.ctx = this.canvas ? this.canvas.getContext('2d') : null;
-                this.blobs = [];
-                this.particles = [];
-                this.animId = null;
-                this.mx = -1000;
-                this.my = -1000;
-                this.time = 0;
-                this.active = true;
-                this.init();
-            }
-            init() {
-                if (!this.canvas) return;
-                this.resize();
-                window.addEventListener('resize', () => this.resize());
-                window.addEventListener('mousemove', (e) => { this.mx = e.clientX; this.my = e.clientY; });
-                window.addEventListener('touchmove', (e) => {
-                    if (e.touches[0]) { this.mx = e.touches[0].clientX; this.my = e.touches[0].clientY; }
-                });
-
-                const colors = ['#62f5db', '#ff435f', '#ffd36c', '#00e5ff', '#a855f7'];
-                for (let i = 0; i < 22; i++) {
-                    this.blobs.push({
-                        x: Math.random() * (this.canvas.width || 800),
-                        y: Math.random() * (this.canvas.height || 600),
-                        vx: (Math.random() - 0.5) * 3.5,
-                        vy: (Math.random() - 0.5) * 3.5,
-                        r: 45 + Math.random() * 65,
-                        color: colors[i % colors.length],
-                        pulseOffset: Math.random() * Math.PI * 2,
-                        speed: 0.8 + Math.random() * 1.2
-                    });
-                }
-                this.animate();
-            }
-            resize() {
-                if (!this.canvas) return;
-                this.canvas.width = window.innerWidth;
-                this.canvas.height = window.innerHeight;
-            }
-            animate() {
-                if (!this.active || !this.canvas || !this.ctx) return;
-                this.time += 0.02;
-                const c = this.ctx;
-                const w = this.canvas.width;
-                const h = this.canvas.height;
-
-                const grad = c.createRadialGradient(w / 2, h / 2, 50, w / 2, h / 2, Math.max(w, h));
-                grad.addColorStop(0, '#0a1726');
-                grad.addColorStop(0.5, '#040912');
-                grad.addColorStop(1, '#020408');
-                c.fillStyle = grad;
-                c.fillRect(0, 0, w, h);
-
-                c.strokeStyle = 'rgba(98, 245, 219, 0.05)';
-                c.lineWidth = 1;
-                const gridSize = 60;
-                for (let x = 0; x < w; x += gridSize) {
-                    c.beginPath(); c.moveTo(x, 0); c.lineTo(x, h); c.stroke();
-                }
-                for (let y = 0; y < h; y += gridSize) {
-                    c.beginPath(); c.moveTo(0, y); c.lineTo(w, y); c.stroke();
-                }
-
-                for (let b of this.blobs) {
-                    const dx = this.mx - b.x;
-                    const dy = this.my - b.y;
-                    const dist = Math.hypot(dx, dy);
-                    if (dist < 320 && dist > 10) {
-                        b.vx += (dx / dist) * 0.35;
-                        b.vy += (dy / dist) * 0.35;
-                    }
-
-                    b.x += b.vx;
-                    b.y += b.vy;
-                    b.vx *= 0.96;
-                    b.vy *= 0.96;
-
-                    if (b.x < b.r || b.x > w - b.r) b.vx *= -1;
-                    if (b.y < b.r || b.y > h - b.r) b.vy *= -1;
-
-                    const currentR = b.r + Math.sin(this.time * b.speed + b.pulseOffset) * 12;
-
-                    const blobGrad = c.createRadialGradient(b.x, b.y, 0, b.x, b.y, currentR);
-                    blobGrad.addColorStop(0, b.color);
-                    blobGrad.addColorStop(0.6, b.color + '66');
-                    blobGrad.addColorStop(1, 'transparent');
-
-                    c.save();
-                    c.globalCompositeOperation = 'screen';
-                    c.fillStyle = blobGrad;
-                    c.beginPath();
-                    c.arc(b.x, b.y, currentR, 0, Math.PI * 2);
-                    c.fill();
-
-                    c.fillStyle = '#ffffff';
-                    c.beginPath();
-                    c.arc(b.x - currentR * 0.2, b.y - currentR * 0.2, currentR * 0.18, 0, Math.PI * 2);
-                    c.fill();
-                    c.restore();
-                }
-
-                if (Math.random() < 0.3) {
-                    this.particles.push({
-                        x: Math.random() * w,
-                        y: h + 10,
-                        vy: -(1 + Math.random() * 3),
-                        size: 1 + Math.random() * 3,
-                        alpha: 1,
-                        color: ['#62f5db', '#ff435f', '#ffd36c'][Math.floor(Math.random() * 3)]
-                    });
-                }
-                for (let i = this.particles.length - 1; i >= 0; i--) {
-                    let p = this.particles[i];
-                    p.y += p.vy;
-                    p.alpha -= 0.008;
-                    if (p.alpha <= 0) {
-                        this.particles.splice(i, 1);
-                        continue;
-                    }
-                    c.fillStyle = p.color;
-                    c.globalAlpha = p.alpha;
-                    c.fillRect(p.x, p.y, p.size, p.size);
-                }
-                c.globalAlpha = 1;
-
-                this.animId = requestAnimationFrame(() => this.animate());
-            }
-            stop() {
-                this.active = false;
-                if (this.animId) cancelAnimationFrame(this.animId);
-            }
-        }
-
-        // ==========================================
-        // START SCREEN CYBER NEBULA CANVAS ENGINE
-        // ==========================================
-        class StartScreenNebulaEngine {
-            constructor() {
-                this.canvas = document.getElementById('bg-nebula-canvas');
-                this.ctx = this.canvas ? this.canvas.getContext('2d') : null;
-                this.stars = [];
-                this.animId = null;
-                this.time = 0;
-                this.init();
-            }
-            init() {
-                if (!this.canvas) return;
-                this.resize();
-                window.addEventListener('resize', () => this.resize());
-                for (let i = 0; i < 90; i++) {
-                    this.stars.push({
-                        x: Math.random() * (this.canvas.width || 800),
-                        y: Math.random() * (this.canvas.height || 600),
-                        r: 0.8 + Math.random() * 2,
-                        speed: 0.2 + Math.random() * 0.8,
-                        alpha: 0.2 + Math.random() * 0.8
-                    });
-                }
-                this.animate();
-            }
-            resize() {
-                if (!this.canvas) return;
-                this.canvas.width = window.innerWidth;
-                this.canvas.height = window.innerHeight;
-            }
-            animate() {
-                if (!this.canvas || !this.ctx) return;
-                this.time += 0.01;
-                const c = this.ctx;
-                const w = this.canvas.width;
-                const h = this.canvas.height;
-
-                c.fillStyle = '#04070b';
-                c.fillRect(0, 0, w, h);
-
-                const nebGrad = c.createRadialGradient(w * 0.5, h * 0.4, 40, w * 0.5, h * 0.4, w * 0.7);
-                nebGrad.addColorStop(0, 'rgba(98, 245, 219, 0.08)');
-                nebGrad.addColorStop(0.5, 'rgba(255, 67, 95, 0.05)');
-                nebGrad.addColorStop(1, 'transparent');
-                c.fillStyle = nebGrad;
-                c.fillRect(0, 0, w, h);
-
-                c.fillStyle = '#ffffff';
-                for (let s of this.stars) {
-                    s.y -= s.speed;
-                    if (s.y < 0) s.y = h;
-                    c.globalAlpha = s.alpha * (0.6 + 0.4 * Math.sin(this.time * 2 + s.x));
-                    c.beginPath();
-                    c.arc(s.x, s.y, s.r, 0, Math.PI * 2);
-                    c.fill();
-                }
-                c.globalAlpha = 1;
-
-                this.animId = requestAnimationFrame(() => this.animate());
-            }
-        }
-
-        let qamelotIntro = null;
-        let startNebula = null;
-
-        document.addEventListener('DOMContentLoaded', () => {
-            qamelotIntro = new QamelotIntroEngine();
-            startNebula = new StartScreenNebulaEngine();
-        });
-
+        // Dismiss Intro & Control Video
         function dismissQamlotIntro() {
             const intro = document.getElementById('qamlot-intro');
+            const vid = document.getElementById('qamlot-video');
+            const bgVid = document.getElementById('bg-video');
             if (intro) {
                 intro.style.pointerEvents = 'none';
                 intro.style.display = 'none';
                 intro.style.zIndex = '-1';
-                if (qamelotIntro) qamelotIntro.stop();
+                if (vid) { try { vid.pause(); } catch(e){} }
+                if (bgVid) { try { bgVid.pause(); } catch(e){} }
             }
         }
+
+        function toggleBgVideo() {
+            const bgVid = document.getElementById('bg-video');
+            const qVid = document.getElementById('qamlot-video');
+            if (bgVid) {
+                if (bgVid.paused) {
+                    bgVid.play().catch(() => {});
+                } else {
+                    bgVid.pause();
+                }
+            }
+            if (qVid) {
+                if (qVid.paused) {
+                    qVid.play().catch(() => {});
+                } else {
+                    qVid.pause();
+                }
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const bgVid = document.getElementById('bg-video');
+            const qVid = document.getElementById('qamlot-video');
+            
+            [bgVid, qVid].forEach(v => {
+                if (v) {
+                    v.addEventListener('timeupdate', () => {
+                        if (v.currentTime >= 10.0 || v.currentTime < 3.2) {
+                            v.currentTime = 3.2;
+                        }
+                    });
+                    v.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        if (v.paused) {
+                            v.play().catch(() => {});
+                        } else {
+                            v.pause();
+                        }
+                    });
+                }
+            });
+        });
+
         window.addEventListener('keydown', dismissQamlotIntro);
 
         // ==========================================
@@ -1074,34 +702,20 @@
                 osc.type = 'sawtooth';
                 osc.frequency.setValueAtTime(450, this.ctx.currentTime);
                 osc.frequency.exponentialRampToValueAtTime(80, this.ctx.currentTime + 0.15);
-                gain.gain.setValueAtTime(0.4, this.ctx.currentTime);
+                gain.gain.setValueAtTime(0.3, this.ctx.currentTime);
                 gain.gain.exponentialRampToValueAtTime(0.01, this.ctx.currentTime + 0.15);
                 osc.connect(gain);
                 gain.connect(this.ctx.destination);
                 osc.start();
                 osc.stop(this.ctx.currentTime + 0.15);
             }
-            playBlock() {
-                if (!this.ctx) return;
-                const osc = this.ctx.createOscillator();
-                const gain = this.ctx.createGain();
-                osc.type = 'sine';
-                osc.frequency.setValueAtTime(800, this.ctx.currentTime);
-                osc.frequency.exponentialRampToValueAtTime(300, this.ctx.currentTime + 0.08);
-                gain.gain.setValueAtTime(0.5, this.ctx.currentTime);
-                gain.gain.exponentialRampToValueAtTime(0.01, this.ctx.currentTime + 0.08);
-                osc.connect(gain);
-                gain.connect(this.ctx.destination);
-                osc.start();
-                osc.stop(this.ctx.currentTime + 0.08);
-            }
             playBeam() {
                 if (!this.ctx) return;
                 const osc = this.ctx.createOscillator();
                 const gain = this.ctx.createGain();
-                osc.type = 'square';
-                osc.frequency.setValueAtTime(120, this.ctx.currentTime);
-                osc.frequency.linearRampToValueAtTime(600, this.ctx.currentTime + 0.25);
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(200, this.ctx.currentTime);
+                osc.frequency.linearRampToValueAtTime(900, this.ctx.currentTime + 0.25);
                 gain.gain.setValueAtTime(0.25, this.ctx.currentTime);
                 gain.gain.exponentialRampToValueAtTime(0.01, this.ctx.currentTime + 0.25);
                 osc.connect(gain);
@@ -1109,55 +723,40 @@
                 osc.start();
                 osc.stop(this.ctx.currentTime + 0.25);
             }
-            playUltimate() {
-                if (!this.ctx) return;
-                const osc = this.ctx.createOscillator();
-                const gain = this.ctx.createGain();
-                osc.type = 'sawtooth';
-                osc.frequency.setValueAtTime(200, this.ctx.currentTime);
-                osc.frequency.linearRampToValueAtTime(800, this.ctx.currentTime + 0.4);
-                gain.gain.setValueAtTime(0.45, this.ctx.currentTime);
-                gain.gain.exponentialRampToValueAtTime(0.01, this.ctx.currentTime + 0.4);
-                osc.connect(gain);
-                gain.connect(this.ctx.destination);
-                osc.start();
-                osc.stop(this.ctx.currentTime + 0.4);
-            }
-            playClash() {
+            playBlock() {
                 if (!this.ctx) return;
                 const osc = this.ctx.createOscillator();
                 const gain = this.ctx.createGain();
                 osc.type = 'square';
-                osc.frequency.setValueAtTime(950, this.ctx.currentTime);
-                osc.frequency.exponentialRampToValueAtTime(120, this.ctx.currentTime + 0.18);
-                gain.gain.setValueAtTime(0.6, this.ctx.currentTime);
-                gain.gain.exponentialRampToValueAtTime(0.01, this.ctx.currentTime + 0.18);
+                osc.frequency.setValueAtTime(650, this.ctx.currentTime);
+                gain.gain.setValueAtTime(0.2, this.ctx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, this.ctx.currentTime + 0.08);
                 osc.connect(gain);
                 gain.connect(this.ctx.destination);
                 osc.start();
-                osc.stop(this.ctx.currentTime + 0.18);
+                osc.stop(this.ctx.currentTime + 0.08);
             }
-            playShieldBreak() {
+            playUltimate() {
                 if (!this.ctx) return;
                 const osc = this.ctx.createOscillator();
                 const gain = this.ctx.createGain();
-                osc.type = 'sawtooth';
-                osc.frequency.setValueAtTime(1200, this.ctx.currentTime);
-                osc.frequency.exponentialRampToValueAtTime(40, this.ctx.currentTime + 0.5);
-                gain.gain.setValueAtTime(0.7, this.ctx.currentTime);
-                gain.gain.exponentialRampToValueAtTime(0.01, this.ctx.currentTime + 0.5);
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(120, this.ctx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(20, this.ctx.currentTime + 0.65);
+                gain.gain.setValueAtTime(0.6, this.ctx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, this.ctx.currentTime + 0.65);
                 osc.connect(gain);
                 gain.connect(this.ctx.destination);
                 osc.start();
-                osc.stop(this.ctx.currentTime + 0.5);
+                osc.stop(this.ctx.currentTime + 0.65);
             }
         }
         const audio = new SoundEngine();
 
         // ==========================================
-        // UI & GAME INITIALIZATION
+        // GAME STATE & CONFIG
         // ==========================================
-        let gameMode = '1p';
+        let gameMode = '1p'; 
         let currentRoster = 'lamb_vs_liar';
         let currentStage = 'tempest';
         let aiDifficulty = 'warrior';
@@ -1178,8 +777,10 @@
             audio.init();
 
             const startScreen = document.getElementById('start-screen');
+            const bgVid = document.getElementById('bg-video');
             const gameContainer = document.getElementById('game-container');
 
+            if (bgVid) { try { bgVid.pause(); } catch(e){} }
             startScreen.style.pointerEvents = 'none';
             startScreen.style.display = 'none';
             startScreen.style.zIndex = '-1';
@@ -1199,7 +800,7 @@
             const isTouch = ('ontouchstart' in window) || navigator.maxTouchPoints > 0;
             if (isTouch) {
                 document.getElementById('touch-controls').style.display = 'block';
-
+                
                 const bindTouch = (id, keyName) => {
                     const el = document.getElementById(id);
                     if (!el) return;
@@ -1239,7 +840,7 @@
         }
 
         // ==========================================
-        // GAMECUBE & BLUETOOTH CONTROLLER API INTEGRATION
+        // GAMEPAD CONTROLLER API INTEGRATION
         // ==========================================
         window.addEventListener('gamepadconnected', () => {
             document.getElementById('gamepad-badge').style.display = 'block';
@@ -1249,87 +850,22 @@
             try {
                 const rawGps = navigator.getGamepads ? navigator.getGamepads() : [];
                 const gamepads = Array.from(rawGps).filter(Boolean);
+                const gp1 = gamepads[0];
+                if (gp1 && player1) {
+                    const lx = gp1.axes[0];
+                    const ly = gp1.axes[1];
+                    if (lx < -0.4) { keys['a'] = true; player1.facing = -1; } else if (lx > 0.4) { keys['d'] = true; player1.facing = 1; }
+                    if (ly > 0.5) player1.crouch(true); else player1.crouch(false);
 
-                if (gamepads.length > 0) {
-                    document.getElementById('gamepad-badge').style.display = 'block';
-                    document.getElementById('gamepad-badge').innerText = `🎮 GAMECUBE / BLUETOOTH CONTROLLER CONNECTED (${gamepads.length})`;
-                } else {
-                    document.getElementById('gamepad-badge').style.display = 'none';
+                    if (gp1.buttons[0] && gp1.buttons[0].pressed) player1.triggerAttack('lightAttack');
+                    if (gp1.buttons[2] && gp1.buttons[2].pressed) player1.triggerAttack('lightAttack');
+                    if (gp1.buttons[3] && gp1.buttons[3].pressed) player1.triggerAttack('heavyAttack');
+                    if (gp1.buttons[4] && gp1.buttons[4].pressed) player1.triggerAttack('specialAttack');
+                    if (gp1.buttons[5] && gp1.buttons[5].pressed) player1.triggerAttack('ultimateAttack');
+                    if (gp1.buttons[1] && gp1.buttons[1].pressed) player1.dash(player1.facing);
+                    if ((gp1.buttons[6] && gp1.buttons[6].pressed) || (gp1.buttons[7] && gp1.buttons[7].pressed)) player1.guard(true); else player1.guard(false);
                 }
-
-                gamepads.forEach((gp, idx) => {
-                    const fighter = idx === 0 ? player1 : player2;
-                    if (!fighter) return;
-
-                    const lx = gp.axes[0];
-                    const ly = gp.axes[1];
-                    const rx = gp.axes[2] !== undefined ? gp.axes[2] : (gp.axes[3] || 0);
-                    const ry = gp.axes[3] !== undefined ? gp.axes[3] : (gp.axes[4] || 0);
-
-                    // Directional Influence (DI) for Smash physics
-                    fighter.diInput = Math.abs(lx) > 0.3 ? Math.sign(lx) : 0;
-
-                    // Left Stick Movement
-                    if (lx < -0.3) { keys[fighter.isP1 ? 'a' : 'ArrowLeft'] = true; fighter.facing = -1; }
-                    else if (lx > 0.3) { keys[fighter.isP1 ? 'd' : 'ArrowRight'] = true; fighter.facing = 1; }
-
-                    if (ly > 0.6) fighter.crouch(true); else fighter.crouch(false);
-
-                    if (ly < -0.65 && !fighter.jumpPressed) {
-                        fighter.jump();
-                        fighter.jumpPressed = true;
-                    } else if (ly >= -0.65) {
-                        fighter.jumpPressed = false;
-                    }
-
-                    // GameCube Button Mapping:
-                    // A (0) = Light Attack
-                    // B (1/2) = Special Attack
-                    // X (2/3) / Y (3/4) = Jump
-                    // Z (5/RB) = Heavy Attack
-                    // L/R (6/7) = Bubble Shield / Dodge
-                    const btnA = gp.buttons[0] && gp.buttons[0].pressed;
-                    const btnB = (gp.buttons[1] && gp.buttons[1].pressed) || (gp.buttons[2] && gp.buttons[2].pressed);
-                    const btnX = (gp.buttons[2] && gp.buttons[2].pressed) || (gp.buttons[3] && gp.buttons[3].pressed);
-                    const btnY = gp.buttons[3] && gp.buttons[3].pressed;
-                    const btnZ = gp.buttons[5] && gp.buttons[5].pressed;
-                    const triggerL = (gp.buttons[6] && gp.buttons[6].pressed) || (gp.buttons[4] && gp.buttons[4].pressed);
-                    const triggerR = (gp.buttons[7] && gp.buttons[7].pressed) || (gp.buttons[5] && gp.buttons[5].pressed);
-
-                    if (btnA) fighter.triggerAttack('lightAttack');
-                    if (btnB) fighter.triggerAttack('specialAttack');
-                    if ((btnX || btnY) && !fighter.jumpBtnPressed) {
-                        fighter.jump();
-                        fighter.jumpBtnPressed = true;
-                    } else if (!btnX && !btnY) {
-                        fighter.jumpBtnPressed = false;
-                    }
-                    if (btnZ) fighter.triggerAttack('heavyAttack');
-
-                    // C-Stick Smash Attacks!
-                    if (Math.abs(rx) > 0.6 || Math.abs(ry) > 0.6) {
-                        if (ry < -0.6) fighter.triggerAttack('ultimateAttack'); // Up Smash
-                        else if (ry > 0.6) fighter.triggerAttack('heavyAttack'); // Down Smash
-                        else if (Math.abs(rx) > 0.6) {
-                            fighter.facing = Math.sign(rx);
-                            fighter.triggerAttack('heavyAttack'); // Forward Smash
-                        }
-                    }
-
-                    // Shield & Dodge
-                    if (triggerL || triggerR) {
-                        if (!fighter.onGround && !fighter.isAirDodging) {
-                            fighter.airDodge();
-                        } else if (fighter.onGround && ly > 0.5 && !fighter.isSpotDodging) {
-                            fighter.spotDodge();
-                        } else {
-                            fighter.guard(true);
-                        }
-                    } else {
-                        fighter.guard(false);
-                    }
-                });
-            } catch (e) { }
+            } catch(e){}
         }
 
         // ==========================================
@@ -1345,9 +881,9 @@
             return img;
         }
 
-        const COMBAT_ASSETS = { "lamb": { "idle": "<svg viewBox=\"0 0 100 100\" xmlns=\"http://www.w3.org/2000/svg\">\n                <!-- Wool Base -->\n                <circle cx=\"50\" cy=\"50\" r=\"30\" fill=\"#ffffff\" filter=\"drop-shadow(0 0 4px #ffffff)\"/>\n                <circle cx=\"25\" cy=\"40\" r=\"15\" fill=\"#f4f4f4\"/>\n                <circle cx=\"75\" cy=\"40\" r=\"15\" fill=\"#f4f4f4\"/>\n                <!-- Sunglasses -->\n                <rect x=\"30\" y=\"42\" width=\"18\" height=\"10\" rx=\"2\" fill=\"#00ffcc\"/>\n                <rect x=\"52\" y=\"42\" width=\"18\" height=\"10\" rx=\"2\" fill=\"#00ffcc\"/>\n                <path d=\"M48 45 L52 45 M30 45 L20 40 M70 45 L80 40\" stroke=\"#111\" stroke-width=\"2\"/>\n                <!-- Sword resting -->\n                <path d=\"M75,80 L90,20\" stroke=\"#00ffcc\" stroke-width=\"4\" filter=\"drop-shadow(0 0 5px #00ffcc)\"/>\n                <path d=\"M75,80 L90,20\" stroke=\"#fff\" stroke-width=\"2\"/>\n            </svg>", "dash": "<svg viewBox=\"0 0 100 100\" xmlns=\"http://www.w3.org/2000/svg\">\n                <!-- Motion Lines -->\n                <line x1=\"5\" y1=\"30\" x2=\"40\" y2=\"30\" stroke=\"#00ffcc\" stroke-width=\"2\" opacity=\"0.6\"/>\n                <line x1=\"10\" y1=\"50\" x2=\"35\" y2=\"50\" stroke=\"#00ffcc\" stroke-width=\"3\" opacity=\"0.8\"/>\n                <line x1=\"2\" y1=\"70\" x2=\"45\" y2=\"70\" stroke=\"#00ffcc\" stroke-width=\"2\" opacity=\"0.6\"/>\n                <!-- Skewed Body for speed -->\n                <g transform=\"skewX(-20) translate(20, 0)\">\n                    <circle cx=\"50\" cy=\"50\" r=\"28\" fill=\"#ffffff\"/>\n                    <rect x=\"35\" y=\"42\" width=\"25\" height=\"8\" rx=\"2\" fill=\"#00ffcc\"/>\n                </g>\n            </svg>", "crouch": "<svg viewBox=\"0 0 100 100\" xmlns=\"http://www.w3.org/2000/svg\">\n                <!-- Ground Dust -->\n                <ellipse cx=\"40\" cy=\"85\" rx=\"30\" ry=\"5\" fill=\"#333\"/>\n                <ellipse cx=\"20\" cy=\"80\" rx=\"15\" ry=\"8\" fill=\"#444\"/>\n                <!-- Compressed Body -->\n                <ellipse cx=\"60\" cy=\"70\" rx=\"35\" ry=\"20\" fill=\"#ffffff\" filter=\"drop-shadow(0 0 4px #ffffff)\"/>\n                <rect x=\"50\" y=\"65\" width=\"20\" height=\"8\" rx=\"2\" fill=\"#00ffcc\"/>\n            </svg>", "guard": "<svg viewBox=\"0 0 100 100\" xmlns=\"http://www.w3.org/2000/svg\">\n                <!-- Body tucked behind -->\n                <circle cx=\"40\" cy=\"50\" r=\"25\" fill=\"#aaa\"/>\n                <rect x=\"25\" y=\"40\" width=\"15\" height=\"8\" rx=\"2\" fill=\"#00ffcc\"/>\n                <!-- Massive Shield -->\n                <path d=\"M50,10 L90,10 L90,40 Q90,90 50,95 Q50,90 50,40 Z\" fill=\"#1a1a1a\" stroke=\"#cca600\" stroke-width=\"4\"/>\n                <path d=\"M50,10 L90,10 L90,40 Q90,90 50,95 Z\" fill=\"#ffcc00\" opacity=\"0.2\"/>\n                <!-- Impact Spark -->\n                <circle cx=\"85\" cy=\"45\" r=\"10\" fill=\"#fff\" filter=\"blur(2px)\"/>\n                <path d=\"M70,45 L100,45 M85,30 L85,60 M75,35 L95,55 M75,55 L95,35\" stroke=\"#00ffcc\" stroke-width=\"2\"/>\n            </svg>", "attack": "<svg viewBox=\"0 0 100 100\" xmlns=\"http://www.w3.org/2000/svg\">\n                <!-- Body leaning into strike -->\n                <circle cx=\"35\" cy=\"60\" r=\"25\" fill=\"#ffffff\"/>\n                <!-- Sword Arc (Smear frame) -->\n                <path d=\"M20,90 Q10,20 60,10 Q95,15 95,60\" fill=\"none\" stroke=\"#00ffcc\" stroke-width=\"12\" opacity=\"0.4\" stroke-linecap=\"round\"/>\n                <path d=\"M30,85 Q20,25 60,15 Q90,20 90,60\" fill=\"none\" stroke=\"#fff\" stroke-width=\"4\" stroke-linecap=\"round\" filter=\"drop-shadow(0 0 5px #00ffcc)\"/>\n                <!-- Spark at tip -->\n                <circle cx=\"90\" cy=\"60\" r=\"6\" fill=\"#fff\" filter=\"drop-shadow(0 0 8px #00ffcc)\"/>\n            </svg>", "ultimate": "<svg viewBox=\"0 0 100 100\" xmlns=\"http://www.w3.org/2000/svg\">\n                <!-- Holy Aura -->\n                <circle cx=\"50\" cy=\"50\" r=\"45\" fill=\"#00ffcc\" opacity=\"0.1\"/>\n                <circle cx=\"50\" cy=\"50\" r=\"35\" fill=\"#00ffcc\" opacity=\"0.2\"/>\n                <!-- Floating Body -->\n                <circle cx=\"50\" cy=\"50\" r=\"20\" fill=\"#ffffff\" filter=\"drop-shadow(0 0 10px #fff)\"/>\n                <!-- Exploding Cross -->\n                <rect x=\"46\" y=\"5\" width=\"8\" height=\"90\" fill=\"#fff\" filter=\"drop-shadow(0 0 8px #00ffcc)\"/>\n                <rect x=\"5\" y=\"46\" width=\"90\" height=\"8\" fill=\"#fff\" filter=\"drop-shadow(0 0 8px #00ffcc)\"/>\n            </svg> "}, "liar": {"idle": "<svg viewBox=\"0 0 100 100\" xmlns=\"http://www.w3.org/2000/svg\">\n                <!-- Demon Body -->\n                <path d=\"M30,30 Q50,15 70,30 L65,75 Q50,95 35,75 Z\" fill=\"#cc0000\"/>\n                <!-- Horns -->\n                <path d=\"M35,32 Q15,10 30,5 Q40,20 45,30 Z\" fill=\"#111\"/>\n                <path d=\"M65,32 Q85,10 70,5 Q60,20 55,30 Z\" fill=\"#111\"/>\n                <!-- Glowing Eyes -->\n                <polygon points=\"40,50 48,45 48,52\" fill=\"#ffcc00\"/>\n                <polygon points=\"60,50 52,45 52,52\" fill=\"#ffcc00\"/>\n                <!-- Tail ticking -->\n                <path d=\"M60,80 Q80,90 90,70 Q95,60 85,55\" fill=\"none\" stroke=\"#cc0000\" stroke-width=\"4\"/>\n                <polygon points=\"85,55 95,50 90,65\" fill=\"#cc0000\"/>\n            </svg>", "dash": "<svg viewBox=\"0 0 100 100\" xmlns=\"http://www.w3.org/2000/svg\">\n                <!-- Shadow/Smoke Trail -->\n                <path d=\"M10,50 Q30,30 40,60 T70,50\" fill=\"none\" stroke=\"#440000\" stroke-width=\"15\" stroke-linecap=\"round\" opacity=\"0.6\"/>\n                <path d=\"M5,60 Q25,40 45,70 T80,60\" fill=\"none\" stroke=\"#111\" stroke-width=\"10\" stroke-linecap=\"round\" opacity=\"0.8\"/>\n                <!-- Dissolving Body -->\n                <path d=\"M60,30 Q80,20 90,40 L80,80 Q60,90 50,70 Z\" fill=\"#cc0000\" transform=\"skewX(-15)\"/>\n                <polygon points=\"75,50 82,46 80,52\" fill=\"#ffcc00\"/>\n            </svg>", "crouch": "<svg viewBox=\"0 0 100 100\" xmlns=\"http://www.w3.org/2000/svg\">\n                <!-- Low profile body -->\n                <path d=\"M20,75 Q50,60 80,80 L70,95 Q50,90 30,95 Z\" fill=\"#cc0000\"/>\n                <!-- Claws digging into ground -->\n                <path d=\"M75,80 L85,95 M80,80 L92,92 M85,75 L95,85\" stroke=\"#fff\" stroke-width=\"2\"/>\n                <!-- Sparks on ground -->\n                <circle cx=\"90\" cy=\"90\" r=\"3\" fill=\"#ff3333\"/>\n                <circle cx=\"95\" cy=\"95\" r=\"2\" fill=\"#ffcc00\"/>\n                <!-- Eye -->\n                <polygon points=\"65,72 72,68 70,74\" fill=\"#ffcc00\"/>\n            </svg>", "guard": "<svg viewBox=\"0 0 100 100\" xmlns=\"http://www.w3.org/2000/svg\">\n                <!-- Hunkered Body -->\n                <path d=\"M30,40 Q50,20 70,40 L65,90 Q50,100 35,90 Z\" fill=\"#660000\"/>\n                <!-- Hardened Arms Blocking -->\n                <rect x=\"25\" y=\"45\" width=\"60\" height=\"15\" rx=\"5\" fill=\"#111\" transform=\"rotate(30 50 50)\"/>\n                <rect x=\"15\" y=\"45\" width=\"60\" height=\"15\" rx=\"5\" fill=\"#111\" transform=\"rotate(-30 50 50)\"/>\n                <!-- Red aura/shield -->\n                <circle cx=\"50\" cy=\"55\" r=\"40\" fill=\"none\" stroke=\"#ff3333\" stroke-width=\"2\" opacity=\"0.5\" stroke-dasharray=\"10, 5\"/>\n            </svg>", "attack": "<svg viewBox=\"0 0 100 100\" xmlns=\"http://www.w3.org/2000/svg\">\n                <!-- Attacking Body -->\n                <path d=\"M20,40 Q40,30 50,50 L40,80 Q20,90 10,70 Z\" fill=\"#cc0000\"/>\n                <!-- Triple Claw/Trident Slash -->\n                <path d=\"M40,20 Q70,40 90,80\" fill=\"none\" stroke=\"#ff3333\" stroke-width=\"6\" stroke-linecap=\"round\" filter=\"drop-shadow(0 0 4px #ff0000)\"/>\n                <path d=\"M50,15 Q80,35 100,75\" fill=\"none\" stroke=\"#fff\" stroke-width=\"3\" stroke-linecap=\"round\" filter=\"drop-shadow(0 0 6px #ff3333)\"/>\n                <path d=\"M30,25 Q60,45 80,85\" fill=\"none\" stroke=\"#aa0000\" stroke-width=\"6\" stroke-linecap=\"round\"/>\n            </svg>", "ultimate": "<svg viewBox=\"0 0 100 100\" xmlns=\"http://www.w3.org/2000/svg\">\n                <!-- Center Body -->\n                <path d=\"M40,40 Q50,20 60,40 L55,70 Q50,80 45,70 Z\" fill=\"#111\"/>\n                <polygon points=\"48,45 52,45 50,50\" fill=\"#ffcc00\"/>\n                <!-- Upward Eruption -->\n                <path d=\"M20,100 Q40,50 10,10\" fill=\"none\" stroke=\"#ff3333\" stroke-width=\"8\" opacity=\"0.8\" filter=\"blur(1px)\"/>\n                <path d=\"M50,100 Q50,40 50,5\" fill=\"none\" stroke=\"#fff\" stroke-width=\"12\" filter=\"drop-shadow(0 0 10px #ff3333)\"/>\n                <path d=\"M80,100 Q60,50 90,10\" fill=\"none\" stroke=\"#ff3333\" stroke-width=\"8\" opacity=\"0.8\" filter=\"blur(1px)\"/>\n                <!-- Base fire -->\n                <ellipse cx=\"50\" cy=\"90\" rx=\"40\" ry=\"10\" fill=\"#ff0000\" opacity=\"0.5\" filter=\"blur(4px)\"/>\n            </svg> "}, "lion": {"idle": "<svg viewBox=\"0 0 100 100\" xmlns=\"http://www.w3.org/2000/svg\">\n                <!-- Golden Mane -->\n                <path d=\"M50,10 L75,25 L85,55 L70,85 L50,90 L30,85 L15,55 L25,25 Z\" fill=\"#cc9900\" filter=\"drop-shadow(0 0 4px #cc9900)\"/>\n                <path d=\"M50,20 L65,30 L75,55 L65,75 L50,80 L35,75 L25,55 L35,30 Z\" fill=\"#ffcc00\"/>\n                <!-- Face -->\n                <ellipse cx=\"50\" cy=\"50\" rx=\"15\" ry=\"20\" fill=\"#e6b800\"/>\n                <polygon points=\"42,45 48,43 46,47\" fill=\"#fff\"/>\n                <polygon points=\"58,45 52,43 54,47\" fill=\"#fff\"/>\n                <!-- Resting Scepter -->\n                <rect x=\"80\" y=\"20\" width=\"4\" height=\"70\" fill=\"#fff\" filter=\"drop-shadow(0 0 5px #ffcc00)\"/>\n                <circle cx=\"82\" cy=\"15\" r=\"6\" fill=\"#ffcc00\"/>\n            </svg>", "dash": "<svg viewBox=\"0 0 100 100\" xmlns=\"http://www.w3.org/2000/svg\">\n                <!-- Heavy Motion Lines -->\n                <rect x=\"0\" y=\"30\" width=\"50\" height=\"4\" fill=\"#ffcc00\" opacity=\"0.4\"/>\n                <rect x=\"10\" y=\"50\" width=\"40\" height=\"8\" fill=\"#ffcc00\" opacity=\"0.7\"/>\n                <rect x=\"0\" y=\"70\" width=\"60\" height=\"4\" fill=\"#ffcc00\" opacity=\"0.4\"/>\n                <!-- Charging Body -->\n                <g transform=\"skewX(-25) translate(30, 0)\">\n                    <path d=\"M40,20 L70,30 L75,70 L40,80 Z\" fill=\"#cc9900\"/>\n                    <path d=\"M45,30 L60,35 L65,65 L45,70 Z\" fill=\"#ffcc00\"/>\n                    <circle cx=\"70\" cy=\"50\" r=\"10\" fill=\"#fff\" filter=\"drop-shadow(0 0 10px #ffcc00)\"/>\n                </g>\n            </svg>", "crouch": "<svg viewBox=\"0 0 100 100\" xmlns=\"http://www.w3.org/2000/svg\">\n                <!-- Golden Dust/Sparks -->\n                <circle cx=\"20\" cy=\"85\" r=\"4\" fill=\"#ffcc00\"/>\n                <circle cx=\"30\" cy=\"80\" r=\"3\" fill=\"#fff\"/>\n                <ellipse cx=\"45\" cy=\"90\" rx=\"35\" ry=\"4\" fill=\"#cc9900\" opacity=\"0.5\"/>\n                <!-- Crouching Heavy Body -->\n                <path d=\"M30,85 Q50,60 80,75 Q90,85 85,90 L30,95 Z\" fill=\"#ffcc00\"/>\n                <path d=\"M40,80 Q60,65 75,75 Q80,80 75,85 L40,88 Z\" fill=\"#cc9900\"/>\n            </svg>", "guard": "<svg viewBox=\"0 0 100 100\" xmlns=\"http://www.w3.org/2000/svg\">\n                <!-- Center Body -->\n                <circle cx=\"50\" cy=\"50\" r=\"20\" fill=\"#cc9900\"/>\n                <!-- Majestic Wings Wrapping Around -->\n                <path d=\"M50,15 Q80,5 95,40 Q85,80 50,90\" fill=\"none\" stroke=\"#ffcc00\" stroke-width=\"8\" stroke-linecap=\"round\"/>\n                <path d=\"M50,15 Q20,5 5,40 Q15,80 50,90\" fill=\"none\" stroke=\"#ffcc00\" stroke-width=\"8\" stroke-linecap=\"round\"/>\n                <!-- Hard Light Shield -->\n                <circle cx=\"50\" cy=\"50\" r=\"45\" fill=\"none\" stroke=\"#fff\" stroke-width=\"2\" filter=\"drop-shadow(0 0 8px #ffcc00)\"/>\n                <path d=\"M50,5 L50,95 M5,50 L95,50\" stroke=\"#ffcc00\" stroke-width=\"1\" opacity=\"0.5\"/>\n            </svg>", "attack": "<svg viewBox=\"0 0 100 100\" xmlns=\"http://www.w3.org/2000/svg\">\n                <!-- Heavy Body Torque -->\n                <circle cx=\"40\" cy=\"60\" r=\"25\" fill=\"#cc9900\"/>\n                <!-- Massive Staff Arc -->\n                <path d=\"M10,80 Q30,10 90,30\" fill=\"none\" stroke=\"#ffcc00\" stroke-width=\"10\" stroke-linecap=\"round\" opacity=\"0.5\"/>\n                <path d=\"M20,70 Q40,20 85,40\" fill=\"none\" stroke=\"#fff\" stroke-width=\"4\" stroke-linecap=\"round\" filter=\"drop-shadow(0 0 8px #ffcc00)\"/>\n                <!-- Impact Burst -->\n                <circle cx=\"85\" cy=\"40\" r=\"12\" fill=\"#fff\" filter=\"blur(2px)\"/>\n                <polygon points=\"85,20 90,35 105,40 90,45 85,60 80,45 65,40 80,35\" fill=\"#ffcc00\"/>\n            </svg>", "ultimate": "<svg viewBox=\"0 0 100 100\" xmlns=\"http://www.w3.org/2000/svg\">\n                <!-- Shockwaves -->\n                <circle cx=\"50\" cy=\"50\" r=\"45\" fill=\"none\" stroke=\"#ffcc00\" stroke-width=\"4\" opacity=\"0.4\"/>\n                <circle cx=\"50\" cy=\"50\" r=\"30\" fill=\"none\" stroke=\"#fff\" stroke-width=\"6\" filter=\"drop-shadow(0 0 10px #ffcc00)\"/>\n                <!-- Roaring Face -->\n                <path d=\"M35,35 L65,35 L50,70 Z\" fill=\"#cc9900\"/>\n                <circle cx=\"40\" cy=\"40\" r=\"4\" fill=\"#fff\"/>\n                <circle cx=\"60\" cy=\"40\" r=\"4\" fill=\"#fff\"/>\n                <!-- Sound Beam -->\n                <path d=\"M50,60 L20,95 L80,95 Z\" fill=\"#fff\" opacity=\"0.8\" filter=\"blur(2px)\"/>\n            </svg> "}, "wolf": {"idle": "<svg viewBox=\"0 0 100 100\" xmlns=\"http://www.w3.org/2000/svg\">\n                <!-- Hunched Feral Body -->\n                <path d=\"M25,60 Q40,30 65,40 L60,75 Q40,85 20,70 Z\" fill=\"#222\"/>\n                <!-- Jagged Fur -->\n                <path d=\"M25,60 L15,50 L30,55 L20,40 L35,48 Z\" fill=\"#444\"/>\n                <path d=\"M65,40 L75,30 L65,45 L80,45 L65,55 Z\" fill=\"#444\"/>\n                <!-- Piercing Ice Eyes -->\n                <polygon points=\"50,48 56,46 54,50\" fill=\"#00aaff\" filter=\"drop-shadow(0 0 3px #00aaff)\"/>\n                <polygon points=\"62,50 68,48 66,52\" fill=\"#00aaff\" filter=\"drop-shadow(0 0 3px #00aaff)\"/>\n                <!-- Twin Daggers Pointed Down -->\n                <path d=\"M60,65 L70,95 M35,70 L40,95\" stroke=\"#777\" stroke-width=\"3\"/>\n            </svg>", "dash": "<svg viewBox=\"0 0 100 100\" xmlns=\"http://www.w3.org/2000/svg\">\n                <!-- Afterimages -->\n                <path d=\"M10,40 Q30,30 50,40 L45,70 Q25,80 5,60 Z\" fill=\"#00aaff\" opacity=\"0.1\"/>\n                <path d=\"M20,45 Q40,35 60,45 L55,75 Q35,85 15,65 Z\" fill=\"#00aaff\" opacity=\"0.3\"/>\n                <!-- Main Body -->\n                <g transform=\"skewX(-30) translate(30, 0)\">\n                    <path d=\"M30,50 Q50,40 70,50 L65,80 Q45,90 25,70 Z\" fill=\"#222\"/>\n                    <rect x=\"50\" y=\"55\" width=\"10\" height=\"3\" fill=\"#00aaff\"/>\n                </g>\n                <!-- Speed Lines -->\n                <line x1=\"5\" y1=\"50\" x2=\"90\" y2=\"50\" stroke=\"#00aaff\" stroke-width=\"1\" opacity=\"0.5\"/>\n            </svg>", "crouch": "<svg viewBox=\"0 0 100 100\" xmlns=\"http://www.w3.org/2000/svg\">\n                <!-- Extremely Low Profile -->\n                <path d=\"M10,85 Q40,70 85,85 L80,95 L10,95 Z\" fill=\"#222\"/>\n                <path d=\"M20,80 Q50,65 75,80 L70,88 L25,88 Z\" fill=\"#444\"/>\n                <!-- Claw Marks on Ground -->\n                <path d=\"M75,95 L95,95 M80,90 L92,90\" stroke=\"#00aaff\" stroke-width=\"2\"/>\n                <!-- Glowing Eye Trail -->\n                <path d=\"M80,75 L40,75\" stroke=\"#00aaff\" stroke-width=\"2\" opacity=\"0.8\" filter=\"blur(1px)\"/>\n            </svg>", "guard": "<svg viewBox=\"0 0 100 100\" xmlns=\"http://www.w3.org/2000/svg\">\n                <!-- Swirling Shadow Vortex -->\n                <path d=\"M50,10 C80,10 90,40 70,80 C50,110 20,80 30,40 C40,10 50,10 50,10 Z\" fill=\"#111\" stroke=\"#333\" stroke-width=\"4\"/>\n                <path d=\"M50,20 C70,20 80,45 65,75 C50,95 30,75 35,45 Z\" fill=\"#222\"/>\n                <!-- Energy Deflection -->\n                <path d=\"M85,30 Q60,50 90,70\" fill=\"none\" stroke=\"#00aaff\" stroke-width=\"3\" filter=\"drop-shadow(0 0 5px #00aaff)\"/>\n                <circle cx=\"75\" cy=\"50\" r=\"3\" fill=\"#fff\"/>\n            </svg>", "attack": "<svg viewBox=\"0 0 100 100\" xmlns=\"http://www.w3.org/2000/svg\">\n                <!-- Dark Silhouette -->\n                <path d=\"M20,50 Q40,30 60,60 Z\" fill=\"#222\"/>\n                <!-- 'X' Cross Slash -->\n                <path d=\"M30,20 L90,80\" stroke=\"#00aaff\" stroke-width=\"8\" stroke-linecap=\"round\" opacity=\"0.6\" filter=\"blur(1px)\"/>\n                <path d=\"M35,25 L85,75\" stroke=\"#fff\" stroke-width=\"3\" stroke-linecap=\"round\"/>\n                <path d=\"M90,20 L30,80\" stroke=\"#00aaff\" stroke-width=\"8\" stroke-linecap=\"round\" opacity=\"0.6\" filter=\"blur(1px)\"/>\n                <path d=\"M85,25 L35,75\" stroke=\"#fff\" stroke-width=\"3\" stroke-linecap=\"round\"/>\n                <!-- Intersection Spark -->\n                <circle cx=\"60\" cy=\"50\" r=\"8\" fill=\"#fff\" filter=\"drop-shadow(0 0 10px #00aaff)\"/>\n            </svg>", "ultimate": "<svg viewBox=\"0 0 100 100\" xmlns=\"http://www.w3.org/2000/svg\">\n                <!-- Massive Crescent Moon -->\n                <path d=\"M80,20 A40,40 0 1,0 80,80 A30,30 0 1,1 80,20 Z\" fill=\"#00aaff\" opacity=\"0.3\" filter=\"blur(2px)\"/>\n                <path d=\"M78,22 A38,38 0 1,0 78,78 A28,28 0 1,1 78,22 Z\" fill=\"#fff\" filter=\"drop-shadow(0 0 8px #00aaff)\"/>\n                <!-- Wolf Silhouette Slashing Through -->\n                <path d=\"M10,90 L90,10\" stroke=\"#111\" stroke-width=\"6\" stroke-linecap=\"round\"/>\n                <polygon points=\"40,50 60,30 70,40\" fill=\"#222\"/>\n                <!-- Blood/Energy Splatter -->\n                <circle cx=\"75\" cy=\"25\" r=\"3\" fill=\"#00aaff\"/>\n                <circle cx=\"85\" cy=\"35\" r=\"2\" fill=\"#fff\"/>\n            </svg> "}, "archangel": {"idle": "<svg viewBox=\"0 0 100 100\" xmlns=\"http://www.w3.org/2000/svg\">\n                <!-- Folded Wings -->\n                <path d=\"M50,30 Q20,20 15,60 Q30,80 50,60\" fill=\"none\" stroke=\"#fff\" stroke-width=\"3\" opacity=\"0.8\"/>\n                <path d=\"M50,30 Q80,20 85,60 Q70,80 50,60\" fill=\"none\" stroke=\"#fff\" stroke-width=\"3\" opacity=\"0.8\"/>\n                <!-- Platinum Armor Body -->\n                <path d=\"M40,40 L60,40 L55,75 L45,75 Z\" fill=\"#e6e6e6\"/>\n                <circle cx=\"50\" cy=\"35\" r=\"10\" fill=\"#fff\" filter=\"drop-shadow(0 0 5px #00e5ff)\"/>\n                <!-- Hovering Halo -->\n                <ellipse cx=\"50\" cy=\"15\" rx=\"15\" ry=\"4\" fill=\"none\" stroke=\"#ffcc00\" stroke-width=\"2\" filter=\"drop-shadow(0 0 3px #ffcc00)\"/>\n                <!-- Resting Spear -->\n                <line x1=\"75\" y1=\"10\" x2=\"60\" y2=\"90\" stroke=\"#00e5ff\" stroke-width=\"4\" filter=\"drop-shadow(0 0 4px #00e5ff)\"/>\n                <line x1=\"75\" y1=\"10\" x2=\"60\" y2=\"90\" stroke=\"#fff\" stroke-width=\"2\"/>\n            </svg>", "dash": "<svg viewBox=\"0 0 100 100\" xmlns=\"http://www.w3.org/2000/svg\">\n                <!-- Light Trails -->\n                <line x1=\"5\" y1=\"40\" x2=\"50\" y2=\"40\" stroke=\"#00e5ff\" stroke-width=\"2\" opacity=\"0.5\"/>\n                <line x1=\"10\" y1=\"60\" x2=\"60\" y2=\"60\" stroke=\"#00e5ff\" stroke-width=\"3\" opacity=\"0.7\"/>\n                <line x1=\"0\" y1=\"50\" x2=\"40\" y2=\"50\" stroke=\"#fff\" stroke-width=\"1\" opacity=\"0.8\"/>\n                <!-- Propelled Body -->\n                <g transform=\"skewX(-35) translate(40, 0)\">\n                    <path d=\"M30,30 L60,40 L50,70 L20,60 Z\" fill=\"#e6e6e6\"/>\n                    <path d=\"M20,30 Q0,50 15,80\" fill=\"none\" stroke=\"#fff\" stroke-width=\"4\"/>\n                    <!-- Thrusting Spear -->\n                    <line x1=\"20\" y1=\"50\" x2=\"90\" y2=\"50\" stroke=\"#00e5ff\" stroke-width=\"6\" filter=\"drop-shadow(0 0 5px #00e5ff)\"/>\n                    <line x1=\"20\" y1=\"50\" x2=\"90\" y2=\"50\" stroke=\"#fff\" stroke-width=\"2\"/>\n                </g>\n            </svg>", "crouch": "<svg viewBox=\"0 0 100 100\" xmlns=\"http://www.w3.org/2000/svg\">\n                <!-- Ground Gliding Sparks -->\n                <ellipse cx=\"40\" cy=\"85\" rx=\"30\" ry=\"2\" fill=\"#00e5ff\" opacity=\"0.6\" filter=\"blur(1px)\"/>\n                <circle cx=\"80\" cy=\"85\" r=\"3\" fill=\"#fff\"/>\n                <circle cx=\"90\" cy=\"82\" r=\"2\" fill=\"#00e5ff\"/>\n                <!-- Kneeling / Gliding Form -->\n                <path d=\"M30,75 Q50,55 70,75 L60,85 Q45,85 25,85 Z\" fill=\"#e6e6e6\"/>\n                <!-- Wing wrapping low -->\n                <path d=\"M20,60 Q40,65 75,70\" fill=\"none\" stroke=\"#fff\" stroke-width=\"4\" opacity=\"0.8\"/>\n            </svg>", "guard": "<svg viewBox=\"0 0 100 100\" xmlns=\"http://www.w3.org/2000/svg\">\n                <!-- Spherical Light Shield -->\n                <circle cx=\"50\" cy=\"50\" r=\"40\" fill=\"#00e5ff\" opacity=\"0.1\" filter=\"blur(2px)\"/>\n                <circle cx=\"50\" cy=\"50\" r=\"35\" fill=\"none\" stroke=\"#00e5ff\" stroke-width=\"2\" filter=\"drop-shadow(0 0 5px #00e5ff)\"/>\n                <!-- Crossed Wings inside shield -->\n                <path d=\"M25,25 Q50,75 75,25\" fill=\"none\" stroke=\"#fff\" stroke-width=\"6\" stroke-linecap=\"round\"/>\n                <path d=\"M25,75 Q50,25 75,75\" fill=\"none\" stroke=\"#fff\" stroke-width=\"6\" stroke-linecap=\"round\"/>\n                <circle cx=\"50\" cy=\"50\" r=\"10\" fill=\"#fff\" filter=\"drop-shadow(0 0 8px #ffcc00)\"/>\n            </svg>", "attack": "<svg viewBox=\"0 0 100 100\" xmlns=\"http://www.w3.org/2000/svg\">\n                <!-- Body lunging -->\n                <path d=\"M15,60 L35,30 L45,55 Z\" fill=\"#e6e6e6\"/>\n                <!-- Massive Piercing Line -->\n                <line x1=\"20\" y1=\"45\" x2=\"95\" y2=\"45\" stroke=\"#00e5ff\" stroke-width=\"8\" filter=\"drop-shadow(0 0 6px #00e5ff)\"/>\n                <line x1=\"10\" y1=\"45\" x2=\"100\" y2=\"45\" stroke=\"#fff\" stroke-width=\"3\"/>\n                <!-- Impact Star -->\n                <polygon points=\"90,35 95,43 105,45 95,47 90,55 85,47 75,45 85,43\" fill=\"#fff\" filter=\"drop-shadow(0 0 4px #00e5ff)\"/>\n            </svg>", "ultimate": "<svg viewBox=\"0 0 100 100\" xmlns=\"http://www.w3.org/2000/svg\">\n                <!-- Floating Caster -->\n                <circle cx=\"50\" cy=\"30\" r=\"12\" fill=\"#fff\" filter=\"drop-shadow(0 0 8px #ffcc00)\"/>\n                <path d=\"M30,10 Q50,40 70,10\" fill=\"none\" stroke=\"#ffcc00\" stroke-width=\"2\"/>\n                <!-- Orbital Strike Beam -->\n                <rect x=\"40\" y=\"0\" width=\"20\" height=\"100\" fill=\"#00e5ff\" opacity=\"0.4\" filter=\"blur(3px)\"/>\n                <rect x=\"45\" y=\"0\" width=\"10\" height=\"100\" fill=\"#fff\" filter=\"drop-shadow(0 0 10px #00e5ff)\"/>\n                <rect x=\"48\" y=\"0\" width=\"4\" height=\"100\" fill=\"#fff\"/>\n            </svg> "}, "leviathan": {"idle": "<svg viewBox=\"0 0 100 100\" xmlns=\"http://www.w3.org/2000/svg\">\n                <!-- Coiled Serpentine Body -->\n                <path d=\"M25,80 Q10,50 40,30 T80,40 T60,80 T35,85\" fill=\"none\" stroke=\"#003366\" stroke-width=\"14\" stroke-linecap=\"round\"/>\n                <path d=\"M25,80 Q10,50 40,30 T80,40 T60,80 T35,85\" fill=\"none\" stroke=\"#0a192f\" stroke-width=\"10\" stroke-linecap=\"round\"/>\n                <!-- Bioluminescent Scales / Spikes -->\n                <path d=\"M35,22 L42,12 L48,22\" fill=\"#00ffaa\"/>\n                <path d=\"M75,32 L88,25 L80,40\" fill=\"#00ffaa\"/>\n                <path d=\"M68,82 L75,95 L60,88\" fill=\"#00ffaa\"/>\n                <!-- Glowing Eye -->\n                <circle cx=\"30\" cy=\"35\" r=\"4\" fill=\"#00ffaa\" filter=\"drop-shadow(0 0 4px #00ffaa)\"/>\n            </svg>", "dash": "<svg viewBox=\"0 0 100 100\" xmlns=\"http://www.w3.org/2000/svg\">\n                <!-- Water Surge -->\n                <path d=\"M10,50 Q40,20 90,50 Q40,80 10,50 Z\" fill=\"#003366\" opacity=\"0.6\"/>\n                <path d=\"M15,50 Q45,30 80,50 Q45,70 15,50 Z\" fill=\"#0a192f\"/>\n                <!-- Bioluminescent Core Pushing Forward -->\n                <ellipse cx=\"65\" cy=\"50\" rx=\"15\" ry=\"6\" fill=\"#00ffaa\" filter=\"drop-shadow(0 0 8px #00ffaa)\"/>\n                <line x1=\"5\" y1=\"50\" x2=\"35\" y2=\"50\" stroke=\"#00ffaa\" stroke-width=\"2\" opacity=\"0.5\"/>\n            </svg>", "crouch": "<svg viewBox=\"0 0 100 100\" xmlns=\"http://www.w3.org/2000/svg\">\n                <!-- Submerging into ground/water -->\n                <ellipse cx=\"50\" cy=\"85\" rx=\"40\" ry=\"10\" fill=\"#003366\"/>\n                <ellipse cx=\"50\" cy=\"85\" rx=\"30\" ry=\"6\" fill=\"#0a192f\"/>\n                <!-- Dorsal Fins breaching surface -->\n                <path d=\"M30,80 L40,65 L50,82\" fill=\"#00ffaa\"/>\n                <path d=\"M55,83 L65,72 L75,85\" fill=\"#00ffaa\"/>\n                <!-- Ripple effect -->\n                <ellipse cx=\"50\" cy=\"85\" rx=\"45\" ry=\"12\" fill=\"none\" stroke=\"#00ffaa\" stroke-width=\"1\" opacity=\"0.6\"/>\n            </svg>", "guard": "<svg viewBox=\"0 0 100 100\" xmlns=\"http://www.w3.org/2000/svg\">\n                <!-- Coiled tightly -->\n                <circle cx=\"50\" cy=\"50\" r=\"30\" fill=\"#0a192f\" stroke=\"#003366\" stroke-width=\"8\"/>\n                <!-- Swirling Whirlpool Shield -->\n                <path d=\"M50,15 A35,35 0 0,1 85,50\" fill=\"none\" stroke=\"#00ffaa\" stroke-width=\"4\" stroke-linecap=\"round\"/>\n                <path d=\"M85,50 A35,35 0 0,1 50,85\" fill=\"none\" stroke=\"#00ffaa\" stroke-width=\"2\" stroke-linecap=\"round\"/>\n                <path d=\"M50,85 A35,35 0 0,1 15,50\" fill=\"none\" stroke=\"#00ffaa\" stroke-width=\"4\" stroke-linecap=\"round\"/>\n                <path d=\"M15,50 A35,35 0 0,1 50,15\" fill=\"none\" stroke=\"#00ffaa\" stroke-width=\"2\" stroke-linecap=\"round\"/>\n                <!-- Center dense shell -->\n                <circle cx=\"50\" cy=\"50\" r=\"15\" fill=\"#002244\"/>\n            </svg>", "attack": "<svg viewBox=\"0 0 100 100\" xmlns=\"http://www.w3.org/2000/svg\">\n                <!-- Anchored Body -->\n                <path d=\"M10,80 Q20,50 40,60 T30,90 Z\" fill=\"#0a192f\"/>\n                <!-- Snapping Tail/Water Whip -->\n                <path d=\"M30,70 Q60,90 90,20\" fill=\"none\" stroke=\"#003366\" stroke-width=\"12\" stroke-linecap=\"round\" opacity=\"0.5\"/>\n                <path d=\"M35,65 Q65,80 95,15\" fill=\"none\" stroke=\"#00ffaa\" stroke-width=\"4\" stroke-linecap=\"round\" filter=\"drop-shadow(0 0 5px #00ffaa)\"/>\n                <!-- Splashing droplets -->\n                <circle cx=\"85\" cy=\"30\" r=\"3\" fill=\"#00ffaa\"/>\n                <circle cx=\"75\" cy=\"20\" r=\"2\" fill=\"#fff\"/>\n            </svg>", "ultimate": "<svg viewBox=\"0 0 100 100\" xmlns=\"http://www.w3.org/2000/svg\">\n                <!-- Massive rising water pillar -->\n                <path d=\"M20,100 Q10,50 40,10 T80,10 Q90,50 80,100 Z\" fill=\"#003366\" opacity=\"0.4\"/>\n                <path d=\"M30,100 Q20,60 45,20 T70,20 Q80,60 70,100 Z\" fill=\"#0a192f\"/>\n                <!-- Jaws / Swirling currents inside -->\n                <path d=\"M35,40 Q50,60 65,40\" fill=\"none\" stroke=\"#00ffaa\" stroke-width=\"6\" stroke-linecap=\"round\" filter=\"drop-shadow(0 0 8px #00ffaa)\"/>\n                <path d=\"M30,60 Q50,80 70,60\" fill=\"none\" stroke=\"#00ffaa\" stroke-width=\"4\" stroke-linecap=\"round\"/>\n                <!-- Fangs -->\n                <polygon points=\"40,43 45,55 50,45\" fill=\"#fff\"/>\n                <polygon points=\"60,43 55,55 50,45\" fill=\"#fff\"/>\n            </svg> "}};
-        const UTILITY_ASSETS = { "the_lamb": "<svg viewBox=\"0 0 100 100\" xmlns=\"http://www.w3.org/2000/svg\">\n                <!-- Wool Aura / Fluff -->\n                <circle cx=\"50\" cy=\"50\" r=\"35\" fill=\"#ffffff\" filter=\"drop-shadow(0 0 5px #ffffff)\"/>\n                <circle cx=\"25\" cy=\"40\" r=\"18\" fill=\"#f4f4f4\"/>\n                <circle cx=\"75\" cy=\"40\" r=\"18\" fill=\"#f4f4f4\"/>\n                <circle cx=\"30\" cy=\"70\" r=\"15\" fill=\"#e0e0e0\"/>\n                <circle cx=\"70\" cy=\"70\" r=\"15\" fill=\"#e0e0e0\"/>\n                <circle cx=\"50\" cy=\"25\" r=\"20\" fill=\"#ffffff\"/>\n                \n                <!-- Ears -->\n                <ellipse cx=\"15\" cy=\"55\" rx=\"12\" ry=\"6\" fill=\"#e0e0e0\" transform=\"rotate(-20 15 55)\"/>\n                <ellipse cx=\"85\" cy=\"55\" rx=\"12\" ry=\"6\" fill=\"#e0e0e0\" transform=\"rotate(20 85 55)\"/>\n                \n                <!-- Sunglasses (Electric Blue / Nike Vibe) -->\n                <rect x=\"26\" y=\"42\" width=\"22\" height=\"14\" rx=\"4\" fill=\"#00ffcc\"/>\n                <rect x=\"52\" y=\"42\" width=\"22\" height=\"14\" rx=\"4\" fill=\"#00ffcc\"/>\n                <path d=\"M48 46 L52 46\" stroke=\"#111\" stroke-width=\"3\"/>\n                <path d=\"M26 46 L18 40\" stroke=\"#111\" stroke-width=\"3\"/>\n                <path d=\"M74 46 L82 40\" stroke=\"#111\" stroke-width=\"3\"/>\n\n                <!-- Snout & Mouth -->\n                <ellipse cx=\"50\" cy=\"68\" rx=\"16\" ry=\"12\" fill=\"#dcdcdc\"/>\n                <polygon points=\"45,65 55,65 50,70\" fill=\"#222\"/>\n                <path d=\"M50 70 L50 75 Q45 78 40 75\" fill=\"none\" stroke=\"#222\" stroke-width=\"2\"/>\n                <path d=\"M50 70 L50 75 Q55 78 60 75\" fill=\"none\" stroke=\"#222\" stroke-width=\"2\"/>\n            </svg>", "the_liar": "<svg viewBox=\"0 0 100 100\" xmlns=\"http://www.w3.org/2000/svg\">\n                <!-- Demonic Head Shape -->\n                <path d=\"M20,35 Q50,15 80,35 L72,80 Q50,105 28,80 Z\" fill=\"#cc0000\"/>\n                <path d=\"M30,40 Q50,25 70,40 L65,75 Q50,95 35,75 Z\" fill=\"#aa0000\"/>\n                \n                <!-- Horns -->\n                <path d=\"M30,38 Q10,10 25,5 Q38,20 42,32 Z\" fill=\"#111\"/>\n                <path d=\"M70,38 Q90,10 75,5 Q62,20 58,32 Z\" fill=\"#111\"/>\n                \n                <!-- Furious Eyes -->\n                <polygon points=\"32,55 46,46 48,52\" fill=\"#ffcc00\"/>\n                <polygon points=\"68,55 54,46 52,52\" fill=\"#ffcc00\"/>\n                \n                <!-- Snarling Mouth -->\n                <path d=\"M40,78 Q50,88 60,78\" fill=\"none\" stroke=\"#111\" stroke-width=\"4\"/>\n                <polygon points=\"42,79 46,85 48,79\" fill=\"#fff\"/>\n                <polygon points=\"58,79 54,85 52,79\" fill=\"#fff\"/>\n            </svg>", "lion_of_judah": "<svg viewBox=\"0 0 100 100\" xmlns=\"http://www.w3.org/2000/svg\">\n                <!-- Golden Mane -->\n                <path d=\"M50,5 L70,15 L90,30 L85,60 L70,90 L50,95 L30,90 L15,60 L10,30 L30,15 Z\" fill=\"#cc9900\"/>\n                <path d=\"M50,15 L65,25 L80,35 L75,55 L65,80 L50,85 L35,80 L25,55 L20,35 L35,25 Z\" fill=\"#ffcc00\"/>\n                \n                <!-- Face -->\n                <ellipse cx=\"50\" cy=\"55\" rx=\"20\" ry=\"25\" fill=\"#e6b800\"/>\n                \n                <!-- Eyes & Nose -->\n                <polygon points=\"38,48 45,45 45,50\" fill=\"#fff\"/>\n                <polygon points=\"62,48 55,45 55,50\" fill=\"#fff\"/>\n                <polygon points=\"45,60 55,60 50,68\" fill=\"#333\"/>\n                \n                <!-- Muzzle -->\n                <path d=\"M50 68 Q40 75 35 70\" fill=\"none\" stroke=\"#333\" stroke-width=\"2\"/>\n                <path d=\"M50 68 Q60 75 65 70\" fill=\"none\" stroke=\"#333\" stroke-width=\"2\"/>\n            </svg>", "sword_of_the_spirit": "<svg viewBox=\"0 0 100 100\" xmlns=\"http://www.w3.org/2000/svg\">\n                <!-- Holy Glow -->\n                <polygon points=\"48,20 52,20 50,2\" fill=\"#00ffcc\" opacity=\"0.6\" filter=\"blur(3px)\"/>\n                \n                <!-- Blade -->\n                <polygon points=\"46,25 54,25 50,5\" fill=\"#f4f4f4\"/>\n                <rect x=\"48\" y=\"25\" width=\"4\" height=\"45\" fill=\"#dcdcdc\"/>\n                <rect x=\"49\" y=\"5\" width=\"2\" height=\"65\" fill=\"#00ffcc\"/> <!-- Energy core -->\n                \n                <!-- Crossguard & Hilt -->\n                <rect x=\"30\" y=\"70\" width=\"40\" height=\"6\" rx=\"2\" fill=\"#cca600\"/>\n                <polygon points=\"30,70 25,65 30,76\" fill=\"#cca600\"/>\n                <polygon points=\"70,70 75,65 70,76\" fill=\"#cca600\"/>\n                <rect x=\"45\" y=\"76\" width=\"10\" height=\"18\" fill=\"#333\"/>\n                <circle cx=\"50\" cy=\"95\" r=\"5\" fill=\"#cca600\"/>\n            </svg>", "shield_of_faith": "<svg viewBox=\"0 0 100 100\" xmlns=\"http://www.w3.org/2000/svg\">\n                <!-- Shield Base -->\n                <path d=\"M15,20 L85,20 L85,45 Q85,90 50,95 Q15,90 15,45 Z\" fill=\"#1a1a1a\" stroke=\"#cca600\" stroke-width=\"5\"/>\n                <path d=\"M22,25 L78,25 L78,45 Q78,85 50,88 Q22,85 22,45 Z\" fill=\"#2a2a2a\"/>\n                \n                <!-- Golden Cross -->\n                <rect x=\"45\" y=\"32\" width=\"10\" height=\"46\" fill=\"#ffcc00\" filter=\"drop-shadow(0 0 8px rgba(255, 204, 0, 0.8))\"/>\n                <rect x=\"30\" y=\"45\" width=\"40\" height=\"10\" fill=\"#ffcc00\" filter=\"drop-shadow(0 0 8px rgba(255, 204, 0, 0.8))\"/>\n                \n                <!-- Inner Cross Highlight -->\n                <rect x=\"48\" y=\"34\" width=\"4\" height=\"42\" fill=\"#fff\"/>\n                <rect x=\"32\" y=\"48\" width=\"36\" height=\"4\" fill=\"#fff\"/>\n            </svg>", "tempest_engine_fx": "<svg viewBox=\"0 0 100 100\" xmlns=\"http://www.w3.org/2000/svg\">\n                <!-- Dark Clouds -->\n                <path d=\"M20,50 Q30,30 50,35 Q65,20 80,40 Q95,55 75,70 L25,70 Q5,60 20,50 Z\" fill=\"#2c3e50\"/>\n                <path d=\"M30,55 Q40,40 55,45 Q65,35 75,50 Q85,60 70,65 L35,65 Q20,60 30,55 Z\" fill=\"#34495e\"/>\n                \n                <!-- Lightning Strike -->\n                <polygon points=\"45,50 65,50 50,68 65,68 35,95 45,72 30,72\" fill=\"#00ffcc\" filter=\"drop-shadow(0 0 5px #00ffcc)\"/>\n                \n                <!-- Splashing Water Base -->\n                <path d=\"M10,85 Q25,75 40,85 T70,85 T90,85 L90,95 L10,95 Z\" fill=\"#0a192f\"/>\n                <path d=\"M20,80 Q35,70 50,80 T80,80 L80,95 L20,95 Z\" fill=\"#112240\"/>\n            </svg>" };
-        const STATE_LABELS = { "lamb": { "idle": "IDLE STANCE", "dash": "KINETIC DASH", "crouch": "TACTICAL SLIDE (LOW)", "guard": "HEAVY BLOCK", "attack": "SWORD STRIKE (LIGHT)", "ultimate": "ULTIMATE: DIVINE BURST" }, "liar": { "idle": "IDLE STANCE", "dash": "SHADOW STEP (DASH)", "crouch": "PREDATOR SLIDE", "guard": "HARDENED GUARD", "attack": "HELLFIRE SLASH (HEAVY)", "ultimate": "ULTIMATE: ABYSSAL ERUPTION" }, "lion": { "idle": "ROYAL STANCE", "dash": "GOLDEN CHARGE", "crouch": "LION'S POUNCE (LOW)", "guard": "WINGED AEGIS", "attack": "SCEPTER SMASH (HEAVY)", "ultimate": "ULTIMATE: WRATHFUL ROAR" }, "wolf": { "idle": "FERAL STANCE", "dash": "PHANTOM SPRINT", "crouch": "SHADOW CRAWL", "guard": "CLOAK OF SHADOWS", "attack": "CROSS FANG STRIKE", "ultimate": "ULTIMATE: LUNAR EXECUTION" }, "archangel": { "idle": "SERAPHIC STANCE", "dash": "HALO DASH", "crouch": "CELESTIAL GLIDE (LOW)", "guard": "AEGIS OF LIGHT", "attack": "SPEAR OF JUSTICE", "ultimate": "ULTIMATE: JUDGEMENT" }, "leviathan": { "idle": "ABYSSAL STANCE", "dash": "TIDAL SURGE", "crouch": "UNDERTOW (SUBMERGE)", "guard": "CORAL CARAPACE", "attack": "RIPTIDE WHIP", "ultimate": "ULTIMATE: DEEP MAW" } };
+        const COMBAT_ASSETS = {"lamb":{"idle":"<svg viewBox=\"0 0 100 100\" xmlns=\"http://www.w3.org/2000/svg\">\n                <!-- Wool Base -->\n                <circle cx=\"50\" cy=\"50\" r=\"30\" fill=\"#ffffff\" filter=\"drop-shadow(0 0 4px #ffffff)\"/>\n                <circle cx=\"25\" cy=\"40\" r=\"15\" fill=\"#f4f4f4\"/>\n                <circle cx=\"75\" cy=\"40\" r=\"15\" fill=\"#f4f4f4\"/>\n                <!-- Sunglasses -->\n                <rect x=\"30\" y=\"42\" width=\"18\" height=\"10\" rx=\"2\" fill=\"#00ffcc\"/>\n                <rect x=\"52\" y=\"42\" width=\"18\" height=\"10\" rx=\"2\" fill=\"#00ffcc\"/>\n                <path d=\"M48 45 L52 45 M30 45 L20 40 M70 45 L80 40\" stroke=\"#111\" stroke-width=\"2\"/>\n                <!-- Sword resting -->\n                <path d=\"M75,80 L90,20\" stroke=\"#00ffcc\" stroke-width=\"4\" filter=\"drop-shadow(0 0 5px #00ffcc)\"/>\n                <path d=\"M75,80 L90,20\" stroke=\"#fff\" stroke-width=\"2\"/>\n            </svg>","dash":"<svg viewBox=\"0 0 100 100\" xmlns=\"http://www.w3.org/2000/svg\">\n                <!-- Motion Lines -->\n                <line x1=\"5\" y1=\"30\" x2=\"40\" y2=\"30\" stroke=\"#00ffcc\" stroke-width=\"2\" opacity=\"0.6\"/>\n                <line x1=\"10\" y1=\"50\" x2=\"35\" y2=\"50\" stroke=\"#00ffcc\" stroke-width=\"3\" opacity=\"0.8\"/>\n                <line x1=\"2\" y1=\"70\" x2=\"45\" y2=\"70\" stroke=\"#00ffcc\" stroke-width=\"2\" opacity=\"0.6\"/>\n                <!-- Skewed Body for speed -->\n                <g transform=\"skewX(-20) translate(20, 0)\">\n                    <circle cx=\"50\" cy=\"50\" r=\"28\" fill=\"#ffffff\"/>\n                    <rect x=\"35\" y=\"42\" width=\"25\" height=\"8\" rx=\"2\" fill=\"#00ffcc\"/>\n                </g>\n            </svg>","crouch":"<svg viewBox=\"0 0 100 100\" xmlns=\"http://www.w3.org/2000/svg\">\n                <!-- Ground Dust -->\n                <ellipse cx=\"40\" cy=\"85\" rx=\"30\" ry=\"5\" fill=\"#333\"/>\n                <ellipse cx=\"20\" cy=\"80\" rx=\"15\" ry=\"8\" fill=\"#444\"/>\n                <!-- Compressed Body -->\n                <ellipse cx=\"60\" cy=\"70\" rx=\"35\" ry=\"20\" fill=\"#ffffff\" filter=\"drop-shadow(0 0 4px #ffffff)\"/>\n                <rect x=\"50\" y=\"65\" width=\"20\" height=\"8\" rx=\"2\" fill=\"#00ffcc\"/>\n            </svg>","guard":"<svg viewBox=\"0 0 100 100\" xmlns=\"http://www.w3.org/2000/svg\">\n                <!-- Body tucked behind -->\n                <circle cx=\"40\" cy=\"50\" r=\"25\" fill=\"#aaa\"/>\n                <rect x=\"25\" y=\"40\" width=\"15\" height=\"8\" rx=\"2\" fill=\"#00ffcc\"/>\n                <!-- Massive Shield -->\n                <path d=\"M50,10 L90,10 L90,40 Q90,90 50,95 Q50,90 50,40 Z\" fill=\"#1a1a1a\" stroke=\"#cca600\" stroke-width=\"4\"/>\n                <path d=\"M50,10 L90,10 L90,40 Q90,90 50,95 Z\" fill=\"#ffcc00\" opacity=\"0.2\"/>\n                <!-- Impact Spark -->\n                <circle cx=\"85\" cy=\"45\" r=\"10\" fill=\"#fff\" filter=\"blur(2px)\"/>\n                <path d=\"M70,45 L100,45 M85,30 L85,60 M75,35 L95,55 M75,55 L95,35\" stroke=\"#00ffcc\" stroke-width=\"2\"/>\n            </svg>","attack":"<svg viewBox=\"0 0 100 100\" xmlns=\"http://www.w3.org/2000/svg\">\n                <!-- Body leaning into strike -->\n                <circle cx=\"35\" cy=\"60\" r=\"25\" fill=\"#ffffff\"/>\n                <!-- Sword Arc (Smear frame) -->\n                <path d=\"M20,90 Q10,20 60,10 Q95,15 95,60\" fill=\"none\" stroke=\"#00ffcc\" stroke-width=\"12\" opacity=\"0.4\" stroke-linecap=\"round\"/>\n                <path d=\"M30,85 Q20,25 60,15 Q90,20 90,60\" fill=\"none\" stroke=\"#fff\" stroke-width=\"4\" stroke-linecap=\"round\" filter=\"drop-shadow(0 0 5px #00ffcc)\"/>\n                <!-- Spark at tip -->\n                <circle cx=\"90\" cy=\"60\" r=\"6\" fill=\"#fff\" filter=\"drop-shadow(0 0 8px #00ffcc)\"/>\n            </svg>","ultimate":"<svg viewBox=\"0 0 100 100\" xmlns=\"http://www.w3.org/2000/svg\">\n                <!-- Holy Aura -->\n                <circle cx=\"50\" cy=\"50\" r=\"45\" fill=\"#00ffcc\" opacity=\"0.1\"/>\n                <circle cx=\"50\" cy=\"50\" r=\"35\" fill=\"#00ffcc\" opacity=\"0.2\"/>\n                <!-- Floating Body -->\n                <circle cx=\"50\" cy=\"50\" r=\"20\" fill=\"#ffffff\" filter=\"drop-shadow(0 0 10px #fff)\"/>\n                <!-- Exploding Cross -->\n                <rect x=\"46\" y=\"5\" width=\"8\" height=\"90\" fill=\"#fff\" filter=\"drop-shadow(0 0 8px #00ffcc)\"/>\n                <rect x=\"5\" y=\"46\" width=\"90\" height=\"8\" fill=\"#fff\" filter=\"drop-shadow(0 0 8px #00ffcc)\"/>\n            </svg>"},"liar":{"idle":"<svg viewBox=\"0 0 100 100\" xmlns=\"http://www.w3.org/2000/svg\">\n                <!-- Demon Body -->\n                <path d=\"M30,30 Q50,15 70,30 L65,75 Q50,95 35,75 Z\" fill=\"#cc0000\"/>\n                <!-- Horns -->\n                <path d=\"M35,32 Q15,10 30,5 Q40,20 45,30 Z\" fill=\"#111\"/>\n                <path d=\"M65,32 Q85,10 70,5 Q60,20 55,30 Z\" fill=\"#111\"/>\n                <!-- Glowing Eyes -->\n                <polygon points=\"40,50 48,45 48,52\" fill=\"#ffcc00\"/>\n                <polygon points=\"60,50 52,45 52,52\" fill=\"#ffcc00\"/>\n                <!-- Tail ticking -->\n                <path d=\"M60,80 Q80,90 90,70 Q95,60 85,55\" fill=\"none\" stroke=\"#cc0000\" stroke-width=\"4\"/>\n                <polygon points=\"85,55 95,50 90,65\" fill=\"#cc0000\"/>\n            </svg>","dash":"<svg viewBox=\"0 0 100 100\" xmlns=\"http://www.w3.org/2000/svg\">\n                <!-- Shadow/Smoke Trail -->\n                <path d=\"M10,50 Q30,30 40,60 T70,50\" fill=\"none\" stroke=\"#440000\" stroke-width=\"15\" stroke-linecap=\"round\" opacity=\"0.6\"/>\n                <path d=\"M5,60 Q25,40 45,70 T80,60\" fill=\"none\" stroke=\"#111\" stroke-width=\"10\" stroke-linecap=\"round\" opacity=\"0.8\"/>\n                <!-- Dissolving Body -->\n                <path d=\"M60,30 Q80,20 90,40 L80,80 Q60,90 50,70 Z\" fill=\"#cc0000\" transform=\"skewX(-15)\"/>\n                <polygon points=\"75,50 82,46 80,52\" fill=\"#ffcc00\"/>\n            </svg>","crouch":"<svg viewBox=\"0 0 100 100\" xmlns=\"http://www.w3.org/2000/svg\">\n                <!-- Low profile body -->\n                <path d=\"M20,75 Q50,60 80,80 L70,95 Q50,90 30,95 Z\" fill=\"#cc0000\"/>\n                <!-- Claws digging into ground -->\n                <path d=\"M75,80 L85,95 M80,80 L92,92 M85,75 L95,85\" stroke=\"#fff\" stroke-width=\"2\"/>\n                <!-- Sparks on ground -->\n                <circle cx=\"90\" cy=\"90\" r=\"3\" fill=\"#ff3333\"/>\n                <circle cx=\"95\" cy=\"95\" r=\"2\" fill=\"#ffcc00\"/>\n                <!-- Eye -->\n                <polygon points=\"65,72 72,68 70,74\" fill=\"#ffcc00\"/>\n            </svg>","guard":"<svg viewBox=\"0 0 100 100\" xmlns=\"http://www.w3.org/2000/svg\">\n                <!-- Hunkered Body -->\n                <path d=\"M30,40 Q50,20 70,40 L65,90 Q50,100 35,90 Z\" fill=\"#660000\"/>\n                <!-- Hardened Arms Blocking -->\n                <rect x=\"25\" y=\"45\" width=\"60\" height=\"15\" rx=\"5\" fill=\"#111\" transform=\"rotate(30 50 50)\"/>\n                <rect x=\"15\" y=\"45\" width=\"60\" height=\"15\" rx=\"5\" fill=\"#111\" transform=\"rotate(-30 50 50)\"/>\n                <!-- Red aura/shield -->\n                <circle cx=\"50\" cy=\"55\" r=\"40\" fill=\"none\" stroke=\"#ff3333\" stroke-width=\"2\" opacity=\"0.5\" stroke-dasharray=\"10, 5\"/>\n            </svg>","attack":"<svg viewBox=\"0 0 100 100\" xmlns=\"http://www.w3.org/2000/svg\">\n                <!-- Attacking Body -->\n                <path d=\"M20,40 Q40,30 50,50 L40,80 Q20,90 10,70 Z\" fill=\"#cc0000\"/>\n                <!-- Triple Claw/Trident Slash -->\n                <path d=\"M40,20 Q70,40 90,80\" fill=\"none\" stroke=\"#ff3333\" stroke-width=\"6\" stroke-linecap=\"round\" filter=\"drop-shadow(0 0 4px #ff0000)\"/>\n                <path d=\"M50,15 Q80,35 100,75\" fill=\"none\" stroke=\"#fff\" stroke-width=\"3\" stroke-linecap=\"round\" filter=\"drop-shadow(0 0 6px #ff3333)\"/>\n                <path d=\"M30,25 Q60,45 80,85\" fill=\"none\" stroke=\"#aa0000\" stroke-width=\"6\" stroke-linecap=\"round\"/>\n            </svg>","ultimate":"<svg viewBox=\"0 0 100 100\" xmlns=\"http://www.w3.org/2000/svg\">\n                <!-- Center Body -->\n                <path d=\"M40,40 Q50,20 60,40 L55,70 Q50,80 45,70 Z\" fill=\"#111\"/>\n                <polygon points=\"48,45 52,45 50,50\" fill=\"#ffcc00\"/>\n                <!-- Upward Eruption -->\n                <path d=\"M20,100 Q40,50 10,10\" fill=\"none\" stroke=\"#ff3333\" stroke-width=\"8\" opacity=\"0.8\" filter=\"blur(1px)\"/>\n                <path d=\"M50,100 Q50,40 50,5\" fill=\"none\" stroke=\"#fff\" stroke-width=\"12\" filter=\"drop-shadow(0 0 10px #ff3333)\"/>\n                <path d=\"M80,100 Q60,50 90,10\" fill=\"none\" stroke=\"#ff3333\" stroke-width=\"8\" opacity=\"0.8\" filter=\"blur(1px)\"/>\n                <!-- Base fire -->\n                <ellipse cx=\"50\" cy=\"90\" rx=\"40\" ry=\"10\" fill=\"#ff0000\" opacity=\"0.5\" filter=\"blur(4px)\"/>\n            </svg>"},"lion":{"idle":"<svg viewBox=\"0 0 100 100\" xmlns=\"http://www.w3.org/2000/svg\">\n                <!-- Golden Mane -->\n                <path d=\"M50,10 L75,25 L85,55 L70,85 L50,90 L30,85 L15,55 L25,25 Z\" fill=\"#cc9900\" filter=\"drop-shadow(0 0 4px #cc9900)\"/>\n                <path d=\"M50,20 L65,30 L75,55 L65,75 L50,80 L35,75 L25,55 L35,30 Z\" fill=\"#ffcc00\"/>\n                <!-- Face -->\n                <ellipse cx=\"50\" cy=\"50\" rx=\"15\" ry=\"20\" fill=\"#e6b800\"/>\n                <polygon points=\"42,45 48,43 46,47\" fill=\"#fff\"/>\n                <polygon points=\"58,45 52,43 54,47\" fill=\"#fff\"/>\n                <!-- Resting Scepter -->\n                <rect x=\"80\" y=\"20\" width=\"4\" height=\"70\" fill=\"#fff\" filter=\"drop-shadow(0 0 5px #ffcc00)\"/>\n                <circle cx=\"82\" cy=\"15\" r=\"6\" fill=\"#ffcc00\"/>\n            </svg>","dash":"<svg viewBox=\"0 0 100 100\" xmlns=\"http://www.w3.org/2000/svg\">\n                <!-- Heavy Motion Lines -->\n                <rect x=\"0\" y=\"30\" width=\"50\" height=\"4\" fill=\"#ffcc00\" opacity=\"0.4\"/>\n                <rect x=\"10\" y=\"50\" width=\"40\" height=\"8\" fill=\"#ffcc00\" opacity=\"0.7\"/>\n                <rect x=\"0\" y=\"70\" width=\"60\" height=\"4\" fill=\"#ffcc00\" opacity=\"0.4\"/>\n                <!-- Charging Body -->\n                <g transform=\"skewX(-25) translate(30, 0)\">\n                    <path d=\"M40,20 L70,30 L75,70 L40,80 Z\" fill=\"#cc9900\"/>\n                    <path d=\"M45,30 L60,35 L65,65 L45,70 Z\" fill=\"#ffcc00\"/>\n                    <circle cx=\"70\" cy=\"50\" r=\"10\" fill=\"#fff\" filter=\"drop-shadow(0 0 10px #ffcc00)\"/>\n                </g>\n            </svg>","crouch":"<svg viewBox=\"0 0 100 100\" xmlns=\"http://www.w3.org/2000/svg\">\n                <!-- Golden Dust/Sparks -->\n                <circle cx=\"20\" cy=\"85\" r=\"4\" fill=\"#ffcc00\"/>\n                <circle cx=\"30\" cy=\"80\" r=\"3\" fill=\"#fff\"/>\n                <ellipse cx=\"45\" cy=\"90\" rx=\"35\" ry=\"4\" fill=\"#cc9900\" opacity=\"0.5\"/>\n                <!-- Crouching Heavy Body -->\n                <path d=\"M30,85 Q50,60 80,75 Q90,85 85,90 L30,95 Z\" fill=\"#ffcc00\"/>\n                <path d=\"M40,80 Q60,65 75,75 Q80,80 75,85 L40,88 Z\" fill=\"#cc9900\"/>\n            </svg>","guard":"<svg viewBox=\"0 0 100 100\" xmlns=\"http://www.w3.org/2000/svg\">\n                <!-- Center Body -->\n                <circle cx=\"50\" cy=\"50\" r=\"20\" fill=\"#cc9900\"/>\n                <!-- Majestic Wings Wrapping Around -->\n                <path d=\"M50,15 Q80,5 95,40 Q85,80 50,90\" fill=\"none\" stroke=\"#ffcc00\" stroke-width=\"8\" stroke-linecap=\"round\"/>\n                <path d=\"M50,15 Q20,5 5,40 Q15,80 50,90\" fill=\"none\" stroke=\"#ffcc00\" stroke-width=\"8\" stroke-linecap=\"round\"/>\n                <!-- Hard Light Shield -->\n                <circle cx=\"50\" cy=\"50\" r=\"45\" fill=\"none\" stroke=\"#fff\" stroke-width=\"2\" filter=\"drop-shadow(0 0 8px #ffcc00)\"/>\n                <path d=\"M50,5 L50,95 M5,50 L95,50\" stroke=\"#ffcc00\" stroke-width=\"1\" opacity=\"0.5\"/>\n            </svg>","attack":"<svg viewBox=\"0 0 100 100\" xmlns=\"http://www.w3.org/2000/svg\">\n                <!-- Heavy Body Torque -->\n                <circle cx=\"40\" cy=\"60\" r=\"25\" fill=\"#cc9900\"/>\n                <!-- Massive Staff Arc -->\n                <path d=\"M10,80 Q30,10 90,30\" fill=\"none\" stroke=\"#ffcc00\" stroke-width=\"10\" stroke-linecap=\"round\" opacity=\"0.5\"/>\n                <path d=\"M20,70 Q40,20 85,40\" fill=\"none\" stroke=\"#fff\" stroke-width=\"4\" stroke-linecap=\"round\" filter=\"drop-shadow(0 0 8px #ffcc00)\"/>\n                <!-- Impact Burst -->\n                <circle cx=\"85\" cy=\"40\" r=\"12\" fill=\"#fff\" filter=\"blur(2px)\"/>\n                <polygon points=\"85,20 90,35 105,40 90,45 85,60 80,45 65,40 80,35\" fill=\"#ffcc00\"/>\n            </svg>","ultimate":"<svg viewBox=\"0 0 100 100\" xmlns=\"http://www.w3.org/2000/svg\">\n                <!-- Shockwaves -->\n                <circle cx=\"50\" cy=\"50\" r=\"45\" fill=\"none\" stroke=\"#ffcc00\" stroke-width=\"4\" opacity=\"0.4\"/>\n                <circle cx=\"50\" cy=\"50\" r=\"30\" fill=\"none\" stroke=\"#fff\" stroke-width=\"6\" filter=\"drop-shadow(0 0 10px #ffcc00)\"/>\n                <!-- Roaring Face -->\n                <path d=\"M35,35 L65,35 L50,70 Z\" fill=\"#cc9900\"/>\n                <circle cx=\"40\" cy=\"40\" r=\"4\" fill=\"#fff\"/>\n                <circle cx=\"60\" cy=\"40\" r=\"4\" fill=\"#fff\"/>\n                <!-- Sound Beam -->\n                <path d=\"M50,60 L20,95 L80,95 Z\" fill=\"#fff\" opacity=\"0.8\" filter=\"blur(2px)\"/>\n            </svg>"},"wolf":{"idle":"<svg viewBox=\"0 0 100 100\" xmlns=\"http://www.w3.org/2000/svg\">\n                <!-- Hunched Feral Body -->\n                <path d=\"M25,60 Q40,30 65,40 L60,75 Q40,85 20,70 Z\" fill=\"#222\"/>\n                <!-- Jagged Fur -->\n                <path d=\"M25,60 L15,50 L30,55 L20,40 L35,48 Z\" fill=\"#444\"/>\n                <path d=\"M65,40 L75,30 L65,45 L80,45 L65,55 Z\" fill=\"#444\"/>\n                <!-- Piercing Ice Eyes -->\n                <polygon points=\"50,48 56,46 54,50\" fill=\"#00aaff\" filter=\"drop-shadow(0 0 3px #00aaff)\"/>\n                <polygon points=\"62,50 68,48 66,52\" fill=\"#00aaff\" filter=\"drop-shadow(0 0 3px #00aaff)\"/>\n                <!-- Twin Daggers Pointed Down -->\n                <path d=\"M60,65 L70,95 M35,70 L40,95\" stroke=\"#777\" stroke-width=\"3\"/>\n            </svg>","dash":"<svg viewBox=\"0 0 100 100\" xmlns=\"http://www.w3.org/2000/svg\">\n                <!-- Afterimages -->\n                <path d=\"M10,40 Q30,30 50,40 L45,70 Q25,80 5,60 Z\" fill=\"#00aaff\" opacity=\"0.1\"/>\n                <path d=\"M20,45 Q40,35 60,45 L55,75 Q35,85 15,65 Z\" fill=\"#00aaff\" opacity=\"0.3\"/>\n                <!-- Main Body -->\n                <g transform=\"skewX(-30) translate(30, 0)\">\n                    <path d=\"M30,50 Q50,40 70,50 L65,80 Q45,90 25,70 Z\" fill=\"#222\"/>\n                    <rect x=\"50\" y=\"55\" width=\"10\" height=\"3\" fill=\"#00aaff\"/>\n                </g>\n                <!-- Speed Lines -->\n                <line x1=\"5\" y1=\"50\" x2=\"90\" y2=\"50\" stroke=\"#00aaff\" stroke-width=\"1\" opacity=\"0.5\"/>\n            </svg>","crouch":"<svg viewBox=\"0 0 100 100\" xmlns=\"http://www.w3.org/2000/svg\">\n                <!-- Extremely Low Profile -->\n                <path d=\"M10,85 Q40,70 85,85 L80,95 L10,95 Z\" fill=\"#222\"/>\n                <path d=\"M20,80 Q50,65 75,80 L70,88 L25,88 Z\" fill=\"#444\"/>\n                <!-- Claw Marks on Ground -->\n                <path d=\"M75,95 L95,95 M80,90 L92,90\" stroke=\"#00aaff\" stroke-width=\"2\"/>\n                <!-- Glowing Eye Trail -->\n                <path d=\"M80,75 L40,75\" stroke=\"#00aaff\" stroke-width=\"2\" opacity=\"0.8\" filter=\"blur(1px)\"/>\n            </svg>","guard":"<svg viewBox=\"0 0 100 100\" xmlns=\"http://www.w3.org/2000/svg\">\n                <!-- Swirling Shadow Vortex -->\n                <path d=\"M50,10 C80,10 90,40 70,80 C50,110 20,80 30,40 C40,10 50,10 50,10 Z\" fill=\"#111\" stroke=\"#333\" stroke-width=\"4\"/>\n                <path d=\"M50,20 C70,20 80,45 65,75 C50,95 30,75 35,45 Z\" fill=\"#222\"/>\n                <!-- Energy Deflection -->\n                <path d=\"M85,30 Q60,50 90,70\" fill=\"none\" stroke=\"#00aaff\" stroke-width=\"3\" filter=\"drop-shadow(0 0 5px #00aaff)\"/>\n                <circle cx=\"75\" cy=\"50\" r=\"3\" fill=\"#fff\"/>\n            </svg>","attack":"<svg viewBox=\"0 0 100 100\" xmlns=\"http://www.w3.org/2000/svg\">\n                <!-- Dark Silhouette -->\n                <path d=\"M20,50 Q40,30 60,60 Z\" fill=\"#222\"/>\n                <!-- 'X' Cross Slash -->\n                <path d=\"M30,20 L90,80\" stroke=\"#00aaff\" stroke-width=\"8\" stroke-linecap=\"round\" opacity=\"0.6\" filter=\"blur(1px)\"/>\n                <path d=\"M35,25 L85,75\" stroke=\"#fff\" stroke-width=\"3\" stroke-linecap=\"round\"/>\n                <path d=\"M90,20 L30,80\" stroke=\"#00aaff\" stroke-width=\"8\" stroke-linecap=\"round\" opacity=\"0.6\" filter=\"blur(1px)\"/>\n                <path d=\"M85,25 L35,75\" stroke=\"#fff\" stroke-width=\"3\" stroke-linecap=\"round\"/>\n                <!-- Intersection Spark -->\n                <circle cx=\"60\" cy=\"50\" r=\"8\" fill=\"#fff\" filter=\"drop-shadow(0 0 10px #00aaff)\"/>\n            </svg>","ultimate":"<svg viewBox=\"0 0 100 100\" xmlns=\"http://www.w3.org/2000/svg\">\n                <!-- Massive Crescent Moon -->\n                <path d=\"M80,20 A40,40 0 1,0 80,80 A30,30 0 1,1 80,20 Z\" fill=\"#00aaff\" opacity=\"0.3\" filter=\"blur(2px)\"/>\n                <path d=\"M78,22 A38,38 0 1,0 78,78 A28,28 0 1,1 78,22 Z\" fill=\"#fff\" filter=\"drop-shadow(0 0 8px #00aaff)\"/>\n                <!-- Wolf Silhouette Slashing Through -->\n                <path d=\"M10,90 L90,10\" stroke=\"#111\" stroke-width=\"6\" stroke-linecap=\"round\"/>\n                <polygon points=\"40,50 60,30 70,40\" fill=\"#222\"/>\n                <!-- Blood/Energy Splatter -->\n                <circle cx=\"75\" cy=\"25\" r=\"3\" fill=\"#00aaff\"/>\n                <circle cx=\"85\" cy=\"35\" r=\"2\" fill=\"#fff\"/>\n            </svg>"},"archangel":{"idle":"<svg viewBox=\"0 0 100 100\" xmlns=\"http://www.w3.org/2000/svg\">\n                <!-- Folded Wings -->\n                <path d=\"M50,30 Q20,20 15,60 Q30,80 50,60\" fill=\"none\" stroke=\"#fff\" stroke-width=\"3\" opacity=\"0.8\"/>\n                <path d=\"M50,30 Q80,20 85,60 Q70,80 50,60\" fill=\"none\" stroke=\"#fff\" stroke-width=\"3\" opacity=\"0.8\"/>\n                <!-- Platinum Armor Body -->\n                <path d=\"M40,40 L60,40 L55,75 L45,75 Z\" fill=\"#e6e6e6\"/>\n                <circle cx=\"50\" cy=\"35\" r=\"10\" fill=\"#fff\" filter=\"drop-shadow(0 0 5px #00e5ff)\"/>\n                <!-- Hovering Halo -->\n                <ellipse cx=\"50\" cy=\"15\" rx=\"15\" ry=\"4\" fill=\"none\" stroke=\"#ffcc00\" stroke-width=\"2\" filter=\"drop-shadow(0 0 3px #ffcc00)\"/>\n                <!-- Resting Spear -->\n                <line x1=\"75\" y1=\"10\" x2=\"60\" y2=\"90\" stroke=\"#00e5ff\" stroke-width=\"4\" filter=\"drop-shadow(0 0 4px #00e5ff)\"/>\n                <line x1=\"75\" y1=\"10\" x2=\"60\" y2=\"90\" stroke=\"#fff\" stroke-width=\"2\"/>\n            </svg>","dash":"<svg viewBox=\"0 0 100 100\" xmlns=\"http://www.w3.org/2000/svg\">\n                <!-- Light Trails -->\n                <line x1=\"5\" y1=\"40\" x2=\"50\" y2=\"40\" stroke=\"#00e5ff\" stroke-width=\"2\" opacity=\"0.5\"/>\n                <line x1=\"10\" y1=\"60\" x2=\"60\" y2=\"60\" stroke=\"#00e5ff\" stroke-width=\"3\" opacity=\"0.7\"/>\n                <line x1=\"0\" y1=\"50\" x2=\"40\" y2=\"50\" stroke=\"#fff\" stroke-width=\"1\" opacity=\"0.8\"/>\n                <!-- Propelled Body -->\n                <g transform=\"skewX(-35) translate(40, 0)\">\n                    <path d=\"M30,30 L60,40 L50,70 L20,60 Z\" fill=\"#e6e6e6\"/>\n                    <path d=\"M20,30 Q0,50 15,80\" fill=\"none\" stroke=\"#fff\" stroke-width=\"4\"/>\n                    <!-- Thrusting Spear -->\n                    <line x1=\"20\" y1=\"50\" x2=\"90\" y2=\"50\" stroke=\"#00e5ff\" stroke-width=\"6\" filter=\"drop-shadow(0 0 5px #00e5ff)\"/>\n                    <line x1=\"20\" y1=\"50\" x2=\"90\" y2=\"50\" stroke=\"#fff\" stroke-width=\"2\"/>\n                </g>\n            </svg>","crouch":"<svg viewBox=\"0 0 100 100\" xmlns=\"http://www.w3.org/2000/svg\">\n                <!-- Ground Gliding Sparks -->\n                <ellipse cx=\"40\" cy=\"85\" rx=\"30\" ry=\"2\" fill=\"#00e5ff\" opacity=\"0.6\" filter=\"blur(1px)\"/>\n                <circle cx=\"80\" cy=\"85\" r=\"3\" fill=\"#fff\"/>\n                <circle cx=\"90\" cy=\"82\" r=\"2\" fill=\"#00e5ff\"/>\n                <!-- Kneeling / Gliding Form -->\n                <path d=\"M30,75 Q50,55 70,75 L60,85 Q45,85 25,85 Z\" fill=\"#e6e6e6\"/>\n                <!-- Wing wrapping low -->\n                <path d=\"M20,60 Q40,65 75,70\" fill=\"none\" stroke=\"#fff\" stroke-width=\"4\" opacity=\"0.8\"/>\n            </svg>","guard":"<svg viewBox=\"0 0 100 100\" xmlns=\"http://www.w3.org/2000/svg\">\n                <!-- Spherical Light Shield -->\n                <circle cx=\"50\" cy=\"50\" r=\"40\" fill=\"#00e5ff\" opacity=\"0.1\" filter=\"blur(2px)\"/>\n                <circle cx=\"50\" cy=\"50\" r=\"35\" fill=\"none\" stroke=\"#00e5ff\" stroke-width=\"2\" filter=\"drop-shadow(0 0 5px #00e5ff)\"/>\n                <!-- Crossed Wings inside shield -->\n                <path d=\"M25,25 Q50,75 75,25\" fill=\"none\" stroke=\"#fff\" stroke-width=\"6\" stroke-linecap=\"round\"/>\n                <path d=\"M25,75 Q50,25 75,75\" fill=\"none\" stroke=\"#fff\" stroke-width=\"6\" stroke-linecap=\"round\"/>\n                <circle cx=\"50\" cy=\"50\" r=\"10\" fill=\"#fff\" filter=\"drop-shadow(0 0 8px #ffcc00)\"/>\n            </svg>","attack":"<svg viewBox=\"0 0 100 100\" xmlns=\"http://www.w3.org/2000/svg\">\n                <!-- Body lunging -->\n                <path d=\"M15,60 L35,30 L45,55 Z\" fill=\"#e6e6e6\"/>\n                <!-- Massive Piercing Line -->\n                <line x1=\"20\" y1=\"45\" x2=\"95\" y2=\"45\" stroke=\"#00e5ff\" stroke-width=\"8\" filter=\"drop-shadow(0 0 6px #00e5ff)\"/>\n                <line x1=\"10\" y1=\"45\" x2=\"100\" y2=\"45\" stroke=\"#fff\" stroke-width=\"3\"/>\n                <!-- Impact Star -->\n                <polygon points=\"90,35 95,43 105,45 95,47 90,55 85,47 75,45 85,43\" fill=\"#fff\" filter=\"drop-shadow(0 0 4px #00e5ff)\"/>\n            </svg>","ultimate":"<svg viewBox=\"0 0 100 100\" xmlns=\"http://www.w3.org/2000/svg\">\n                <!-- Floating Caster -->\n                <circle cx=\"50\" cy=\"30\" r=\"12\" fill=\"#fff\" filter=\"drop-shadow(0 0 8px #ffcc00)\"/>\n                <path d=\"M30,10 Q50,40 70,10\" fill=\"none\" stroke=\"#ffcc00\" stroke-width=\"2\"/>\n                <!-- Orbital Strike Beam -->\n                <rect x=\"40\" y=\"0\" width=\"20\" height=\"100\" fill=\"#00e5ff\" opacity=\"0.4\" filter=\"blur(3px)\"/>\n                <rect x=\"45\" y=\"0\" width=\"10\" height=\"100\" fill=\"#fff\" filter=\"drop-shadow(0 0 10px #00e5ff)\"/>\n                <rect x=\"48\" y=\"0\" width=\"4\" height=\"100\" fill=\"#fff\"/>\n            </svg>"},"leviathan":{"idle":"<svg viewBox=\"0 0 100 100\" xmlns=\"http://www.w3.org/2000/svg\">\n                <!-- Coiled Serpentine Body -->\n                <path d=\"M25,80 Q10,50 40,30 T80,40 T60,80 T35,85\" fill=\"none\" stroke=\"#003366\" stroke-width=\"14\" stroke-linecap=\"round\"/>\n                <path d=\"M25,80 Q10,50 40,30 T80,40 T60,80 T35,85\" fill=\"none\" stroke=\"#0a192f\" stroke-width=\"10\" stroke-linecap=\"round\"/>\n                <!-- Bioluminescent Scales / Spikes -->\n                <path d=\"M35,22 L42,12 L48,22\" fill=\"#00ffaa\"/>\n                <path d=\"M75,32 L88,25 L80,40\" fill=\"#00ffaa\"/>\n                <path d=\"M68,82 L75,95 L60,88\" fill=\"#00ffaa\"/>\n                <!-- Glowing Eye -->\n                <circle cx=\"30\" cy=\"35\" r=\"4\" fill=\"#00ffaa\" filter=\"drop-shadow(0 0 4px #00ffaa)\"/>\n            </svg>","dash":"<svg viewBox=\"0 0 100 100\" xmlns=\"http://www.w3.org/2000/svg\">\n                <!-- Water Surge -->\n                <path d=\"M10,50 Q40,20 90,50 Q40,80 10,50 Z\" fill=\"#003366\" opacity=\"0.6\"/>\n                <path d=\"M15,50 Q45,30 80,50 Q45,70 15,50 Z\" fill=\"#0a192f\"/>\n                <!-- Bioluminescent Core Pushing Forward -->\n                <ellipse cx=\"65\" cy=\"50\" rx=\"15\" ry=\"6\" fill=\"#00ffaa\" filter=\"drop-shadow(0 0 8px #00ffaa)\"/>\n                <line x1=\"5\" y1=\"50\" x2=\"35\" y2=\"50\" stroke=\"#00ffaa\" stroke-width=\"2\" opacity=\"0.5\"/>\n            </svg>","crouch":"<svg viewBox=\"0 0 100 100\" xmlns=\"http://www.w3.org/2000/svg\">\n                <!-- Submerging into ground/water -->\n                <ellipse cx=\"50\" cy=\"85\" rx=\"40\" ry=\"10\" fill=\"#003366\"/>\n                <ellipse cx=\"50\" cy=\"85\" rx=\"30\" ry=\"6\" fill=\"#0a192f\"/>\n                <!-- Dorsal Fins breaching surface -->\n                <path d=\"M30,80 L40,65 L50,82\" fill=\"#00ffaa\"/>\n                <path d=\"M55,83 L65,72 L75,85\" fill=\"#00ffaa\"/>\n                <!-- Ripple effect -->\n                <ellipse cx=\"50\" cy=\"85\" rx=\"45\" ry=\"12\" fill=\"none\" stroke=\"#00ffaa\" stroke-width=\"1\" opacity=\"0.6\"/>\n            </svg>","guard":"<svg viewBox=\"0 0 100 100\" xmlns=\"http://www.w3.org/2000/svg\">\n                <!-- Coiled tightly -->\n                <circle cx=\"50\" cy=\"50\" r=\"30\" fill=\"#0a192f\" stroke=\"#003366\" stroke-width=\"8\"/>\n                <!-- Swirling Whirlpool Shield -->\n                <path d=\"M50,15 A35,35 0 0,1 85,50\" fill=\"none\" stroke=\"#00ffaa\" stroke-width=\"4\" stroke-linecap=\"round\"/>\n                <path d=\"M85,50 A35,35 0 0,1 50,85\" fill=\"none\" stroke=\"#00ffaa\" stroke-width=\"2\" stroke-linecap=\"round\"/>\n                <path d=\"M50,85 A35,35 0 0,1 15,50\" fill=\"none\" stroke=\"#00ffaa\" stroke-width=\"4\" stroke-linecap=\"round\"/>\n                <path d=\"M15,50 A35,35 0 0,1 50,15\" fill=\"none\" stroke=\"#00ffaa\" stroke-width=\"2\" stroke-linecap=\"round\"/>\n                <!-- Center dense shell -->\n                <circle cx=\"50\" cy=\"50\" r=\"15\" fill=\"#002244\"/>\n            </svg>","attack":"<svg viewBox=\"0 0 100 100\" xmlns=\"http://www.w3.org/2000/svg\">\n                <!-- Anchored Body -->\n                <path d=\"M10,80 Q20,50 40,60 T30,90 Z\" fill=\"#0a192f\"/>\n                <!-- Snapping Tail/Water Whip -->\n                <path d=\"M30,70 Q60,90 90,20\" fill=\"none\" stroke=\"#003366\" stroke-width=\"12\" stroke-linecap=\"round\" opacity=\"0.5\"/>\n                <path d=\"M35,65 Q65,80 95,15\" fill=\"none\" stroke=\"#00ffaa\" stroke-width=\"4\" stroke-linecap=\"round\" filter=\"drop-shadow(0 0 5px #00ffaa)\"/>\n                <!-- Splashing droplets -->\n                <circle cx=\"85\" cy=\"30\" r=\"3\" fill=\"#00ffaa\"/>\n                <circle cx=\"75\" cy=\"20\" r=\"2\" fill=\"#fff\"/>\n            </svg>","ultimate":"<svg viewBox=\"0 0 100 100\" xmlns=\"http://www.w3.org/2000/svg\">\n                <!-- Massive rising water pillar -->\n                <path d=\"M20,100 Q10,50 40,10 T80,10 Q90,50 80,100 Z\" fill=\"#003366\" opacity=\"0.4\"/>\n                <path d=\"M30,100 Q20,60 45,20 T70,20 Q80,60 70,100 Z\" fill=\"#0a192f\"/>\n                <!-- Jaws / Swirling currents inside -->\n                <path d=\"M35,40 Q50,60 65,40\" fill=\"none\" stroke=\"#00ffaa\" stroke-width=\"6\" stroke-linecap=\"round\" filter=\"drop-shadow(0 0 8px #00ffaa)\"/>\n                <path d=\"M30,60 Q50,80 70,60\" fill=\"none\" stroke=\"#00ffaa\" stroke-width=\"4\" stroke-linecap=\"round\"/>\n                <!-- Fangs -->\n                <polygon points=\"40,43 45,55 50,45\" fill=\"#fff\"/>\n                <polygon points=\"60,43 55,55 50,45\" fill=\"#fff\"/>\n            </svg>"}};
+        const UTILITY_ASSETS = {"the_lamb":"<svg viewBox=\"0 0 100 100\" xmlns=\"http://www.w3.org/2000/svg\">\n                <!-- Wool Aura / Fluff -->\n                <circle cx=\"50\" cy=\"50\" r=\"35\" fill=\"#ffffff\" filter=\"drop-shadow(0 0 5px #ffffff)\"/>\n                <circle cx=\"25\" cy=\"40\" r=\"18\" fill=\"#f4f4f4\"/>\n                <circle cx=\"75\" cy=\"40\" r=\"18\" fill=\"#f4f4f4\"/>\n                <circle cx=\"30\" cy=\"70\" r=\"15\" fill=\"#e0e0e0\"/>\n                <circle cx=\"70\" cy=\"70\" r=\"15\" fill=\"#e0e0e0\"/>\n                <circle cx=\"50\" cy=\"25\" r=\"20\" fill=\"#ffffff\"/>\n                \n                <!-- Ears -->\n                <ellipse cx=\"15\" cy=\"55\" rx=\"12\" ry=\"6\" fill=\"#e0e0e0\" transform=\"rotate(-20 15 55)\"/>\n                <ellipse cx=\"85\" cy=\"55\" rx=\"12\" ry=\"6\" fill=\"#e0e0e0\" transform=\"rotate(20 85 55)\"/>\n                \n                <!-- Sunglasses (Electric Blue / Nike Vibe) -->\n                <rect x=\"26\" y=\"42\" width=\"22\" height=\"14\" rx=\"4\" fill=\"#00ffcc\"/>\n                <rect x=\"52\" y=\"42\" width=\"22\" height=\"14\" rx=\"4\" fill=\"#00ffcc\"/>\n                <path d=\"M48 46 L52 46\" stroke=\"#111\" stroke-width=\"3\"/>\n                <path d=\"M26 46 L18 40\" stroke=\"#111\" stroke-width=\"3\"/>\n                <path d=\"M74 46 L82 40\" stroke=\"#111\" stroke-width=\"3\"/>\n\n                <!-- Snout & Mouth -->\n                <ellipse cx=\"50\" cy=\"68\" rx=\"16\" ry=\"12\" fill=\"#dcdcdc\"/>\n                <polygon points=\"45,65 55,65 50,70\" fill=\"#222\"/>\n                <path d=\"M50 70 L50 75 Q45 78 40 75\" fill=\"none\" stroke=\"#222\" stroke-width=\"2\"/>\n                <path d=\"M50 70 L50 75 Q55 78 60 75\" fill=\"none\" stroke=\"#222\" stroke-width=\"2\"/>\n            </svg>","the_liar":"<svg viewBox=\"0 0 100 100\" xmlns=\"http://www.w3.org/2000/svg\">\n                <!-- Demonic Head Shape -->\n                <path d=\"M20,35 Q50,15 80,35 L72,80 Q50,105 28,80 Z\" fill=\"#cc0000\"/>\n                <path d=\"M30,40 Q50,25 70,40 L65,75 Q50,95 35,75 Z\" fill=\"#aa0000\"/>\n                \n                <!-- Horns -->\n                <path d=\"M30,38 Q10,10 25,5 Q38,20 42,32 Z\" fill=\"#111\"/>\n                <path d=\"M70,38 Q90,10 75,5 Q62,20 58,32 Z\" fill=\"#111\"/>\n                \n                <!-- Furious Eyes -->\n                <polygon points=\"32,55 46,46 48,52\" fill=\"#ffcc00\"/>\n                <polygon points=\"68,55 54,46 52,52\" fill=\"#ffcc00\"/>\n                \n                <!-- Snarling Mouth -->\n                <path d=\"M40,78 Q50,88 60,78\" fill=\"none\" stroke=\"#111\" stroke-width=\"4\"/>\n                <polygon points=\"42,79 46,85 48,79\" fill=\"#fff\"/>\n                <polygon points=\"58,79 54,85 52,79\" fill=\"#fff\"/>\n            </svg>","lion_of_judah":"<svg viewBox=\"0 0 100 100\" xmlns=\"http://www.w3.org/2000/svg\">\n                <!-- Golden Mane -->\n                <path d=\"M50,5 L70,15 L90,30 L85,60 L70,90 L50,95 L30,90 L15,60 L10,30 L30,15 Z\" fill=\"#cc9900\"/>\n                <path d=\"M50,15 L65,25 L80,35 L75,55 L65,80 L50,85 L35,80 L25,55 L20,35 L35,25 Z\" fill=\"#ffcc00\"/>\n                \n                <!-- Face -->\n                <ellipse cx=\"50\" cy=\"55\" rx=\"20\" ry=\"25\" fill=\"#e6b800\"/>\n                \n                <!-- Eyes & Nose -->\n                <polygon points=\"38,48 45,45 45,50\" fill=\"#fff\"/>\n                <polygon points=\"62,48 55,45 55,50\" fill=\"#fff\"/>\n                <polygon points=\"45,60 55,60 50,68\" fill=\"#333\"/>\n                \n                <!-- Muzzle -->\n                <path d=\"M50 68 Q40 75 35 70\" fill=\"none\" stroke=\"#333\" stroke-width=\"2\"/>\n                <path d=\"M50 68 Q60 75 65 70\" fill=\"none\" stroke=\"#333\" stroke-width=\"2\"/>\n            </svg>","sword_of_the_spirit":"<svg viewBox=\"0 0 100 100\" xmlns=\"http://www.w3.org/2000/svg\">\n                <!-- Holy Glow -->\n                <polygon points=\"48,20 52,20 50,2\" fill=\"#00ffcc\" opacity=\"0.6\" filter=\"blur(3px)\"/>\n                \n                <!-- Blade -->\n                <polygon points=\"46,25 54,25 50,5\" fill=\"#f4f4f4\"/>\n                <rect x=\"48\" y=\"25\" width=\"4\" height=\"45\" fill=\"#dcdcdc\"/>\n                <rect x=\"49\" y=\"5\" width=\"2\" height=\"65\" fill=\"#00ffcc\"/> <!-- Energy core -->\n                \n                <!-- Crossguard & Hilt -->\n                <rect x=\"30\" y=\"70\" width=\"40\" height=\"6\" rx=\"2\" fill=\"#cca600\"/>\n                <polygon points=\"30,70 25,65 30,76\" fill=\"#cca600\"/>\n                <polygon points=\"70,70 75,65 70,76\" fill=\"#cca600\"/>\n                <rect x=\"45\" y=\"76\" width=\"10\" height=\"18\" fill=\"#333\"/>\n                <circle cx=\"50\" cy=\"95\" r=\"5\" fill=\"#cca600\"/>\n            </svg>","shield_of_faith":"<svg viewBox=\"0 0 100 100\" xmlns=\"http://www.w3.org/2000/svg\">\n                <!-- Shield Base -->\n                <path d=\"M15,20 L85,20 L85,45 Q85,90 50,95 Q15,90 15,45 Z\" fill=\"#1a1a1a\" stroke=\"#cca600\" stroke-width=\"5\"/>\n                <path d=\"M22,25 L78,25 L78,45 Q78,85 50,88 Q22,85 22,45 Z\" fill=\"#2a2a2a\"/>\n                \n                <!-- Golden Cross -->\n                <rect x=\"45\" y=\"32\" width=\"10\" height=\"46\" fill=\"#ffcc00\" filter=\"drop-shadow(0 0 8px rgba(255, 204, 0, 0.8))\"/>\n                <rect x=\"30\" y=\"45\" width=\"40\" height=\"10\" fill=\"#ffcc00\" filter=\"drop-shadow(0 0 8px rgba(255, 204, 0, 0.8))\"/>\n                \n                <!-- Inner Cross Highlight -->\n                <rect x=\"48\" y=\"34\" width=\"4\" height=\"42\" fill=\"#fff\"/>\n                <rect x=\"32\" y=\"48\" width=\"36\" height=\"4\" fill=\"#fff\"/>\n            </svg>","tempest_engine_fx":"<svg viewBox=\"0 0 100 100\" xmlns=\"http://www.w3.org/2000/svg\">\n                <!-- Dark Clouds -->\n                <path d=\"M20,50 Q30,30 50,35 Q65,20 80,40 Q95,55 75,70 L25,70 Q5,60 20,50 Z\" fill=\"#2c3e50\"/>\n                <path d=\"M30,55 Q40,40 55,45 Q65,35 75,50 Q85,60 70,65 L35,65 Q20,60 30,55 Z\" fill=\"#34495e\"/>\n                \n                <!-- Lightning Strike -->\n                <polygon points=\"45,50 65,50 50,68 65,68 35,95 45,72 30,72\" fill=\"#00ffcc\" filter=\"drop-shadow(0 0 5px #00ffcc)\"/>\n                \n                <!-- Splashing Water Base -->\n                <path d=\"M10,85 Q25,75 40,85 T70,85 T90,85 L90,95 L10,95 Z\" fill=\"#0a192f\"/>\n                <path d=\"M20,80 Q35,70 50,80 T80,80 L80,95 L20,95 Z\" fill=\"#112240\"/>\n            </svg>"};
+        const STATE_LABELS = {"lamb":{"idle":"IDLE STANCE","dash":"KINETIC DASH","crouch":"TACTICAL SLIDE (LOW)","guard":"HEAVY BLOCK","attack":"SWORD STRIKE (LIGHT)","ultimate":"ULTIMATE: DIVINE BURST"},"liar":{"idle":"IDLE STANCE","dash":"SHADOW STEP (DASH)","crouch":"PREDATOR SLIDE","guard":"HARDENED GUARD","attack":"HELLFIRE SLASH (HEAVY)","ultimate":"ULTIMATE: ABYSSAL ERUPTION"},"lion":{"idle":"ROYAL STANCE","dash":"GOLDEN CHARGE","crouch":"LION'S POUNCE (LOW)","guard":"WINGED AEGIS","attack":"SCEPTER SMASH (HEAVY)","ultimate":"ULTIMATE: WRATHFUL ROAR"},"wolf":{"idle":"FERAL STANCE","dash":"PHANTOM SPRINT","crouch":"SHADOW CRAWL","guard":"CLOAK OF SHADOWS","attack":"CROSS FANG STRIKE","ultimate":"ULTIMATE: LUNAR EXECUTION"},"archangel":{"idle":"SERAPHIC STANCE","dash":"HALO DASH","crouch":"CELESTIAL GLIDE (LOW)","guard":"AEGIS OF LIGHT","attack":"SPEAR OF JUSTICE","ultimate":"ULTIMATE: JUDGEMENT"},"leviathan":{"idle":"ABYSSAL STANCE","dash":"TIDAL SURGE","crouch":"UNDERTOW (SUBMERGE)","guard":"CORAL CARAPACE","attack":"RIPTIDE WHIP","ultimate":"ULTIMATE: DEEP MAW"}};
 
         function getCharacterSVG(char, pose) {
             const states = COMBAT_ASSETS[char] || COMBAT_ASSETS.lamb;
@@ -1356,153 +892,11 @@
         function getUtilitySprite(key) { return getSprite(UTILITY_ASSETS[key]); }
 
         // ==========================================
-        // SVG GAME ASSET LIBRARY · PART II MODULE
-        // ==========================================
-        const P2_PAL = { cyan: '#62f5db', ice: '#bffcf3', blue: '#5ca8ff', red: '#ff435f', hot: '#ff9a62', dark: '#071019', void: '#030508', gold: '#ffd36c', purple: '#a87cff', white: '#fff', smoke: '#8191a0' };
-
-        function part2Shell(body, label = 'Animated game SVG asset', view = '0 0 320 220', customId = null) {
-            const id = customId || label.toLowerCase().replace(/[^a-z0-9]+/g, '') || 'p2a';
-            return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${view}" role="img" aria-label="${label}"><defs><filter id="g${id}" x="-80%" y="-80%" width="260%" height="260%"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter><filter id="s${id}" x="-80%" y="-80%" width="260%" height="260%"><feGaussianBlur stdDeviation="12"/></filter><linearGradient id="t${id}"><stop stop-color="${P2_PAL.white}"/><stop offset=".5" stop-color="${P2_PAL.cyan}"/><stop offset="1" stop-color="${P2_PAL.blue}"/></linearGradient><linearGradient id="d${id}"><stop stop-color="${P2_PAL.hot}"/><stop offset=".5" stop-color="${P2_PAL.red}"/><stop offset="1" stop-color="${P2_PAL.purple}"/></linearGradient></defs><style>.a{animation-duration:1.5s;animation-iteration-count:infinite;animation-timing-function:linear;transform-box:fill-box;transform-origin:center}.pulse{animation-name:pulse}.spin{animation-name:spin}.spinR{animation-name:spinR}.drift{animation-name:drift}.float{animation-name:float}.flicker{animation-name:flicker}.shake{animation-name:shake}.slide{animation-name:slide}.wave{animation-name:wave}.grow{animation-name:grow}.blink{animation-name:blink}@keyframes pulse{0%,100%{transform:scale(.86);opacity:.35}50%{transform:scale(1.12);opacity:1}}@keyframes spin{to{transform:rotate(360deg)}}@keyframes spinR{to{transform:rotate(-360deg)}}@keyframes drift{0%{transform:translate(-30px,10px);opacity:0}20%{opacity:.8}100%{transform:translate(45px,-25px);opacity:0}}@keyframes float{0%,100%{transform:translateY(-7px)}50%{transform:translateY(8px)}}@keyframes flicker{0%,8%,12%,70%,74%,100%{opacity:1}10%,72%{opacity:.12}}@keyframes shake{0%,100%{transform:translate(0)}25%{transform:translate(-4px,2px)}50%{transform:translate(5px,-2px)}75%{transform:translate(-2px,-3px)}}@keyframes slide{0%{transform:translateX(-80px);opacity:0}15%{opacity:1}85%{opacity:1}100%{transform:translateX(80px);opacity:0}}@keyframes wave{0%,100%{transform:skewX(-4deg) translateY(3px)}50%{transform:skewX(4deg) translateY(-5px)}}@keyframes grow{0%,100%{transform:scaleY(.65);opacity:.4}50%{transform:scaleY(1.15);opacity:1}}@keyframes blink{0%,46%,54%,100%{opacity:1}48%,52%{opacity:0}}</style>${body.replaceAll('GLOW', `g${id}`).replaceAll('SOFT', `s${id}`).replaceAll('TRUTH', `t${id}`).replaceAll('DECEIT', `d${id}`)}</svg>`;
-        }
-
-        const p2Particles = (color, n = 12) => Array.from({ length: n }, (_, i) => `<circle cx="${35 + (i * 47) % 255}" cy="${38 + (i * 71) % 145}" r="${1 + i % 4}" fill="${color}" class="a drift" style="--d:${1.3 + (i % 5) * .35}s;animation-delay:-${i * .19}s"/>`).join('');
-
-        function part2Arena(k) {
-            let b = `<rect width="320" height="220" fill="${P2_PAL.dark}"/>`;
-            if (k === 'The Tempest Sea' || k === 'tempest') {
-                b += `
-                <!-- Dark Storm Sky -->
-                <rect width="320" height="150" fill="url(#d${P2_PAL.dark})"/>
-                <!-- Distant Storm Clouds -->
-                <path d="M-10 40Q30 10 90 25Q140 5 210 20Q280 10 330 35v60H-10z" fill="#091826" opacity=".8"/>
-                <path d="M-10 60Q50 35 120 48Q190 30 260 45Q310 35 330 65v50H-10z" fill="#0d2438" opacity=".9"/>
-                <!-- Lightning Flash -->
-                <path d="M140 0L115 50h25l-35 65 75-75h-30l30-40z" fill="${P2_PAL.white}" class="a flicker" style="--d:2.2s" filter="url(#GLOW)"/>
-                <!-- Rolling Wave Layers -->
-                <path d="M0 135Q40 115 80 135t80 0t80 0t80 0v85H0z" fill="#0a2a40"/>
-                <path d="M0 148Q40 128 80 148t80 0t80 0t80 0" fill="none" stroke="${P2_PAL.cyan}" stroke-width="4" class="a wave" style="--d:1.5s"/>
-                <path d="M0 162Q40 142 80 162t80 0t80 0t80 0v58H0z" fill="#061c2c"/>
-                <path d="M0 168Q40 150 80 168t80 0t80 0t80 0" fill="none" stroke="${P2_PAL.blue}" stroke-width="3" class="a wave" style="--d:2s"/>
-                ${p2Particles(P2_PAL.cyan, 14)}`;
-            } else if (k === 'Mount of Transfiguration' || k === 'mount') {
-                b += `
-                <!-- Celestial Glory Sky -->
-                <rect width="320" height="220" fill="#141c26"/>
-                <!-- Radiant Halo Burst -->
-                <circle cx="160" cy="75" r="75" fill="${P2_PAL.gold}" opacity=".15" class="a pulse" style="--d:2.4s" filter="url(#SOFT)"/>
-                <circle cx="160" cy="75" r="45" fill="${P2_PAL.gold}" opacity=".25" class="a pulse" style="--d:1.6s" filter="url(#GLOW)"/>
-                <!-- Holy Light Beams -->
-                <polygon points="160,0 120,220 200,220" fill="${P2_PAL.gold}" opacity=".1" class="a pulse" style="--d:3s"/>
-                <!-- Mountain Peaks -->
-                <path d="M-20 220L50 110l45 35 65-115 60 105 50-35 70 110z" fill="#1c2633" stroke="${P2_PAL.gold}" stroke-width="2"/>
-                <path d="M30 220L95 130l35 25 30-55 40 60 45-30 65 90z" fill="#101822"/>
-                <!-- Sacred Temple Pillars -->
-                <rect x="35" y="110" width="18" height="90" fill="#2b3847" stroke="${P2_PAL.gold}" stroke-width="2"/>
-                <rect x="267" y="110" width="18" height="90" fill="#2b3847" stroke="${P2_PAL.gold}" stroke-width="2"/>
-                <path d="M30 110h28M262 110h28" stroke="${P2_PAL.gold}" stroke-width="4"/>
-                ${p2Particles(P2_PAL.gold, 12)}`;
-            } else if (k === 'The Abyss' || k === 'abyss') {
-                b += `
-                <!-- Dark Cavern Sky -->
-                <rect width="320" height="220" fill="#120508"/>
-                <!-- Blood Moon Orb -->
-                <circle cx="160" cy="65" r="50" fill="${P2_PAL.red}" opacity=".2" class="a pulse" style="--d:2s" filter="url(#SOFT)"/>
-                <circle cx="160" cy="65" r="30" fill="${P2_PAL.hot}" opacity=".4" class="a pulse" style="--d:1.5s" filter="url(#GLOW)"/>
-                <!-- Craggy Magma Peaks -->
-                <path d="M-10 220L40 140l35 25 45-45 40 35 45-60 40 50 85-35v110z" fill="#240c13"/>
-                <!-- Glowing Lava Veins -->
-                <path d="M0 185l50-15 30 20 45-30 35 25 45-45 35 40 80-15" fill="none" stroke="${P2_PAL.red}" stroke-width="5" filter="url(#GLOW)" class="a flicker" style="--d:1.8s"/>
-                <path d="M0 195l60-10 25 15 50-25 30 20 40-35 40 30 75-10" fill="none" stroke="${P2_PAL.hot}" stroke-width="3" class="a flicker" style="--d:2.4s"/>
-                ${p2Particles(P2_PAL.hot, 16)}`;
-            } else if (k === 'Garden of Choice' || k === 'garden') {
-                b += `
-                <!-- Twilight Forest Sky -->
-                <rect width="320" height="220" fill="#081815"/>
-                <!-- Moonlight Glow -->
-                <ellipse cx="160" cy="50" rx="90" ry="40" fill="${P2_PAL.cyan}" opacity=".12" class="a pulse" style="--d:2.5s" filter="url(#SOFT)"/>
-                <!-- Tree of Life Trunk & Canopy -->
-                <path d="M160 220V75M160 115q-60-50-85 10q40 40 85 15M160 115q60-50 85 10q-40 40-85 15" fill="#143b31" stroke="${P2_PAL.cyan}" stroke-width="3.5" class="a wave" style="--d:3s"/>
-                <!-- Golden Sacred Fruit -->
-                <circle cx="110" cy="85" r="9" fill="${P2_PAL.gold}" class="a pulse" style="--d:1.8s" filter="url(#GLOW)"/>
-                <circle cx="210" cy="85" r="9" fill="${P2_PAL.gold}" class="a pulse" style="--d:2.1s" filter="url(#GLOW)"/>
-                <circle cx="160" cy="55" r="11" fill="${P2_PAL.gold}" class="a pulse" style="--d:1.5s" filter="url(#GLOW)"/>
-                <!-- Forest Floor -->
-                <rect y="145" width="320" height="75" fill="#0d261f"/>
-                <path d="M0 145Q80 135 160 145T320 145v75H0z" fill="#081a15" stroke="${P2_PAL.cyan}" stroke-width="1.5"/>
-                ${p2Particles(P2_PAL.cyan, 12)}`;
-            } else if (k === 'Judgment Colosseum' || k === 'colosseum') {
-                b += `
-                <!-- Coliseum Arena Sky -->
-                <rect width="320" height="220" fill="#121824"/>
-                <!-- Arena Crest Glow -->
-                <circle cx="160" cy="80" r="70" fill="${P2_PAL.gold}" opacity=".1" class="a pulse" style="--d:2.2s" filter="url(#SOFT)"/>
-                <!-- Archways -->
-                <path d="M15 220V75Q160 -5 305 75v145" fill="#1a2433" stroke="${P2_PAL.gold}" stroke-width="3"/>
-                <path d="M35 220V88Q160 15 285 88v132" fill="#0b1018"/>
-                ${Array.from({ length: 9 }, (_, i) => `<rect x="${43 + i * 26}" y="95" width="13" height="75" fill="#243245" stroke="#121a24" stroke-width="1"/>`).join('')}
-                <!-- Flaming Torch Braziers -->
-                <rect x="30" y="110" width="10" height="40" fill="${P2_PAL.gold}"/>
-                <circle cx="35" cy="105" r="10" fill="${P2_PAL.hot}" class="a pulse" style="--d:1.2s" filter="url(#GLOW)"/>
-                <rect x="280" y="110" width="10" height="40" fill="${P2_PAL.gold}"/>
-                <circle cx="285" cy="105" r="10" fill="${P2_PAL.hot}" class="a pulse" style="--d:1.4s" filter="url(#GLOW)"/>
-                <!-- Sand Ring -->
-                <ellipse cx="160" cy="190" rx="135" ry="30" fill="#2e261d" stroke="${P2_PAL.gold}" stroke-width="2"/>
-                ${p2Particles(P2_PAL.gold, 10)}`;
-            } else {
-                b += `
-                <!-- Celestial Temple Sky -->
-                <rect width="320" height="220" fill="#0d1826"/>
-                <circle cx="160" cy="70" r="80" fill="${P2_PAL.cyan}" opacity=".15" class="a pulse" style="--d:2.5s" filter="url(#SOFT)"/>
-                <!-- Pearly Gates Pillar Architecture -->
-                <path d="M0 155L60 100l35 32 55-68 45 60 50-35 75 66v65H0z" fill="#182638" stroke="${P2_PAL.cyan}" stroke-width="2.5"/>
-                <path d="M40 220V120M280 220V120" stroke="${P2_PAL.white}" stroke-width="12" opacity=".8"/>
-                <path d="M30 115h20M270 115h20" stroke="${P2_PAL.gold}" stroke-width="6"/>
-                <!-- Heavenly Cloud Layer -->
-                <path d="M-10 175Q40 150 100 170T220 165T330 175v45H-10z" fill="#20334a" opacity=".9"/>
-                ${p2Particles(P2_PAL.white, 14)}`;
-            }
-            return part2Shell(b, k);
-        }
-
-        function part2Pickup(k) {
-            const c = /Faith|Truth|Scripture|Crown/.test(k) ? P2_PAL.cyan : /Fear|Mask/.test(k) ? P2_PAL.red : P2_PAL.gold;
-            let s = k.includes('Heart') ? `<path d="M160 176C44 104 91 37 160 91c69-54 116 13 0 85z" fill="${c}"/>` : k.includes('Crown') ? `<path d="M75 151l17-84 47 39 22-72 27 72 45-39 14 84z" fill="${P2_PAL.gold}" stroke="${c}" stroke-width="5"/>` : k.includes('Scripture') ? `<path d="M72 49q44-21 88 9v118q-44-29-88-7zM248 49q-44-21-88 9v118q44-29 88-7z" fill="#e8faf6" stroke="${c}" stroke-width="4"/><path d="M94 81h44M94 101h49M181 81h45M181 101h37" stroke="#345" stroke-width="4"/>` : `<polygon points="160,29 190,86 253,94 208,138 219,200 160,171 101,200 112,138 67,94 130,86" fill="${c}" opacity=".82"/>`;
-            return part2Shell(`<circle cx="160" cy="110" r="92" fill="${c}" opacity=".08" class="a pulse" style="--d:1.4s" filter="url(#SOFT)"/><g class="a float" style="--d:1.7s" filter="url(#GLOW)">${s}</g>`, k);
-        }
-
-        function part2Boss(k) {
-            const c = k.includes('Lion') ? P2_PAL.gold : k.includes('Archangel') ? P2_PAL.cyan : k.includes('Leviathan') ? P2_PAL.blue : k.includes('Wolf') ? P2_PAL.purple : P2_PAL.red;
-            let icon = k.includes('Lion') ? `<path d="M104 91l18-51 25 20 14-37 18 37 28-20 11 55-22 62-72 1z" fill="#291e13" stroke="${c}" stroke-width="5"/><circle cx="142" cy="103" r="6" fill="${P2_PAL.white}"/><circle cx="181" cy="103" r="6" fill="${P2_PAL.white}"/><path d="M138 131q24 22 47 0" fill="none" stroke="${c}" stroke-width="7"/>` : k.includes('Leviathan') ? `<path d="M35 146C60 37 257 28 267 119c7 57-92 72-106 18-10-41 61-51 68-12" fill="none" stroke="${c}" stroke-width="26" class="a wave" style="--d:1.8s"/><path d="M253 89l43 22-39 27z" fill="${c}"/><circle cx="267" cy="111" r="5" fill="${P2_PAL.white}"/>` : k.includes('Archangel') ? `<path d="M147 56L80 78l49 36-72 42 91-22M173 56l67 22-49 36 72 42-91-22" fill="none" stroke="${P2_PAL.white}" stroke-width="13"/><path d="M135 62h50l-7 103h-37z" fill="#cbd6dc" stroke="${c}" stroke-width="4"/><ellipse cx="160" cy="43" rx="35" ry="9" fill="none" stroke="${P2_PAL.gold}" stroke-width="5" class="a pulse" style="--d:1.6s"/>` : `<path d="M74 155l27-76 34-31 26 23 26-25 36 34 24 75-56-22-30 34-30-34z" fill="#16101d" stroke="${c}" stroke-width="5"/><path d="M114 91l34 13-34 13M207 91l-34 13 34 13" fill="${P2_PAL.white}" filter="url(#GLOW)"/>`;
-            return part2Shell(`<ellipse cx="160" cy="190" rx="104" ry="13" fill="${c}" opacity=".15" filter="url(#SOFT)"/><g class="a float" style="--d:2s">${icon}</g><circle cx="160" cy="109" r="92" fill="none" stroke="${c}" stroke-width="2" stroke-dasharray="8 13" class="a spin" style="--d:7s"/>`, k);
-        }
-
-        function part2Minion(k) {
-            const lie = /Imp|Serpent|False|Abyss/.test(k), c = lie ? P2_PAL.red : P2_PAL.cyan;
-            const shape = k.includes('Serpent') ? `<path d="M55 154q54-80 105 0t105 0" fill="none" stroke="${c}" stroke-width="19"/><path d="M258 135l38 18-35 24z" fill="${c}"/><circle cx="272" cy="151" r="4" fill="#fff"/>` : k.includes('Raven') ? `<path d="M160 109Q95 50 43 96q55 7 95 48M160 109q65-59 117-13-55 7-95 48l-22 37-22-37z" fill="#12151c" stroke="${c}" stroke-width="4"/>` : `<circle cx="160" cy="75" r="30" fill="${lie ? '#331018' : '#e7fffb'}" stroke="${c}" stroke-width="4"/><path d="M128 107h64l18 73h-100z" fill="${lie ? '#220c12' : '#173a38'}" stroke="${c}" stroke-width="4"/><path d="M139 69h8M173 69h8" stroke="${lie ? P2_PAL.hot : P2_PAL.dark}" stroke-width="7"/>`;
-            return part2Shell(`<ellipse cx="160" cy="190" rx="58" ry="9" fill="${c}" opacity=".16"/><g class="a ${k.includes('Raven') ? 'wave' : 'float'}" style="--d:1.4s">${shape}</g>`, k);
-        }
-
-        function part2Hazard(k) {
-            const c = /Holy|Light|Truth/.test(k) ? P2_PAL.cyan : /Water|Tidal/.test(k) ? P2_PAL.blue : P2_PAL.red;
-            let b = k.includes('Lightning') ? `<path d="M183 10l-55 91h35l-47 109 93-128h-42l47-72" fill="${P2_PAL.white}" stroke="${c}" stroke-width="4" class="a flicker" style="--d:1.7s" filter="url(#GLOW)"/>` : k.includes('Pillar') ? `<path d="M139 210l-16-85 22 15 15-122 18 119 22-18-19 91z" fill="${c}" opacity=".7" class="a grow" style="--d:1.1s" filter="url(#GLOW)"/>` : k.includes('Whirlpool') ? `<g class="a spin" style="--d:2s">${[0, 1, 2, 3].map(i => `<ellipse cx="160" cy="110" rx="${38 + i * 22}" ry="${12 + i * 8}" fill="none" stroke="${c}" stroke-width="${7 - i}" stroke-dasharray="18 9"/>`).join('')}</g>` : k.includes('Falling') ? `${Array.from({ length: 8 }, (_, i) => `<path d="M${30 + i * 39} ${15 + (i % 3) * 17}l-14 34 19 15 17-35z" fill="#65717c" stroke="${c}" stroke-width="2" class="a drift" style="--d:${.8 + (i % 4) * .25}s;animation-delay:-${i * .2}s"/>`).join('')}` : `<path d="M0 187${Array.from({ length: 12 }, (_, i) => `L${i * 28 + 10} ${i % 2 ? 130 : 175}`).join('')}L320 187v33H0z" fill="${c}" opacity=".65" class="a pulse" style="--d:1.2s"/>`;
-            return part2Shell(b, k);
-        }
-
-        const PART2_GROUPS = [
-            ['Arenas', ['The Tempest Sea', 'Mount of Transfiguration', 'The Abyss', 'Garden of Choice', 'Judgment Colosseum', 'Heaven Gate Summit'], part2Arena],
-            ['Bosses', ['Lion of Judah', 'The Archangel', 'The Leviathan', 'Shadow Wolf Alpha', 'False Prophet Titan'], part2Boss],
-            ['Minions', ['False Shepherd', 'Abyss Imp', 'Deceit Serpent', 'Truth Sentinel', 'Storm Raven'], part2Minion],
-            ['Stage Hazards', ['Storm Lightning', 'Abyss Flame Pillar', 'Tidal Whirlpool', 'Falling Temple Stone', 'Holy Thorn Field'], part2Hazard],
-            ['Pickups & Relics', ['Faith Shard', 'Fear Shard', 'Scripture Scroll', 'Crown of Life', 'Restoration Heart'], part2Pickup]
-        ];
-
-        // ==========================================
-        // ENGINE & FIGHTER LOGIC WITH SMASH BROS PHYSICS
+        // ENGINE & FIGHTER LOGIC
         // ==========================================
         const canvas = document.getElementById('gameCanvas');
         const c = canvas.getContext('2d');
-        const GROUND_LEVEL = 490;
-        const GRAVITY = 0.72;
+        const GROUND_LEVEL = 470;
 
         class Fighter {
             constructor({ position, character, color, name, isP1 }) {
@@ -1514,61 +908,51 @@
                 this.isP1 = isP1;
                 this.width = 70;
                 this.height = 150;
-
-                // INCREASED GLOBAL HEALTH (250 HP)
-                this.maxHealth = 250;
+                this.maxHealth = 100;
                 this.health = this.maxHealth;
-
                 this.tension = 0;
-                this.speed = 7.5;
+                this.speed = 7;
                 this.facing = isP1 ? 1 : -1;
                 this.pose = 'idle';
                 this.poseTimer = null;
                 this.attackId = 0;
                 this.hitAttackId = -1;
-
-                // SMASH BROS SHIELD & DODGE PHYSICS
                 this.isGuarding = false;
-                this.shieldHP = 100;
-                this.maxShieldHP = 100;
-                this.isShieldBroken = false;
-                this.shieldBreakTimer = 0;
-
-                this.isAirDodging = false;
-                this.airDodgeTimer = 0;
-                this.isSpotDodging = false;
-                this.spotDodgeTimer = 0;
-
-                this.hitstun = 0;
-                this.diInput = 0;
-
                 this.isAttacking = false;
-                this.attackBox = {
-                    x: this.position.x,
-                    y: this.position.y,
-                    width: 90,
-                    height: 90,
-                    damage: 15
-                };
+                this.isInvincible = false;
+                this.attackBox = { x: 0, y: 0, width: 90, height: 60, damage: 10 };
 
                 if (isP1) {
-                    if (currentBuff === 'eagles') this.speed = 9.2;
-                    if (currentBuff === 'faith') { this.maxHealth = 300; this.health = this.maxHealth; }
+                    if (currentBuff === 'eagles') this.speed = 8.5;
+                    if (currentBuff === 'faith') { this.maxHealth = 120; this.health = this.maxHealth; }
                 }
+            }
+
+            update() {
+                this.position.x += this.velocity.x;
+                this.position.y += this.velocity.y;
+
+                if (this.position.y + this.height + this.velocity.y >= GROUND_LEVEL) {
+                    this.velocity.y = 0;
+                    this.position.y = GROUND_LEVEL - this.height;
+                } else {
+                    this.velocity.y += 0.8;
+                }
+
+                if (this.position.x <= 0) this.position.x = 0;
+                if (this.position.x + this.width >= canvas.width) this.position.x = canvas.width - this.width;
+
+                this.attackBox.x = this.position.x + (this.facing === 1 ? this.width : -90);
+                this.attackBox.y = this.position.y + 30;
+
+                this.draw();
             }
 
             draw() {
                 c.save();
                 const svgStr = getCharacterSVG(this.character, this.pose);
                 const spriteImg = getSprite(svgStr);
-
-                // Apply Hitstun Tumbling / DI Rotation
-                if (this.hitstun > 0) {
-                    c.translate(this.position.x + this.width / 2, this.position.y + this.height / 2);
-                    c.rotate((this.hitstun * 0.1) * (this.facing * -1));
-                    c.translate(-(this.position.x + this.width / 2), -(this.position.y + this.height / 2));
-                }
-
+                
                 if (spriteImg.complete && spriteImg.naturalWidth > 0) {
                     if (this.facing === -1) {
                         c.translate(this.position.x + this.width, this.position.y);
@@ -1581,104 +965,14 @@
                     c.fillStyle = this.color;
                     c.fillRect(this.position.x, this.position.y, this.width, this.height);
                 }
-
-                // SMASH BROS SHIELD BUBBLE RENDERING
-                if (this.isGuarding && !this.isShieldBroken) {
-                    const shieldRadius = 16 + (this.shieldHP / 100) * 36;
-                    c.beginPath();
-                    c.arc(this.position.x + this.width / 2, this.position.y + 65, shieldRadius, 0, Math.PI * 2);
-                    c.fillStyle = this.isP1 ? 'rgba(98, 245, 219, 0.45)' : 'rgba(255, 67, 95, 0.45)';
-                    c.fill();
-                    c.lineWidth = 3;
-                    c.strokeStyle = '#ffffff';
-                    c.stroke();
-                }
-
-                // Air Dodge / Spot Dodge Aura
-                if (this.isAirDodging || this.isSpotDodging) {
-                    c.beginPath();
-                    c.arc(this.position.x + this.width / 2, this.position.y + 65, 50, 0, Math.PI * 2);
-                    c.fillStyle = 'rgba(255, 255, 255, 0.25)';
-                    c.fill();
-                }
-
-                // Shield Break Dizzy Stars
-                if (this.isShieldBroken) {
-                    const angle = (frameCount * 0.15);
-                    c.fillStyle = '#ffd36c';
-                    for (let i = 0; i < 3; i++) {
-                        const sx = this.position.x + this.width / 2 + Math.cos(angle + (i * Math.PI * 2 / 3)) * 28;
-                        const sy = this.position.y - 15 + Math.sin(angle + (i * Math.PI * 2 / 3)) * 10;
-                        c.beginPath();
-                        c.arc(sx, sy, 5, 0, Math.PI * 2);
-                        c.fill();
-                    }
-                }
-
+                if (this.isGuarding) drawUtilityEffect('shield_of_faith', this.position.x + this.width / 2, this.position.y + 65, 76, .62);
                 if (this.isAttacking && this.pose === 'attack') drawUtilityEffect('sword_of_the_spirit', this.attackBox.x + this.attackBox.width / 2, this.attackBox.y + 25, 54, .78);
                 c.restore();
             }
 
-            update() {
-                this.draw();
-
-                // Shield Regen / Decay
-                if (this.isGuarding && !this.isShieldBroken) {
-                    this.shieldHP = Math.max(0, this.shieldHP - 0.35);
-                    if (this.shieldHP <= 0) {
-                        this.isShieldBroken = true;
-                        this.isGuarding = false;
-                        this.shieldBreakTimer = 180; // 3 Seconds dizzy stun
-                        audio.playShieldBreak();
-                        burst(this.position.x + this.width / 2, this.position.y + 65, '#ffd36c', 30);
-                        showMove('SHIELD BREAK!', '#ffd36c');
-                    }
-                } else if (!this.isGuarding && this.shieldHP < this.maxShieldHP) {
-                    this.shieldHP = Math.min(this.maxShieldHP, this.shieldHP + 0.25);
-                }
-
-                if (this.isShieldBroken) {
-                    if (--this.shieldBreakTimer <= 0) {
-                        this.isShieldBroken = false;
-                        this.shieldHP = 60;
-                    }
-                }
-
-                if (this.hitstun > 0) this.hitstun--;
-                if (this.isAirDodging && --this.airDodgeTimer <= 0) this.isAirDodging = false;
-                if (this.isSpotDodging && --this.spotDodgeTimer <= 0) this.isSpotDodging = false;
-
-                // Attack Box Position
-                if (this.facing === 1) {
-                    this.attackBox.x = this.position.x + 30;
-                } else {
-                    this.attackBox.x = this.position.x - this.attackBox.width + 40;
-                }
-                this.attackBox.y = this.position.y + 35;
-
-                // Apply Horizontal Velocity & Gravity
-                this.position.x += this.velocity.x;
-                this.position.y += this.velocity.y;
-
-                if (this.position.y + this.height + this.velocity.y >= GROUND_LEVEL) {
-                    this.velocity.y = 0;
-                    this.position.y = GROUND_LEVEL - this.height;
-                } else {
-                    this.velocity.y += GRAVITY;
-                }
-
-                // Stage Blast Zones (Smash Style Boundaries)
-                if (this.position.x < -100) this.position.x = -100;
-                if (this.position.x + this.width > canvas.width + 100) this.position.x = canvas.width + 100 - this.width;
-            }
-
-            get onGround() {
-                return this.position.y >= GROUND_LEVEL - this.height - 2;
-            }
-
             jump() {
-                if (this.onGround && this.hitstun <= 0 && !this.isShieldBroken) {
-                    this.velocity.y = -16.5;
+                if (this.position.y >= GROUND_LEVEL - this.height - 5) {
+                    this.velocity.y = -16;
                 }
             }
 
@@ -1687,187 +981,54 @@
                 this.pose = pose;
                 if (duration) this.poseTimer = setTimeout(() => { if (!this.isGuarding && !this.isAttacking) this.pose = 'idle'; }, duration);
             }
-
-            crouch(down) {
-                if (!this.isAttacking && this.hitstun <= 0 && !this.isShieldBroken) {
-                    this.setPose(down ? 'crouch' : 'idle');
-                }
-            }
-
+            crouch(down) { if (!this.isAttacking) this.setPose(down ? 'crouch' : 'idle'); }
             dash(dir) {
-                if (this.isAttacking || this.hitstun > 0 || this.isShieldBroken) return;
+                if (this.isAttacking) return;
                 this.velocity.x = 24 * dir;
                 this.setPose('dash', 190);
                 burst(this.position.x + this.width / 2, this.position.y + 100, this.color, 8);
                 setTimeout(() => { this.velocity.x = 0; }, 150);
             }
-
-            guard(g) {
-                if (this.isShieldBroken) return;
-                this.isGuarding = g;
-                if (!this.isAttacking && this.hitstun <= 0) this.setPose(g ? 'guard' : 'idle');
-            }
-
-            airDodge() {
-                if (!this.onGround && !this.isAirDodging && this.hitstun <= 0) {
-                    this.isAirDodging = true;
-                    this.airDodgeTimer = 22;
-                    this.velocity.x = 12 * this.facing;
-                    this.velocity.y = -4;
-                    burst(this.position.x + this.width / 2, this.position.y + 65, '#ffffff', 12);
-                }
-            }
-
-            spotDodge() {
-                if (this.onGround && !this.isSpotDodging && this.hitstun <= 0) {
-                    this.isSpotDodging = true;
-                    this.spotDodgeTimer = 18;
-                    burst(this.position.x + this.width / 2, this.position.y + 90, '#ffffff', 10);
-                }
-            }
+            guard(g) { this.isGuarding = g; if (!this.isAttacking) this.setPose(g ? 'guard' : 'idle'); }
 
             triggerAttack(type) {
-                if (this.isAttacking || this.isGuarding || this.hitstun > 0 || this.isShieldBroken) return;
+                if (this.isAttacking || this.isGuarding) return;
                 if (type === 'ultimateAttack' && this.tension < 100) return;
-
                 this.isAttacking = true;
                 this.attackId++;
-
-                const mult = ((this.isP1 && currentBuff === 'sword') ? 1.15 : 1) * (this.relicBuff === 'sword_of_the_spirit' ? 1.35 : 1);
-                
-                // DECREASED DAMAGE VALUES & BALANCED FOR 250 HP
+                const mult = (this.isP1 && currentBuff === 'sword') ? 1.15 : 1;
                 const config = {
-                    lightAttack: [15, 170, 'attack', 'punch'],
-                    heavyAttack: [32, 310, 'attack', 'slash'],
-                    specialAttack: [42, 360, 'ultimate', 'beam'],
-                    ultimateAttack: [85, 620, 'ultimate', 'ultimate']
+                    lightAttack: [10, 170, 'attack', 'punch'], heavyAttack: [22, 310, 'attack', 'slash'],
+                    specialAttack: [16, 360, 'ultimate', 'beam'], ultimateAttack: [38, 620, 'ultimate', 'ultimate']
                 }[type];
-
                 if (!config) { this.isAttacking = false; return; }
-
-                showMove(STATE_LABELS[this.character][config[2]], this.color);
                 this.attackBox.damage = Math.floor(config[0] * mult);
-                this.attackBox.width = type === 'specialAttack' ? 165 : type === 'ultimateAttack' ? 240 : 95;
+                this.attackBox.width = type === 'specialAttack' ? 155 : type === 'ultimateAttack' ? 220 : 90;
                 this.setPose(config[2]);
-                
                 audio['play' + config[3][0].toUpperCase() + config[3].slice(1)]();
-
-                if (type === 'ultimateAttack') {
-                    this.tension = 0;
-                    ultimateCutin = { fighter: this, life: 52 };
-                }
-
-                burst(this.position.x + this.width / 2 + this.facing * 45, this.position.y + 65, this.color, type === 'ultimateAttack' ? 26 : 12);
-                setTimeout(() => { this.isAttacking = false; this.attackBox.width = 95; this.setPose('idle'); }, config[1]);
+                if (type === 'ultimateAttack') this.tension = 0;
+                burst(this.position.x + this.width / 2 + this.facing * 45, this.position.y + 65, this.color, type === 'ultimateAttack' ? 24 : 10);
+                setTimeout(() => { this.isAttacking = false; this.attackBox.width = 90; this.setPose('idle'); }, config[1]);
             }
         }
 
         // ==========================================
-        // MATCH CONTROLLER & SMASH COLLISION SYSTEM
+        // MATCH CONTROLLER & LOOP
         // ==========================================
         let player1, player2;
         let matchActive = false;
         let animId = null;
-        let particles = [], screenFlash = 0, frameCount = 0, codexOpen = false, ultimateCutin = null;
-        let relic = null, nextRelicFrame = 420, tempestStrike = null;
-        const combos = [{ count: 0, last: -999 }, { count: 0, last: -999 }];
-
-        function burst(x, y, color, count = 10) { for (let i = 0; i < count; i++) particles.push({ x, y, vx: (Math.random() - .5) * 14, vy: (Math.random() - .6) * 12, life: 28 + Math.random() * 18, color }); }
-        function drawParticles() { particles = particles.filter(p => p.life-- > 0); for (const p of particles) { p.x += p.vx; p.y += p.vy; p.vy += .35; c.globalAlpha = Math.min(1, p.life / 15); c.fillStyle = p.color; c.fillRect(p.x, p.y, 3.5, 3.5) } c.globalAlpha = 1; }
-        function drawUtilityEffect(key, x, y, size, alpha = 1) { const img = getUtilitySprite(key); if (img && img.complete && img.naturalWidth) { c.save(); c.globalAlpha = alpha; c.translate(x, y); c.drawImage(img, -size / 2, -size / 2, size, size); c.restore() } }
-        function healthPercent(f) { return Math.max(0, (f.health / f.maxHealth) * 100); }
-        function dataUri(svg) { return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg) }
-        function portraitSvg(char) { const key = { lamb: 'the_lamb', liar: 'the_liar', lion: 'lion_of_judah' }[char]; return key ? UTILITY_ASSETS[key] : COMBAT_ASSETS[char].idle }
-        function showMove(text, color = '#fff') { const el = document.getElementById('move-callout'); el.textContent = text; el.style.color = color; el.classList.add('show'); clearTimeout(showMove.t); showMove.t = setTimeout(() => el.classList.remove('show'), 650) }
-        function toggleCodex() {
-            codexOpen = !codexOpen;
-            document.getElementById('asset-codex').classList.toggle('open', codexOpen);
-            if (!toggleCodex.built) {
-                let out = '<h2 style="color:var(--cyan);margin-top:10px">PART I — COMBAT & FIGHTER SVG ASSETS</h2>';
-                for (const [ch, states] of Object.entries(COMBAT_ASSETS)) {
-                    out += '<h3>' + ch.toUpperCase() + '</h3><div class="codex-grid">';
-                    for (const [state, svg] of Object.entries(states)) {
-                        out += '<div class="codex-card"><img src="' + dataUri(svg) + '"><b>' + STATE_LABELS[ch][state] + '</b><br>' + state.toUpperCase() + '</div>';
-                    }
-                    out += '</div>';
-                }
-                out += '<h3>RELICS & PORTRAITS</h3><div class="codex-grid">';
-                for (const [key, svg] of Object.entries(UTILITY_ASSETS)) {
-                    out += '<div class="codex-card"><img src="' + dataUri(svg) + '"><b>' + key.replaceAll('_', ' ').toUpperCase() + '</b></div>';
-                }
-                out += '</div>';
-
-                out += '<h2 style="color:var(--gold);margin-top:35px">PART II — WORLD, HAZARDS & INTERFACE SVG LIBRARY (60 ASSETS)</h2>';
-                for (const [groupName, assetNames, renderFn] of PART2_GROUPS) {
-                    out += '<h3>' + groupName.toUpperCase() + '</h3><div class="codex-grid">';
-                    for (const name of assetNames) {
-                        out += '<div class="codex-card"><img src="' + dataUri(renderFn(name)) + '"><b>' + name.toUpperCase() + '</b></div>';
-                    }
-                    out += '</div>';
-                }
-
-                document.getElementById('codex-content').innerHTML = out;
-                toggleCodex.built = true;
-            }
+        let particles = [];
+        let screenFlash = 0;
+        function burst(x, y, color, count = 10) {
+            for (let i=0;i<count;i++) particles.push({x,y,vx:(Math.random()-.5)*12,vy:(Math.random()-.6)*10,life:28+Math.random()*18,color});
         }
-
-        function spawnRelic() {
-            const types = ['sword_of_the_spirit', 'shield_of_faith', 'faith_shard', 'scripture_scroll', 'crown_of_life', 'restoration_heart'];
-            relic = { type: types[Math.floor(Math.random() * types.length)], x: 180 + Math.random() * 660, y: 395, life: 720 };
-            nextRelicFrame = frameCount + 600 + Math.random() * 360;
+        function drawParticles(){
+            particles = particles.filter(p=>p.life-->0);
+            for(const p of particles){p.x+=p.vx;p.y+=p.vy;p.vy+=.3;c.globalAlpha=Math.min(1,p.life/15);c.fillStyle=p.color;c.fillRect(p.x,p.y,3,3)}c.globalAlpha=1;
         }
-
-        function updateRelic() {
-            if (!relic && frameCount > nextRelicFrame) spawnRelic();
-            if (!relic) return;
-            relic.y = 395 + Math.sin(frameCount * .08) * 10;
-
-            if (relic.type === 'faith_shard') {
-                const img = getSprite(part2Pickup('Faith Shard'));
-                if (img.complete) c.drawImage(img, relic.x - 29, relic.y - 29, 58, 58);
-            } else if (relic.type === 'scripture_scroll') {
-                const img = getSprite(part2Pickup('Scripture Scroll'));
-                if (img.complete) c.drawImage(img, relic.x - 29, relic.y - 29, 58, 58);
-            } else if (relic.type === 'crown_of_life') {
-                const img = getSprite(part2Pickup('Crown of Life'));
-                if (img.complete) c.drawImage(img, relic.x - 29, relic.y - 29, 58, 58);
-            } else if (relic.type === 'restoration_heart') {
-                const img = getSprite(part2Pickup('Restoration Heart'));
-                if (img.complete) c.drawImage(img, relic.x - 29, relic.y - 29, 58, 58);
-            } else {
-                drawUtilityEffect(relic.type, relic.x, relic.y, 58, .9);
-            }
-
-            for (const f of [player1, player2]) {
-                if (f && Math.abs((f.position.x + 35) - relic.x) < 55) {
-                    if (relic.type === 'restoration_heart') {
-                        f.health = Math.min(f.maxHealth, f.health + 45);
-                        document.getElementById(f.isP1 ? 'p1-health' : 'p2-health').style.width = healthPercent(f) + '%';
-                        showMove('RESTORATION: +45 HP HEAL', f.color);
-                    } else if (relic.type === 'scripture_scroll') {
-                        f.tension = Math.min(100, f.tension + 35);
-                        document.getElementById(f.isP1 ? 'p1-tension' : 'p2-tension').style.width = f.tension + '%';
-                        showMove('SCRIPTURE SCROLL: +35 TENSION', f.color);
-                    } else if (relic.type === 'faith_shard') {
-                        f.shieldHP = Math.min(f.maxShieldHP, f.shieldHP + 50);
-                        showMove('FAITH SHARD: +50 BUBBLE SHIELD', f.color);
-                    } else {
-                        f.relicBuff = relic.type;
-                        clearTimeout(f.relicTimer);
-                        f.relicTimer = setTimeout(() => f.relicBuff = null, 9000);
-                        showMove(relic.type === 'sword_of_the_spirit' ? 'SWORD RELIC: +35% DAMAGE' : 'SHIELD RELIC: +50% GUARD', f.color);
-                    }
-                    burst(relic.x, relic.y, f.color, 24);
-                    relic = null;
-                    break;
-                }
-            }
-            if (relic && --relic.life < 0) relic = null;
-        }
-        function drawUltimateCutin() { if (!ultimateCutin) return; const u = ultimateCutin, f = u.fighter; c.save(); c.fillStyle = 'rgba(0,0,0,.72)'; c.fillRect(0, 115, canvas.width, 230); const img = getSprite(portraitSvg(f.character)); if (img.complete) c.drawImage(img, f.isP1 ? 90 : canvas.width - 300, 125, 210, 210); c.fillStyle = f.color; c.font = '900 38px Rajdhani'; c.textAlign = f.isP1 ? 'left' : 'right'; c.fillText(STATE_LABELS[f.character].ultimate, f.isP1 ? 330 : canvas.width - 330, 245); c.restore(); if (--u.life <= 0) ultimateCutin = null }
-        function registerCombo(attacker) { const co = combos[attacker.isP1 ? 0 : 1]; co.count = frameCount - co.last < 100 ? co.count + 1 : 1; co.last = frameCount; if (co.count > 1) showMove(co.count + ' HIT COMBO', attacker.color) }
-        function updateTempest() { if (currentStage !== 'tempest') return; if (frameCount % 480 === 360) tempestStrike = { x: 100 + Math.random() * 824, life: 120, hit: false }; if (!tempestStrike) return; const t = tempestStrike; if (t.life > 35) { c.fillStyle = 'rgba(98,245,219,.2)'; c.fillRect(t.x - 28, GROUND_LEVEL - 8, 56, 8) } else { c.fillStyle = '#bffff4'; c.fillRect(t.x - 5, 0, 10, GROUND_LEVEL); if (!t.hit) { for (const f of [player1, player2]) if (Math.abs(f.position.x + 35 - t.x) < 55) { f.health = Math.max(0, f.health - 15); document.getElementById(f.isP1 ? 'p1-health' : 'p2-health').style.width = healthPercent(f) + '%'; burst(t.x, GROUND_LEVEL - 70, '#62f5db', 18) } t.hit = true } } if (--t.life <= 0) tempestStrike = null }
-        function updatePortraits() { document.getElementById('p1-portrait').src = dataUri(portraitSvg(player1.character)); document.getElementById('p2-portrait').src = dataUri(portraitSvg(player2.character)) }
+        function drawUtilityEffect(key,x,y,size,alpha=1){const img=getUtilitySprite(key);if(img.complete&&img.naturalWidth){c.save();c.globalAlpha=alpha;c.translate(x,y);c.drawImage(img,-size/2,-size/2,size,size);c.restore()}}
+        function healthPercent(f){return (f.health/f.maxHealth)*100}
         const keys = {};
 
         function setupMatch() {
@@ -1891,8 +1052,6 @@
             player1 = new Fighter({ position: { x: 180, y: 0 }, character: p1Char, color: p1Color, name: p1Name, isP1: true });
             player2 = new Fighter({ position: { x: 770, y: 0 }, character: p2Char, color: p2Color, name: p2Name, isP1: false });
             matchActive = true;
-            updatePortraits();
-            relic = null; nextRelicFrame = frameCount + 300;
         }
 
         function resetMatch() {
@@ -1941,13 +1100,13 @@
         function handleInput() {
             pollGamepads();
 
-            if (player1 && player1.hitstun <= 0) {
+            if (player1) {
                 if (keys['a']) player1.velocity.x = -player1.speed;
                 else if (keys['d']) player1.velocity.x = player1.speed;
                 else player1.velocity.x = 0;
             }
 
-            if (player2 && player2.hitstun <= 0) {
+            if (player2) {
                 if (gameMode === '2p') {
                     if (keys['ArrowLeft']) player2.velocity.x = -player2.speed;
                     else if (keys['ArrowRight']) player2.velocity.x = player2.speed;
@@ -1956,89 +1115,46 @@
                     const dx = player1.position.x - player2.position.x;
                     const speedMod = aiDifficulty === 'divine' ? 1.0 : aiDifficulty === 'warrior' ? 0.75 : 0.5;
                     if (Math.abs(dx) > 80) {
-                        if (Math.random() < 0.004 * speedMod) player2.dash(Math.sign(dx));
                         player2.velocity.x = Math.sign(dx) * (player2.speed * speedMod);
                         player2.facing = Math.sign(dx);
                     } else {
                         player2.velocity.x = 0;
-                        const roll = Math.random();
-                        if (roll < .012 * speedMod) { player2.guard(true); setTimeout(() => player2 && player2.guard(false), 280) }
-                        else if (roll < .02 * speedMod) { player2.crouch(true); setTimeout(() => player2 && player2.crouch(false), 240) }
-                        else if (roll < (aiDifficulty === 'divine' ? .075 : .045)) player2.triggerAttack(Math.random() < .7 ? 'lightAttack' : 'heavyAttack');
-                        else if (player2.tension >= 100 && roll > .992) player2.triggerAttack('ultimateAttack');
+                        if (Math.random() < (aiDifficulty === 'divine' ? 0.06 : 0.03)) player2.triggerAttack('lightAttack');
                     }
                 }
             }
         }
 
-        // SMASH BROS DYNAMIC KNOCKBACK & HITSTUN CALCULATOR
-        function applySmashHit(attacker, defender) {
-            let dmg = attacker.attackBox.damage;
-            
-            // Air dodge / Spot dodge invincibility check
-            if (defender.isAirDodging || defender.isSpotDodging) {
-                showMove('DODGE!', defender.color);
-                return;
-            }
-
-            // Shield damage & guard mitigation
-            if (defender.isGuarding && !defender.isShieldBroken) {
-                dmg = Math.floor(dmg * (defender.relicBuff === 'shield_of_faith' ? 0.15 : currentBuff === 'armor' ? 0.2 : 0.35));
-                defender.shieldHP = Math.max(0, defender.shieldHP - attacker.attackBox.damage * 0.7);
-                audio.playBlock();
-            }
-
-            defender.health = Math.max(0, defender.health - dmg);
-            attacker.tension = Math.min(100, attacker.tension + 20);
-
-            // Smash Damage Ratio Knockback formula
-            const damagePct = ((defender.maxHealth - defender.health) / defender.maxHealth) * 100;
-            let launchPower = (14 + (damagePct / 8) + (dmg * 0.4)) * attacker.facing;
-            
-            // Directional Influence (DI) adjustment
-            if (defender.diInput) launchPower *= (1 - defender.diInput * 0.15 * attacker.facing);
-
-            defender.velocity.x = launchPower * 1.2;
-            defender.velocity.y = -Math.abs(launchPower * 0.45) - 4;
-            defender.hitstun = Math.floor(Math.abs(launchPower) * 0.85) + 8;
-
-            registerCombo(attacker);
-            burst(defender.position.x + 35, defender.position.y + 55, attacker.color, 16);
-            screenFlash = 5;
-
-            document.getElementById(defender.isP1 ? 'p1-health' : 'p2-health').style.width = healthPercent(defender) + '%';
-            document.getElementById(attacker.isP1 ? 'p1-tension' : 'p2-tension').style.width = attacker.tension + '%';
-        }
-
         function checkHits() {
             if (!player1 || !player2) return;
-
-            // Attack Clashing Check (Smash Bros Clashing Hitboxes)
-            if (player1.isAttacking && player2.isAttacking) {
-                if (Math.abs((player1.position.x + 35) - (player2.position.x + 35)) < 90) {
-                    audio.playClash();
-                    burst((player1.position.x + player2.position.x) / 2 + 35, player1.position.y + 60, '#ffffff', 20);
-                    showMove('ATTACK CLASH!', '#ffd36c');
-                    player1.velocity.x = -8 * player1.facing;
-                    player2.velocity.x = -8 * player2.facing;
-                    player1.isAttacking = false;
-                    player2.isAttacking = false;
-                    return;
-                }
-            }
 
             if (player1.isAttacking) {
                 if (player1.attackBox.x + player1.attackBox.width >= player2.position.x &&
                     player1.attackBox.x <= player2.position.x + player2.width) {
                     player1.isAttacking = false;
-                    applySmashHit(player1, player2);
+                    let dmg = player1.attackBox.damage;
+                    if (player2.isGuarding) { dmg = Math.floor(dmg * 0.3); audio.playBlock(); }
+                    player2.health = Math.max(0, player2.health - dmg);
+                    player1.tension = Math.min(100, player1.tension + 22);
+                    burst(player2.position.x + 35, player2.position.y + 55, player1.color, 14); screenFlash = 5;
+                    document.getElementById('p2-health').style.width = healthPercent(player2) + '%';
+                    document.getElementById('p1-tension').style.width = player1.tension + '%';
                 }
             }
             if (player2.isAttacking) {
                 if (player2.attackBox.x + player2.attackBox.width >= player1.position.x &&
                     player2.attackBox.x <= player1.position.x + player1.width) {
                     player2.isAttacking = false;
-                    applySmashHit(player2, player1);
+                    let dmg = player2.attackBox.damage;
+                    if (player1.isGuarding) { 
+                        dmg = Math.floor(dmg * (currentBuff === 'armor' ? 0.15 : 0.3)); 
+                        audio.playBlock(); 
+                    }
+                    player1.health = Math.max(0, player1.health - dmg);
+                    player2.tension = Math.min(100, player2.tension + 22);
+                    burst(player1.position.x + 35, player1.position.y + 55, player2.color, 14); screenFlash = 5;
+                    document.getElementById('p1-health').style.width = healthPercent(player1) + '%';
+                    document.getElementById('p2-tension').style.width = player2.tension + '%';
                 }
             }
 
@@ -2056,59 +1172,27 @@
             }
             animId = requestAnimationFrame(animate);
 
-            frameCount++;
-            if (!codexOpen) handleInput();
+            handleInput();
 
-            const arenaSvg = part2Arena(currentStage);
-            const arenaImg = getSprite(arenaSvg);
-            if (arenaImg.complete && arenaImg.naturalWidth > 0) {
-                c.drawImage(arenaImg, 0, 0, canvas.width, canvas.height);
-            } else {
-                if (currentStage === 'abyss') c.fillStyle = '#1c090d';
-                else if (currentStage === 'mount') c.fillStyle = '#262010';
-                else if (currentStage === 'garden') c.fillStyle = '#091c14';
-                else if (currentStage === 'heaven') c.fillStyle = '#0f1826';
-                else c.fillStyle = '#071019';
-                c.fillRect(0, 0, canvas.width, canvas.height);
-            }
+            if (currentStage === 'abyss') c.fillStyle = '#1c090d';
+            else if (currentStage === 'mount') c.fillStyle = '#262010';
+            else if (currentStage === 'garden') c.fillStyle = '#091c14';
+            else if (currentStage === 'heaven') c.fillStyle = '#0f1826';
+            else c.fillStyle = '#071019';
 
-            // Stage Ambient Environmental Effects
-            if (frameCount % 4 === 0) {
-                if (currentStage === 'tempest') {
-                    particles.push({ x: Math.random() * canvas.width, y: 0, vx: -3, vy: 14 + Math.random() * 6, life: 30, color: '#62f5db' });
-                } else if (currentStage === 'mount') {
-                    particles.push({ x: Math.random() * canvas.width, y: canvas.height, vx: (Math.random() - .5) * 2, vy: -(1.5 + Math.random() * 2), life: 50, color: '#ffd36c' });
-                } else if (currentStage === 'abyss') {
-                    particles.push({ x: Math.random() * canvas.width, y: canvas.height, vx: (Math.random() - .5) * 3, vy: -(2 + Math.random() * 3), life: 45, color: '#ff435f' });
-                } else if (currentStage === 'garden') {
-                    particles.push({ x: Math.random() * canvas.width, y: Math.random() * canvas.height, vx: (Math.random() - .5) * 1.5, vy: (Math.random() - .5) * 1.5, life: 60, color: '#62f5db' });
-                } else if (currentStage === 'colosseum') {
-                    particles.push({ x: Math.random() * canvas.width, y: GROUND_LEVEL, vx: (Math.random() - .5) * 2.5, vy: -(1 + Math.random() * 2.5), life: 40, color: '#ff9a62' });
-                } else if (currentStage === 'heaven') {
-                    particles.push({ x: Math.random() * canvas.width, y: 0, vx: (Math.random() - .5) * 1.2, vy: 1 + Math.random() * 2, life: 55, color: '#ffffff' });
-                }
-            }
+            c.fillRect(0, 0, canvas.width, canvas.height);
 
-            // Ground boundary marker line
-            c.strokeStyle = currentStage === 'abyss' ? 'rgba(255, 67, 95, 0.4)' : currentStage === 'mount' ? 'rgba(255, 211, 108, 0.4)' : 'rgba(98, 245, 219, 0.3)';
-            c.lineWidth = 2;
-            c.beginPath(); c.moveTo(0, GROUND_LEVEL); c.lineTo(canvas.width, GROUND_LEVEL); c.stroke();
-
-            if (currentStage === 'tempest') {
-                drawUtilityEffect('tempest_engine_fx', canvas.width / 2, 210, 330, .18);
-            }
-            updateTempest();
-            updateRelic();
+            c.fillStyle = '#0d1f30';
+            c.fillRect(0, GROUND_LEVEL, canvas.width, canvas.height - GROUND_LEVEL);
+            drawUtilityEffect('tempest_engine_fx', canvas.width / 2, 210, 330, currentStage === 'tempest' ? .18 : .07);
             drawParticles();
-            if (screenFlash > 0) { c.fillStyle = 'rgba(255,255,255,' + (screenFlash-- * .035) + ')'; c.fillRect(0, 0, canvas.width, canvas.height); }
+            if(screenFlash>0){c.fillStyle='rgba(255,255,255,'+(screenFlash--*.035)+')';c.fillRect(0,0,canvas.width,canvas.height);}
 
             if (player1) player1.update();
             if (player2) player2.update();
 
-            if (!codexOpen) checkHits();
-            drawUltimateCutin();
+            checkHits();
         }
     </script>
 </body>
-
 </html>
